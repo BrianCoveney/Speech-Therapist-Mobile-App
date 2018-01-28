@@ -3,6 +3,8 @@ package com.brian.speechtherapistapp.models;
 import com.brian.speechtherapistapp.util.Const;
 
 import org.exparity.hamcrest.date.DateMatchers;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.temporal.ChronoUnit;
@@ -82,29 +84,35 @@ public class ChildTest {
     public void testIsEmailValid() {
         Child child = Child.builder(firstName, secondName, email).build();
 
+        print("success: valid email");
 
         List<String> validEmailList = Arrays.asList("joe@gmail.com", "joe@yahoo.co.uk",
                 "joe.peters@aol.com", "joe_peters@hotmail.com");
-
-        print("success: valid email");
-
         for (String email : validEmailList) {
             assertEquals(child.isEmailValid(email), true);
         }
 
+        print("failure: invalid email");
 
         List<String> invalidEmailList = Arrays.asList(
                 ".username@yahoo.com", "username@yahoo.com.", "username@yahoo..com",
                 "username@yahoo.c", "username@yahoo.corporate", "@yahoo.com");
-
-        print("failure: invalid email");
-
         for (String invalidEmail : invalidEmailList) {
             assertEquals(child.isEmailValid(invalidEmail), false);
         }
     }
 
-    private void print(String message) {
+    @BeforeClass
+    public static void printClassHeadder() {
+        print("[=============" + Child.class.getCanonicalName() + "=============]");
+    }
+
+    @AfterClass
+    public static void printTestClassFooter() {
+        print("[=============" + Child.class.getCanonicalName() + " completed");
+    }
+
+    protected static void print(String message) {
         System.out.println("* " + message);
     }
 }
