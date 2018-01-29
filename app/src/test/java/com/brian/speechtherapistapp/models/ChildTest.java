@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ChildTest {
 
-    private String firstName = "Brian";
+    private String firstName = "brian";
     private String secondName = "Coveney";
     private String email =  "brian@email.com";
 
