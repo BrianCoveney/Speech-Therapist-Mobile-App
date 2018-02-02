@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SpeechTherapistApp</string>
+    <string name="login_activity">Login Activity</string>
 </resources>

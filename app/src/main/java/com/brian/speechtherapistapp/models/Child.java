@@ -3,6 +3,7 @@ package com.brian.speechtherapistapp.models;
 import com.brian.speechtherapistapp.util.Const;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,7 @@ public class Child {
     private Address address;
 
     // Required fields
+    private String id;
     private String firstName;
     private String secondName;
     private String email;
@@ -26,14 +28,15 @@ public class Child {
 
 
     private Child() {
+        id = Const.ParamsNames.CHILD_ID;
         birthday = Const.setDefaultBirthday();
         gender = Const.ParamsNames.CHILD_GENDER;
         school = Const.ParamsNames.CHILD_SCHOOL;
     }
 
 
-    public static ChildBuilder builder(String firstName, String secondName, String email) {
-        return new ChildBuilder(firstName, secondName, email);
+    public static ChildBuilder builder(String id, String firstName, String secondName, String email) {
+        return new ChildBuilder(id, firstName, secondName, email);
     }
 
     public void changeAddress(final Address address) {
@@ -96,11 +99,12 @@ public class Child {
 
         private final Child child;
 
-        public ChildBuilder(String firstName, String secondName, String email) {
+        public ChildBuilder(String id, String firstName, String secondName, String email) {
 
-            validateRequiredFields(firstName, secondName, email);
+            validateRequiredFields(id, firstName, secondName, email);
 
             child = new Child();
+            child.id = id;
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
@@ -134,9 +138,7 @@ public class Child {
 
         private void validateRequiredFields(Object... objects) {
             for (Object object : objects) {
-                if (object == null) {
-                    throw new NullPointerException("Object's required values cannot be null");
-                }
+                Objects.requireNonNull(object, "Object's required values cannot be null");
             }
         }
     }

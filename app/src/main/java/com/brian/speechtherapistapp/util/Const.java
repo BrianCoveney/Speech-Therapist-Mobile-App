@@ -11,6 +11,7 @@ import java.util.Date;
 public final class Const {
 
     public static final class ParamsNames {
+        public static final String CHILD_ID = "childId";
         public static final String CHILD_GENDER = "male";
         public static final String CHILD_SCHOOL = "Scoil Barra Naofa";
         public static final Date CHILD_BIRTHDAY = setDefaultBirthday();
