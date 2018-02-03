@@ -23,7 +23,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/login_floatingActionButton"
+        android:id="@+id/login_fab"
         android:layout_width="38dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -32,6 +32,7 @@
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>

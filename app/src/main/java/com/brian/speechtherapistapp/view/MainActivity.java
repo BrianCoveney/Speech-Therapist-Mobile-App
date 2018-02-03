@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.brian.speechtherapistapp.MyApplication;
 import com.brian.speechtherapistapp.R;
 
 import javax.inject.Inject;
@@ -14,16 +15,18 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.login_floatingActionButton)
+    @BindView(R.id.login_fab)
     FloatingActionButton loginFloatingActionButton;
 
     @Inject
-    LaunchActivity launchActivity;
+    LaunchActivityImpl launchActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ((MyApplication)getApplication()).getAppComponent().inject(this);
 
         ButterKnife.bind(this);
 
@@ -35,10 +38,8 @@ public class MainActivity extends AppCompatActivity {
         loginFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LaunchActivity.launchLoginActivity(getApplicationContext());
+                launchActivity.launchLoginActivity(getApplicationContext());
             }
         });
     }
-
-
 }
