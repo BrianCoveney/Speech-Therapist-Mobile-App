@@ -43,6 +43,10 @@ public class Child {
         this.address = address;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Address getAddress() {
         return address;
     }

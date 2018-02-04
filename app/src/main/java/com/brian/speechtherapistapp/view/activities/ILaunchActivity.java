@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view;
+package com.brian.speechtherapistapp.view.activities;
 
 import android.content.Context;
 

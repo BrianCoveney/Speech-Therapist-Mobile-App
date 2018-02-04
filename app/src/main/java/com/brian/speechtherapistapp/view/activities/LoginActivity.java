@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view;
+package com.brian.speechtherapistapp.view.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.brian.speechtherapistapp.MyApplication;
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.IChildView;
 
 import javax.inject.Inject;
 
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements IChildView {
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
@@ -26,12 +27,14 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     LaunchActivityImpl launchActivity;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ((MyApplication)getApplication()).getAppComponent().inject(this);
+        ((MainApplication)getApplication()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this);
     }
@@ -46,5 +49,40 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar.make(constraintLayout, "Submit clicked", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    public String getChildId() {
+        return null;
+    }
+
+    @Override
+    public void displayFirstName(String firstName) {
+
+    }
+
+    @Override
+    public void displaySecondName() {
+
+    }
+
+    @Override
+    public void showChildSavedMessage() {
+
+    }
+
+    @Override
+    public String getFirstName() {
+        return null;
+    }
+
+    @Override
+    public String getLastName() {
+        return null;
+    }
+
+    @Override
+    public void showChildNameIsRequired() {
+
     }
 }

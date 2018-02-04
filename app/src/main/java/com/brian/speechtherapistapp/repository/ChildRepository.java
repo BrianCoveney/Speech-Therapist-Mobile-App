@@ -7,6 +7,6 @@ import com.brian.speechtherapistapp.models.Child;
  */
 
 public interface ChildRepository {
-    Child getChild(int id);
+    Child getChild(String id);
     void saveChild(Child child);
 }

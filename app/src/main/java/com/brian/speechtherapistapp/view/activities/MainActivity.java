@@ -1,11 +1,11 @@
-package com.brian.speechtherapistapp.view;
+package com.brian.speechtherapistapp.view.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.brian.speechtherapistapp.MyApplication;
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 
 import javax.inject.Inject;
@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((MyApplication)getApplication()).getAppComponent().inject(this);
+//        ((MainApplication)getApplication()).getAppComponent().inject(this);
+
+        ((MainApplication)getApplication()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this);
 
@@ -42,4 +44,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
