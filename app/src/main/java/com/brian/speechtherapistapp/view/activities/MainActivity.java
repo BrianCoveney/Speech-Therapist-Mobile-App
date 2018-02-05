@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        ((MainApplication)getApplication()).getAppComponent().inject(this);
-
         ((MainApplication)getApplication()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this);

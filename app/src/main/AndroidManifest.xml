@@ -24,6 +24,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.MainActivity"/>
         </activity>
+        <activity android:name=".view.activities.TherapistMenuActivity"
+            android:label="@string/therapist_menu"
+            android:parentActivityName=".view.activities.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.LoginActivity"/>
+        </activity>
     </application>
 
 </manifest>

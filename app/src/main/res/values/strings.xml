@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SpeechTherapistApp</string>
     <string name="login_activity">Login Activity</string>
+    <string name="view_child_list">View Child List</string>
+    <string name="create_new_child">Create New Child</string>
+    <string name="therapist_menu">Therapist Menu</string>
 </resources>

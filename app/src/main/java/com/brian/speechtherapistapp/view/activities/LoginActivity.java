@@ -1,12 +1,12 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
@@ -24,19 +24,25 @@ public class LoginActivity extends AppCompatActivity implements IChildView {
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
 
+    @BindView((R.id.username_edit_text))
+    EditText userNameEditText;
+
+    @BindView(R.id.password_edit_text)
+    EditText passwordEditText;
+
     @Inject
     LaunchActivityImpl launchActivity;
 
-
+    public static final String EXTRA_MESSAGE = "therapist_name";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ((MainApplication)getApplication()).getActivityComponent().inject(this);
-
         ButterKnife.bind(this);
+
+        ((MainApplication)getApplication()).getActivityComponent().inject(this);
     }
 
     @OnClick({R.id.cancel_button, R.id.submit_button})
@@ -46,9 +52,16 @@ public class LoginActivity extends AppCompatActivity implements IChildView {
                 launchActivity.launchMainActivity(this);
                 break;
             case R.id.submit_button:
-                Snackbar.make(constraintLayout, "Submit clicked", Toast.LENGTH_SHORT).show();
+                onTherapistSignIn();
                 break;
         }
+    }
+
+    private void onTherapistSignIn() {
+        Intent intent = new Intent(this, TherapistMenuActivity.class);
+        String therapistName = userNameEditText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, therapistName);
+        startActivity(intent);
     }
 
     @Override
