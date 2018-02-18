@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.LaunchActivityImpl;
 
 import javax.inject.Inject;
 

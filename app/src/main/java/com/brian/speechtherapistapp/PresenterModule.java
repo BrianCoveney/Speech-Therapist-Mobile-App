@@ -2,8 +2,8 @@ package com.brian.speechtherapistapp;
 
 import com.brian.speechtherapistapp.presentation.ChildPresenterImpl;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
-import com.brian.speechtherapistapp.repository.ChildRepository;
-import com.brian.speechtherapistapp.repository.DatabaseChildRepository;
+import com.brian.speechtherapistapp.repository.ChildRepositoryImpl;
+import com.brian.speechtherapistapp.repository.IChildRepository;
 
 import javax.inject.Singleton;
 
@@ -21,12 +21,12 @@ public class PresenterModule {
     }
 
     @Provides @Singleton
-    public ChildRepository providesChildRepository() {
-        return new DatabaseChildRepository();
+    public IChildRepository providesChildRepository() {
+        return new ChildRepositoryImpl();
     }
 
     @Provides
-    public IChildPresenter providesChildPresenter(ChildRepository childRepository) {
-        return new ChildPresenterImpl();
+    public IChildPresenter providesChildPresenter(IChildRepository childRepository) {
+        return new ChildPresenterImpl(childRepository);
     }
 }

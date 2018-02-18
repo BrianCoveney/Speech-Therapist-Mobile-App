@@ -75,6 +75,14 @@ public class Child {
         return school;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
     boolean isEmailValid(String eMail) {
         if(eMail != null) {
             Pattern pattern = Pattern.compile(Const.VALID_EMAIL_REGEX);

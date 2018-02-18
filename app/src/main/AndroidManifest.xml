@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.brian.speechtherapistapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -17,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".view.activities.LoginActivity"
             android:label="@string/login_activity"
             android:parentActivityName=".view.activities.MainActivity">
@@ -24,12 +27,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.MainActivity"/>
         </activity>
+
         <activity android:name=".view.activities.TherapistMenuActivity"
             android:label="@string/therapist_menu"
             android:parentActivityName=".view.activities.LoginActivity">
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".view.activities.LoginActivity"/>-->
+        </activity>
+
+        <activity android:name=".view.activities.CreateChildActivity"
+            android:label="@string/therapist_menu"
+            android:parentActivityName=".view.activities.TherapistMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.LoginActivity"/>
+                android:value=".view.activities.TherapistMenuActivity"/>
         </activity>
     </application>
 

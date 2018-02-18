@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.view.IChildView;
+import com.brian.speechtherapistapp.view.LaunchActivityImpl;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends AppCompatActivity implements IChildView {
+public class LoginActivity extends AppCompatActivity {
+
+    @Inject
+    LaunchActivityImpl launchActivity;
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
@@ -29,9 +32,6 @@ public class LoginActivity extends AppCompatActivity implements IChildView {
 
     @BindView(R.id.password_edit_text)
     EditText passwordEditText;
-
-    @Inject
-    LaunchActivityImpl launchActivity;
 
     public static final String EXTRA_MESSAGE = "therapist_name";
 
@@ -64,38 +64,4 @@ public class LoginActivity extends AppCompatActivity implements IChildView {
         startActivity(intent);
     }
 
-    @Override
-    public String getChildId() {
-        return null;
-    }
-
-    @Override
-    public void displayFirstName(String firstName) {
-
-    }
-
-    @Override
-    public void displaySecondName() {
-
-    }
-
-    @Override
-    public void showChildSavedMessage() {
-
-    }
-
-    @Override
-    public String getFirstName() {
-        return null;
-    }
-
-    @Override
-    public String getLastName() {
-        return null;
-    }
-
-    @Override
-    public void showChildNameIsRequired() {
-
-    }
 }

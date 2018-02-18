@@ -2,8 +2,6 @@ package com.brian.speechtherapistapp;
 
 import android.app.Application;
 
-import com.brian.speechtherapistapp.models.ActivityModule;
-
 public class MainApplication extends Application {
 
     private ActivityComponent activityComponent;

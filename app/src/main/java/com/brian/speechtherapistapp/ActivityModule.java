@@ -1,9 +1,8 @@
-package com.brian.speechtherapistapp.models;
+package com.brian.speechtherapistapp;
 
 
-import com.brian.speechtherapistapp.MainApplication;
+import com.brian.speechtherapistapp.view.LaunchActivityImpl;
 import com.brian.speechtherapistapp.view.activities.ILaunchActivity;
-import com.brian.speechtherapistapp.view.activities.LaunchActivityImpl;
 
 import dagger.Module;
 import dagger.Provides;
