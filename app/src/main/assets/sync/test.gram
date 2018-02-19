@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+grammar test;
+
+public <words> = (
+    telephone   | teffone   |
+    spider      | pider     |
+    bus         | bu        |
+    cat         | ca        |
+    dog         | dah       |
+    leg         | weg       |
+    yellow      | yeyo      |
+    elephant    | efant     |
+    beep        | eep
+);

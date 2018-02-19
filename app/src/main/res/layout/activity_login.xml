@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.brian.speechtherapistapp.view.activities.MainActivity"
+    tools:context="com.brian.speechtherapistapp.view.activities.SplashActivity"
     tools:layout_editor_absoluteY="81dp"
+    android:background="@color/background"
     android:id="@+id/login_constraint_layout">
 
 
     <ImageView
         android:id="@+id/bubbles_image_view"
         android:layout_width="@dimen/zero"
-        android:layout_height="96dp"
+        android:layout_height="200dp"
         android:contentDescription="TODO"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
@@ -80,43 +81,28 @@
         app:layout_constraintStart_toStartOf="@+id/username_edit_text"
         app:layout_constraintTop_toBottomOf="@+id/username_edit_text" />
 
-    <TextView
-        android:id="@+id/editText4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-        app:layout_constraintBottom_toTopOf="@+id/cancel_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text" />
-
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="Submit"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/login_button"
+        style="@style/AppTheme.RedButton"
+        android:layout_width="276dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/skip_button"
+        style="@style/AppTheme.RedButton"
+        android:layout_width="276dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/skip"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

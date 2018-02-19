@@ -45,14 +45,15 @@ public class LoginActivity extends AppCompatActivity {
         ((MainApplication)getApplication()).getActivityComponent().inject(this);
     }
 
-    @OnClick({R.id.cancel_button, R.id.submit_button})
+    @OnClick({R.id.login_button, R.id.skip_button})
     public void onButtonClicked(View view) {
         switch (view.getId()){
-            case R.id.cancel_button:
-                launchActivity.launchMainActivity(this);
-                break;
-            case R.id.submit_button:
+            case R.id.login_button:
                 onTherapistSignIn();
+                break;
+            case R.id.skip_button:
+                Intent intent = new Intent(this, SpeechActivity.class);
+                startActivity(intent);
                 break;
         }
     }

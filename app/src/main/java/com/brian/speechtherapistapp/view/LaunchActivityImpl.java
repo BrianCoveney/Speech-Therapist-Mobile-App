@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.brian.speechtherapistapp.view.activities.CreateChildActivity;
 import com.brian.speechtherapistapp.view.activities.ILaunchActivity;
 import com.brian.speechtherapistapp.view.activities.LoginActivity;
-import com.brian.speechtherapistapp.view.activities.MainActivity;
+import com.brian.speechtherapistapp.view.activities.SplashActivity;
 
 import javax.inject.Inject;
 
@@ -20,7 +20,7 @@ public class LaunchActivityImpl implements ILaunchActivity {
     public LaunchActivityImpl() { }
 
     public void launchMainActivity(Context context) {
-        Intent mainIntent = new Intent(context, MainActivity.class);
+        Intent mainIntent = new Intent(context, SplashActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(mainIntent);
     }

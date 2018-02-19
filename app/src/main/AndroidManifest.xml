@@ -3,46 +3,51 @@
     package="com.brian.speechtherapistapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_microphone"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_microphone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.MainActivity">
+        <activity android:name=".view.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.activities.LoginActivity"
             android:label="@string/login_activity"
-            android:parentActivityName=".view.activities.MainActivity">
+            android:parentActivityName=".view.activities.SplashActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.MainActivity"/>
+                android:value=".view.activities.SplashActivity"/>
         </activity>
-
+        <activity android:name=".view.activities.SpeechActivity"
+            android:label="@string/speech_activity"
+            android:parentActivityName=".view.activities.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.LoginActivity"/>
+        </activity>
         <activity android:name=".view.activities.TherapistMenuActivity"
             android:label="@string/therapist_menu"
             android:parentActivityName=".view.activities.LoginActivity">
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".view.activities.LoginActivity"/>-->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.LoginActivity"/>
         </activity>
-
         <activity android:name=".view.activities.CreateChildActivity"
-            android:label="@string/therapist_menu"
+            android:label="@string/create_child_screen"
             android:parentActivityName=".view.activities.TherapistMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.TherapistMenuActivity"/>
         </activity>
     </application>
-
 </manifest>

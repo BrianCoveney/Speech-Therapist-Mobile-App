@@ -65,12 +65,15 @@ public class TherapistMenuActivity extends AppCompatActivity {
     }
 
     private SpannableStringBuilder highlightWord(String word) {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        SpannableString message = new SpannableString("Welcome ");
-        builder.append(message);
-        SpannableString name = new SpannableString(word);
-        name.setSpan(new ForegroundColorSpan(Color.RED), 0, name.length(), 0);
-        return builder.append(name);
+        if (word != null) {
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString message = new SpannableString("Welcome ");
+            builder.append(message);
+            SpannableString name = new SpannableString(word);
+            name.setSpan(new ForegroundColorSpan(Color.RED), 0, name.length(), 0);
+            return builder.append(name);
+        }
+        return null;
     }
 
     @OnClick({R.id.create_child_button, R.id.view_child_list_button})

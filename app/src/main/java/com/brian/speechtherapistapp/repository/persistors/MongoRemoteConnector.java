@@ -6,10 +6,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
 
-/**
- * Author Brian Coveney
- * Date:  27/04/17.
- */
 public class MongoRemoteConnector {
 
     public static MongoClient databaseConnectionRemote() {

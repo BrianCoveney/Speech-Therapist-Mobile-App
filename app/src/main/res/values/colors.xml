@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <color name="orange">#FF5500</color>
+    <color name="gray_lightest">#EEEEEE</color>
+
+    <color name="button_pressed_text_color">@color/gray_lightest</color>
+    <color name="background">@color/gray_lightest</color>
+
 </resources>
