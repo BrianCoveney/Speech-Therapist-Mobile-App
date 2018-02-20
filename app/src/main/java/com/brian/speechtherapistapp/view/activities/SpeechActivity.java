@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
@@ -27,11 +29,17 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 public class SpeechActivity extends AppCompatActivity implements
         RecognitionListener {
 
+    @BindView(R.id.caption_text)
+    TextView captionTextView;
+
+    @BindView(R.id.result_text)
+    TextView resultTextView;
+
     /* Named searches allow to quickly reconfigure the decoder */
     private static final String KWS_SEARCH = "wakeup";
     private static final String DIGITS_SEARCH = "digits";
     private static final String MENU_SEARCH = "menu";
-    private static final String TEST_SEARCH = "words";
+    private static final String TEXT_SEARCH = "words";
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "recording on";
@@ -51,10 +59,12 @@ public class SpeechActivity extends AppCompatActivity implements
         captions.put(KWS_SEARCH, R.string.kws_caption);
         captions.put(MENU_SEARCH, R.string.menu_caption);
         captions.put(DIGITS_SEARCH, R.string.digits_caption);
-        captions.put(TEST_SEARCH, R.string.test_caption);
+        captions.put(TEXT_SEARCH, R.string.test_caption);
         setContentView(R.layout.activity_speech);
-        ((TextView) findViewById(R.id.caption_text))
-                .setText("Preparing the recognizer");
+
+        ButterKnife.bind(this);
+
+        captionTextView.setText("Preparing the recognizer");
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
@@ -86,8 +96,7 @@ public class SpeechActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(Exception result) {
             if (result != null) {
-                ((TextView) activityReference.get().findViewById(R.id.caption_text))
-                        .setText("Failed to init recognizer " + result);
+                activityReference.get().captionTextView.setText("Failed to init recognizer " + result);
             } else {
                 activityReference.get().switchSearch(KWS_SEARCH);
             }
@@ -135,10 +144,10 @@ public class SpeechActivity extends AppCompatActivity implements
             switchSearch(MENU_SEARCH);
         else if (text.equals(DIGITS_SEARCH))
             switchSearch(DIGITS_SEARCH);
-        else if (text.equals(TEST_SEARCH))
-            switchSearch(TEST_SEARCH);
+        else if (text.equals(TEXT_SEARCH))
+            switchSearch(TEXT_SEARCH);
         else
-            ((TextView) findViewById(R.id.result_text)).setText(text);
+            resultTextView.setText(text);
     }
 
     /**
@@ -146,10 +155,16 @@ public class SpeechActivity extends AppCompatActivity implements
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
-        ((TextView) findViewById(R.id.result_text)).setText("");
+
+        /* This resets the TextView after a short period. It can be left out as the contents will
+           be replaced on the next run.
+        */
+        // resultTextView.setText("");
+
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -176,7 +191,7 @@ public class SpeechActivity extends AppCompatActivity implements
             recognizer.startListening(searchName, 10000);
 
         String caption = getResources().getString(captions.get(searchName));
-        ((TextView) findViewById(R.id.caption_text)).setText(caption);
+        captionTextView.setText(caption);
     }
 
     private void setupRecognizer(File assetsDir) throws IOException {
@@ -208,13 +223,13 @@ public class SpeechActivity extends AppCompatActivity implements
         recognizer.addGrammarSearch(DIGITS_SEARCH, digitsGrammar);
 
         // Create grammar-based search for custom recognition
-        File testGrammar = new File(assetsDir, "test.gram");
-        recognizer.addGrammarSearch(TEST_SEARCH, testGrammar);
+        File testGrammar = new File(assetsDir, "text.gram");
+        recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
     }
 
     @Override
     public void onError(Exception error) {
-        ((TextView) findViewById(R.id.caption_text)).setText(error.getMessage());
+        captionTextView.setText(error.getMessage());
     }
 
     @Override

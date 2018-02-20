@@ -1,6 +1,6 @@
 #JSGF V1.0;
 
-grammar test;
+grammar text;
 
 public <words> = (
     telephone   | teffone   |

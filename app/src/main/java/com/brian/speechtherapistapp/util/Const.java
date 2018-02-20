@@ -10,6 +10,18 @@ import java.util.Date;
 
 public final class Const {
 
+    public static final class PhonologicalProcesses {
+        public static final String TEFFONE = "teffone";
+        public static final String PIDER = "pider";
+        public static final String BU = "bu";
+        public static final String CA = "ca";
+        public static final String DAH = "dah";
+        public static final String WEG = "weg";
+        public static final String YEYO = "yeyo";
+        public static final String EFANT = "efant";
+        public static final String EEP = "eep";
+    }
+
     public static final class ParamsNames {
         public static final String CHILD_ID = "childId";
         public static final String CHILD_GENDER = "male";

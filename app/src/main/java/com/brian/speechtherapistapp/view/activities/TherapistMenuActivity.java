@@ -12,11 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.view.LaunchActivityImpl;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,17 +30,12 @@ public class TherapistMenuActivity extends AppCompatActivity {
     @BindView(R.id.view_child_list_button)
     Button viewChildListButton;
 
-    @Inject
-    LaunchActivityImpl launchActivity;
-
     private final String LOG_TAG = TherapistMenuActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_therapist_menu);
-
-        ((MainApplication)getApplication()).getActivityComponent().inject(this);
 
         ButterKnife.bind(this);
 
@@ -80,16 +71,14 @@ public class TherapistMenuActivity extends AppCompatActivity {
     public void onMenuButtonClicked(View view) {
         switch (view.getId()){
             case R.id.create_child_button:
-                createChildButtonClicked();
+                Intent intentStartCreateChildActivity = new Intent(this, CreateChildActivity.class);
+                startActivity(intentStartCreateChildActivity);
                 break;
             case R.id.view_child_list_button:
-                launchActivity.launchLoginActivity(this);
+                Intent intentStartLoginActivity = new Intent(this, LoginActivity.class);
+                startActivity(intentStartLoginActivity);
                 break;
         }
     }
 
-    private void createChildButtonClicked() {
-        Intent intent = new Intent(this, CreateChildActivity.class);
-        startActivity(intent);
-    }
 }
