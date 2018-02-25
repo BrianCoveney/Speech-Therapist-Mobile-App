@@ -28,13 +28,16 @@ public class GameMenuActivity extends BaseActivity {
 
         switch (view.getId()) {
             case R.id.game_one_button:
-                showToast("Game One");
+                Intent intentGameOneActivity = new Intent(this, GameOneActivity.class);
+                startActivity(intentGameOneActivity);
                 break;
             case R.id.game_two_button:
-                showToast("Game Two");
+                Intent intentGameTwoActivity = new Intent(this, GameTwoActivity.class);
+                startActivity(intentGameTwoActivity);
                 break;
             case R.id.game_three_button:
-                showToast("Game Three");
+                Intent intentGameThree = new Intent(this, SpeechActivity.class);
+                startActivity(intentGameThree);;
                 break;
         }
 

@@ -22,4 +22,6 @@
     <string name="play_game_two">Play Game Two</string>
     <string name="play_game_three">Play Game Three</string>
     <string name="play_game_one">Play Game One</string>
+    <string name="game_menu">Game Menu</string>
+    <string name="play_game">Play Game!</string>
 </resources>
