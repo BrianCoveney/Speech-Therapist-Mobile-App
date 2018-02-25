@@ -26,6 +26,8 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
+import static com.brian.speechtherapistapp.util.Const.PhonologicalProcesses.TEFFONE;
+
 public class SpeechActivity extends AppCompatActivity implements
         RecognitionListener {
 
@@ -34,6 +36,9 @@ public class SpeechActivity extends AppCompatActivity implements
 
     @BindView(R.id.result_text)
     TextView resultTextView;
+
+    @BindView(R.id.result_text_compare)
+    TextView resultTextViewCompare;
 
     /* Named searches allow to quickly reconfigure the decoder */
     private static final String KWS_SEARCH = "wakeup";
@@ -165,8 +170,12 @@ public class SpeechActivity extends AppCompatActivity implements
             String text = hypothesis.getHypstr();
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
+            resultComparison(text);
+
         }
     }
+
+
 
     @Override
     public void onBeginningOfSpeech() {
@@ -236,4 +245,16 @@ public class SpeechActivity extends AppCompatActivity implements
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
     }
+
+    public void resultComparison(String result) {
+        String telephone = "Telephone";
+
+        if (result.contains(TEFFONE)) {
+            resultTextViewCompare.setText(TEFFONE);
+        }
+        if (result.equalsIgnoreCase(telephone)) {
+            resultTextViewCompare.setText(telephone);
+        }
+    }
+
 }

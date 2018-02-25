@@ -2,20 +2,17 @@ package com.brian.speechtherapistapp.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
 import com.brian.speechtherapistapp.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
@@ -28,12 +25,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "therapist_name";
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        ButterKnife.bind(this);
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
+        super.onViewReady(savedInstanceState, intent);
     }
 
     @OnClick({R.id.login_button, R.id.skip_button})

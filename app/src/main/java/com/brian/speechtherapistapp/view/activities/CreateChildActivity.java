@@ -1,8 +1,8 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,14 +13,12 @@ import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.view.IChildView;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-public class CreateChildActivity extends AppCompatActivity implements IChildView{
+public class CreateChildActivity extends BaseActivity implements IChildView{
 
     @Inject
     IChildPresenter iChildPresenter;
@@ -36,13 +34,11 @@ public class CreateChildActivity extends AppCompatActivity implements IChildView
 
     private static final String CHILD_ID = "child_id";
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_child);
-        ((MainApplication)getApplication()).getPresenterComponent().inject(this);
 
-        ButterKnife.bind(this);
+    @Override
+    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
+        super.onViewReady(savedInstanceState, intent);
+        ((MainApplication)getApplication()).getPresenterComponent().inject(this);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +52,11 @@ public class CreateChildActivity extends AppCompatActivity implements IChildView
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_create_child;
     }
 
     @Override
