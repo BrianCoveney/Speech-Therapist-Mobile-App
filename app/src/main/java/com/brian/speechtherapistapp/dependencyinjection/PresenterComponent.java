@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp;
+package com.brian.speechtherapistapp.dependencyinjection;
 
 
 import com.brian.speechtherapistapp.view.activities.CreateChildActivity;

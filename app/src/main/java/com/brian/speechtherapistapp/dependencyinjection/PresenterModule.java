@@ -1,5 +1,6 @@
-package com.brian.speechtherapistapp;
+package com.brian.speechtherapistapp.dependencyinjection;
 
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.presentation.ChildPresenterImpl;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.repository.ChildRepositoryImpl;
