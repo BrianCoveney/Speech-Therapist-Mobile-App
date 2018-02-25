@@ -25,7 +25,6 @@ public class LoginActivity extends BaseActivity {
 
     public static final String EXTRA_MESSAGE = "therapist_name";
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_login;
@@ -46,8 +45,8 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intentTherapistMenuActivity);
                 break;
             case R.id.skip_button:
-                Intent intentSpeechActivity = new Intent(this, SpeechActivity.class);
-                startActivity(intentSpeechActivity);
+                Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
+                startActivity(intentGameMenuActivity);
                 break;
         }
     }

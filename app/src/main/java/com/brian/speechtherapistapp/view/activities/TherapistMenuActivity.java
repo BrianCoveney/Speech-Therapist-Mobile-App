@@ -29,18 +29,16 @@ public class TherapistMenuActivity extends BaseActivity {
 
     private final String LOG_TAG = TherapistMenuActivity.class.getSimpleName();
 
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_therapist_menu;
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         getIntentFromCallingActivity();
     }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_therapist_menu;
-    }
-
 
     private void getIntentFromCallingActivity() {
         Intent intent = getIntent();

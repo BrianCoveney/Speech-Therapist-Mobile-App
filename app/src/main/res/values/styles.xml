@@ -24,9 +24,19 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
 
+    <style name="AppTheme.GreenButton" parent="AppTheme.Button">
+        <item name="android:background">@drawable/green_button_background</item>
+        <item name="android:textColor">@drawable/green_button_text</item>
+    </style>
+
     <style name="AppTheme.RedButton" parent="AppTheme.Button">
         <item name="android:background">@drawable/red_button_background</item>
         <item name="android:textColor">@drawable/red_button_text</item>
+    </style>
+
+    <style name="AppTheme.CyanButton" parent="AppTheme.Button">
+        <item name="android:background">@drawable/cyan_button_background</item>
+        <item name="android:textColor">@drawable/cyan_button_text</item>
     </style>
 
 </resources>

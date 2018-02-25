@@ -34,6 +34,10 @@ public class CreateChildActivity extends BaseActivity implements IChildView{
 
     private static final String CHILD_ID = "child_id";
 
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_create_child;
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -52,11 +56,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView{
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-    }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_create_child;
     }
 
     @Override

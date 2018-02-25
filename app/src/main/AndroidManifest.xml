@@ -28,12 +28,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.SplashActivity"/>
         </activity>
-        <activity android:name=".view.activities.SpeechActivity"
+        <activity android:name=".view.activities.GameMenuActivity"
             android:label="@string/speech_activity"
             android:parentActivityName=".view.activities.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.LoginActivity"/>
+        </activity>
+        <activity android:name=".view.activities.SpeechActivity"
+            android:label="@string/speech_activity"
+            android:parentActivityName=".view.activities.GameMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.GameMenuActivity"/>
         </activity>
         <activity android:name=".view.activities.TherapistMenuActivity"
             android:label="@string/therapist_menu"
