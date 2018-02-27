@@ -10,6 +10,8 @@ public class SpokenWord {
     private int frequency;
     private List<String> glidingLiquidsWords = Const.GLIDING_OF_LIQUIDS_INVALID;
 
+    public SpokenWord() { }
+
     public SpokenWord(String word) {
         this.word = word;
         this.frequency = 0;

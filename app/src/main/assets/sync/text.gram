@@ -11,5 +11,15 @@ public <words> = (
     leg         | weg       |
     yellow      | yeyo      |
     elephant    | efant     |
-    beep        | eep
+    beep        | eep       |
+    black       | bwack     |
+    bread       | bwed      |
+    glass       | gwas      |
+    green       | gween     |
+    leaf        | lif       |
+    play        | pway      |
+    rabbit      | wabbit    |
+    real        | weal      |
+    look        | wook      |
+    run         | wun
 );

@@ -26,8 +26,6 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
-import static com.brian.speechtherapistapp.util.Const.PhonologicalProcesses.TEFFONE;
-
 public class SpeechActivity extends AppCompatActivity implements
         RecognitionListener {
 
@@ -170,7 +168,6 @@ public class SpeechActivity extends AppCompatActivity implements
             String text = hypothesis.getHypstr();
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-            resultComparison(text);
 
         }
     }
@@ -246,15 +243,5 @@ public class SpeechActivity extends AppCompatActivity implements
         switchSearch(KWS_SEARCH);
     }
 
-    public void resultComparison(String result) {
-        String telephone = "Telephone";
-
-        if (result.contains(TEFFONE)) {
-            resultTextViewCompare.setText(TEFFONE);
-        }
-        if (result.equalsIgnoreCase(telephone)) {
-            resultTextViewCompare.setText(telephone);
-        }
-    }
 
 }

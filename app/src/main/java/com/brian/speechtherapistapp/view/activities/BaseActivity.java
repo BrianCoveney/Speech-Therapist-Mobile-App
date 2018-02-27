@@ -25,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(String toastMessage) {
-        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
     }
 
     protected abstract int getContentView();

@@ -1,8 +1,11 @@
 package com.brian.speechtherapistapp.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by brian on 26/01/18.
@@ -21,6 +24,46 @@ public final class Const {
         public static final String EFANT = "efant";
         public static final String EEP = "eep";
     }
+
+    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
+    public static final List<String> GLIDING_OF_LIQUIDS_INVALID = Collections.unmodifiableList(
+            Arrays.asList(
+                    "teffone",  // telephone
+                    "pider",        // spider
+                    "weg",          // leg
+                    "pway",         // play
+                    "wun",          // run
+                    "yeyo",         // yellow
+                    "lif",          // leaf
+                    "weal",         // real
+                    "wabit",        // rabbit
+                    "wook",         // look
+                    "bwed",         // bread
+                    "gween",        // green
+                    "bwack",        // black
+                    "gwas"          // glass
+            )
+    );
+
+    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
+    public static final List<String> GLIDING_OF_LIQUIDS_VALID = Collections.unmodifiableList(
+            Arrays.asList(
+                    "telephone",
+                    "spider",
+                    "leg",
+                    "play",
+                    "run",
+                    "yellow",
+                    "leaf",
+                    "real",
+                    "rabbit",
+                    "look",
+                    "bread",
+                    "green",
+                    "black",
+                    "glass"
+            )
+    );
 
     public static final class ParamsNames {
         public static final String CHILD_ID = "childId";
