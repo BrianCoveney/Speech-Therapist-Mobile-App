@@ -1,0 +1,20 @@
+#JSGF V1.0;
+
+grammar text;
+
+public <words-gliding-of-liquids> = (
+    telephone   | teffone   |
+    spider      | pider     |
+    leg         | weg       |
+    yellow      | yeyo      |
+    black       | bwack     |
+    bread       | bwed      |
+    glass       | gwas      |
+    green       | gween     |
+    leaf        | lif       |
+    play        | pway      |
+    rabbit      | wabbit    |
+    real        | weal      |
+    look        | wook      |
+    run         | wun
+);
