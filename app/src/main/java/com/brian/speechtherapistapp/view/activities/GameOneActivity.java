@@ -3,6 +3,7 @@ package com.brian.speechtherapistapp.view.activities;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
@@ -34,11 +33,14 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 public class GameOneActivity extends BaseActivity implements
-        RecognitionListener {
+        RecognitionListener{
 
-    private String listItemClicked;
     private ArrayAdapter<String> arrayAdapter;
     private List words = Const.GLIDING_OF_LIQUIDS_VALID;
+
+    SharedPreferences sharedPreferences;
+    public static final String KEY = "key";
+    public static final String SPEECH_PREFERENCES = "Speech_Shared_Preferences";
 
     @BindView(R.id.game_one_list_view)
     ListView listView;
@@ -52,24 +54,25 @@ public class GameOneActivity extends BaseActivity implements
     @BindView(R.id.start_recording_button)
     Button startRecordingButton;
 
+    @BindView(R.id.stop_recording_button)
+    Button stopRecordingButton;
+
+    @BindView(R.id.test_edit_text)
+    TextView editText;
+
     private final String LOG_TAG = GameOneActivity.class.getSimpleName();
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     /* Keyword we are looking for to activate menu */
-    private static final String KEYPHRASE = "recording on";
+    private static final String KEYPHRASE = "words";
 
     private SpeechRecognizer recognizer;
-    private HashMap<String, String> captions;
+    private HashMap<String, Integer> captions;
 
 
-    /* Named searches allow to quickly reconfigure the decoder */
-    private static final String KWS_SEARCH = "wakeup";
-    private static final String MENU_SEARCH = "menu";
     private static final String TEXT_SEARCH = "words";
-
-
 
 
     @Override
@@ -82,13 +85,11 @@ public class GameOneActivity extends BaseActivity implements
         super.onViewReady(savedInstanceState, intent);
         populateListView();
 
-        onListItemClickListener();
+        stopRecordingButton.setVisibility(View.INVISIBLE);
 
         // Prepare the data for UI
         captions = new HashMap<>();
-        captions.put(KWS_SEARCH, "To Start recording say recording on");
-        captions.put(MENU_SEARCH, "Say words");
-        captions.put(TEXT_SEARCH, "Say something like telephone");
+        captions.put(TEXT_SEARCH, R.string.test_caption);
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
@@ -122,11 +123,21 @@ public class GameOneActivity extends BaseActivity implements
             if (result != null) {
                 activityReference.get().captionTextView.setText("Failed to init recognizer " + result);
             } else {
-                activityReference.get().switchSearch(KWS_SEARCH);
+                activityReference.get().captionTextView.setVisibility(View.INVISIBLE);
             }
         }
     }
 
+    private void populateListView() {
+        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words);
+        listView.setAdapter(arrayAdapter);
+    }
+
+    /*
+    ----------------------------------------------------------------
+    * CMU Speech Recognition Listeners
+    ----------------------------------------------------------------
+    */
     private void setupRecognizer(File assetsDir) throws IOException {
         // The recognizer can be configured to perform multiple searches
         // of different kind and switch between them
@@ -135,41 +146,36 @@ public class GameOneActivity extends BaseActivity implements
                 .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                 .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
 
-                .setRawLogDir(assetsDir) // To disable logging of raw audio comment out this call (takes a lot of space on the device)
+                // To disable logging of raw audio comment out this call (takes a lot of space on the device)
+                // .setRawLogDir(assetsDir)
 
                 .getRecognizer();
         recognizer.addListener(this);
 
         // Create keyword-activation search.
-        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
+        recognizer.addKeyphraseSearch(TEXT_SEARCH, KEYPHRASE);
 
-        // Create grammar-based search for selection between demos
-        File menuGrammar = new File(assetsDir, "menu.gram");
-        recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
+        recognizer.getSearchName();
 
         // Create grammar-based search for custom recognition
         File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
         recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
     }
 
-    private void switchSearch(String searchName) {
+
+    public void onStartButtonClick(View view) {
+        recognizer.startListening(TEXT_SEARCH);
+        captionTextView.setVisibility(View.VISIBLE);
+        captionTextView.setText(startRecordingButton.getText());
+        stopRecordingButton.setVisibility(View.VISIBLE);
+        startRecordingButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void onStopButtonClick(View view) {
+        stopRecordingButton.setVisibility(View.INVISIBLE);
+        startRecordingButton.setVisibility(View.VISIBLE);
         recognizer.stop();
-
-        // If we are not spotting, start listening with timeout (10000 ms or 10 seconds).
-        if (searchName.equals(KWS_SEARCH))
-            recognizer.startListening(searchName);
-        else
-            recognizer.startListening(searchName, 10000);
-
-
-        // Fails
-        // recognizer.startListening(onListItemClickListener());
-
-        // Fails
-        // recognizer.startListening("telephone");
-
-        String caption = captions.get(searchName);
-        captionTextView.setText(caption);
+        recognizer.cancel();
     }
 
     @Override
@@ -177,8 +183,6 @@ public class GameOneActivity extends BaseActivity implements
 
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(KWS_SEARCH))
-            switchSearch(KWS_SEARCH);
     }
 
     @Override
@@ -187,19 +191,19 @@ public class GameOneActivity extends BaseActivity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE))
-            switchSearch(MENU_SEARCH);
-        else if (text.equals(TEXT_SEARCH))
-            switchSearch(TEXT_SEARCH);
-        else
-            resultTextView.setText(text);
+        resultTextView.setText(text);
+        // Log.i(LOG_TAG, "Partial Result: " + text);
     }
 
+    /**
+     * This callback is called when we stop the recognizer.
+     */
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
             showToast(text);
+            Log.i(LOG_TAG, "Result: " + text);
         }
     }
 
@@ -210,37 +214,7 @@ public class GameOneActivity extends BaseActivity implements
 
     @Override
     public void onTimeout() {
-        switchSearch(KWS_SEARCH);
-    }
-
-    private void populateListView() {
-        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words);
-        listView.setAdapter(arrayAdapter);
-    }
-
-    private void onListItemClickListener() {
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Object itemClicked = listView.getItemAtPosition(position);
-                showToast(itemClicked.toString());
-                listItemClicked = itemClicked.toString();
-                Log.i(LOG_TAG, listItemClicked);
-            }
-
-        });
-
-        // unavailable
-//        Log.i(LOG_TAG, "Here: " + listItemClicked);
 
     }
 
-
-
-    @OnClick(R.id.start_recording_button)
-    public void onStartRecordingButtonClick() {
-
-    }
 }

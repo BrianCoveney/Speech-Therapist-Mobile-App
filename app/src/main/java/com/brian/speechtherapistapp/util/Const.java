@@ -11,7 +11,8 @@ import java.util.List;
  * Created by brian on 26/01/18.
  */
 
-public final class Const {
+public final class
+Const {
 
     public static final class PhonologicalProcesses {
         public static final String TEFFONE = "teffone";
@@ -61,7 +62,8 @@ public final class Const {
                     "bread",
                     "green",
                     "black",
-                    "glass"
+                    "glass",
+                    "menu"
             )
     );
 
