@@ -28,9 +28,9 @@ public class ChildRepositoryImpl implements IChildRepository {
     public ChildRepositoryImpl() {
         try {
 
-            // MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
+//             MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
 
-            MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
+             MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
 
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);
@@ -55,6 +55,9 @@ public class ChildRepositoryImpl implements IChildRepository {
                               .build();
             saveChildMongoDocument.put("first_name", this.child.getFirstName());
             saveChildMongoDocument.put("second_name", this.child.getSecondName());
+            saveChildMongoDocument.put("test_name", "test name");
+
+            Log.i(LOG_TAG, "Word: " + this.child.getFirstName());
         }
         Thread thread = new Thread(new Runnable() {
             @Override

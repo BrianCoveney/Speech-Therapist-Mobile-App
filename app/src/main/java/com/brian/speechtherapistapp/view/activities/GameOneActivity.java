@@ -16,14 +16,19 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.util.Const;
+import com.brian.speechtherapistapp.view.IGameOneView;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import edu.cmu.pocketsphinx.Assets;
@@ -32,8 +37,14 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
-public class GameOneActivity extends BaseActivity implements
-        RecognitionListener{
+public class GameOneActivity extends BaseActivity implements IGameOneView, RecognitionListener {
+
+    @Inject
+    IWordPresenter wordPresenter;
+
+    private static final String WORD_ID = "word_id";
+
+    private final String LOG_TAG = GameOneActivity.class.getSimpleName();
 
     private ArrayAdapter<String> arrayAdapter;
     private List words = Const.GLIDING_OF_LIQUIDS_VALID;
@@ -60,8 +71,6 @@ public class GameOneActivity extends BaseActivity implements
     @BindView(R.id.test_edit_text)
     TextView editText;
 
-    private final String LOG_TAG = GameOneActivity.class.getSimpleName();
-
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
@@ -70,8 +79,6 @@ public class GameOneActivity extends BaseActivity implements
 
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
-
-
     private static final String TEXT_SEARCH = "words";
 
 
@@ -83,6 +90,8 @@ public class GameOneActivity extends BaseActivity implements
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+        ((MainApplication)getApplication()).getPresenterComponent().inject(this);
+
         populateListView();
 
         stopRecordingButton.setVisibility(View.INVISIBLE);
@@ -100,6 +109,12 @@ public class GameOneActivity extends BaseActivity implements
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
         new SetupTask(this).execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wordPresenter.setView(this);
     }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
@@ -134,34 +149,21 @@ public class GameOneActivity extends BaseActivity implements
     }
 
     /*
-    ----------------------------------------------------------------
-    * CMU Speech Recognition Listeners
-    ----------------------------------------------------------------
+      ----------------------------------------------------------------------------------------------
+      CMU Speech Recognition Listeners
+      ----------------------------------------------------------------------------------------------
     */
     private void setupRecognizer(File assetsDir) throws IOException {
-        // The recognizer can be configured to perform multiple searches
-        // of different kind and switch between them
-
         recognizer = SpeechRecognizerSetup.defaultSetup()
                 .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                 .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
-
-                // To disable logging of raw audio comment out this call (takes a lot of space on the device)
-                // .setRawLogDir(assetsDir)
-
                 .getRecognizer();
         recognizer.addListener(this);
-
-        // Create keyword-activation search.
-        recognizer.addKeyphraseSearch(TEXT_SEARCH, KEYPHRASE);
-
-        recognizer.getSearchName();
 
         // Create grammar-based search for custom recognition
         File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
         recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
     }
-
 
     public void onStartButtonClick(View view) {
         recognizer.startListening(TEXT_SEARCH);
@@ -169,6 +171,8 @@ public class GameOneActivity extends BaseActivity implements
         captionTextView.setText(startRecordingButton.getText());
         stopRecordingButton.setVisibility(View.VISIBLE);
         startRecordingButton.setVisibility(View.INVISIBLE);
+
+        wordPresenter.saveWord();
     }
 
     public void onStopButtonClick(View view) {
@@ -179,20 +183,12 @@ public class GameOneActivity extends BaseActivity implements
     }
 
     @Override
-    public void onBeginningOfSpeech() { }
-
-    @Override
-    public void onEndOfSpeech() {
-    }
-
-    @Override
     public void onPartialResult(Hypothesis hypothesis) {
         if (hypothesis == null)
             return;
 
         String text = hypothesis.getHypstr();
         resultTextView.setText(text);
-        // Log.i(LOG_TAG, "Partial Result: " + text);
     }
 
     /**
@@ -203,7 +199,7 @@ public class GameOneActivity extends BaseActivity implements
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
             showToast(text);
-            Log.i(LOG_TAG, "Result: " + text);
+            Log.i(LOG_TAG, "onResult: " + text);
         }
     }
 
@@ -213,8 +209,27 @@ public class GameOneActivity extends BaseActivity implements
     }
 
     @Override
-    public void onTimeout() {
+    public void onTimeout() { }
 
+    @Override
+    public void onBeginningOfSpeech() { }
+
+    @Override
+    public void onEndOfSpeech() { }
+
+    /*
+      ----------------------------------------------------------------------------------------------
+      MVP
+      ----------------------------------------------------------------------------------------------
+    */
+    @Override
+    public String getWordId() {
+        return WORD_ID;
+    }
+
+    @Override
+    public String getRecognizerWordResult() {
+        return startRecordingButton.getText().toString();
     }
 
 }

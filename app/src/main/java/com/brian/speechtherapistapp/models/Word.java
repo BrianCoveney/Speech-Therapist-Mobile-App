@@ -5,16 +5,21 @@ import com.brian.speechtherapistapp.util.Const;
 
 import java.util.List;
 
-public class SpokenWord {
+public class Word {
+
+    private String id;
     private String word;
     private int frequency;
     private List<String> glidingLiquidsWords = Const.GLIDING_OF_LIQUIDS_INVALID;
 
-    public SpokenWord() { }
+    public Word() { }
 
-    public SpokenWord(String word) {
-        this.word = word;
-        this.frequency = 0;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getWord() {
@@ -45,7 +50,7 @@ public class SpokenWord {
 
     @Override
     public String toString() {
-        return "SpokenWord{" +
+        return "Word{" +
                 "word='" + word + '\'' +
                 ", frequency=" + frequency +
                 '}';

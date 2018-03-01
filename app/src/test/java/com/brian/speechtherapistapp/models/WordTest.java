@@ -7,26 +7,26 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-public class SpokenWordTest {
+public class WordTest {
 
-    private SpokenWord spokenWord;
+    private Word word;
     private String wordInDictionary = "pider";
     private String wordInDictionary2 = "teffone";
     private String wordNotInDictionary = "bus";
 
     @Before
     public void setUp() throws Exception {
-        spokenWord = new SpokenWord(wordInDictionary);
+        word = new Word(wordInDictionary);
     }
 
     @Test
     public void hasMatch() throws Exception {
-        assertTrue(spokenWord.hasMatch(wordInDictionary));
-        assertFalse(spokenWord.hasMatch(wordNotInDictionary));
-        assertEquals(1, spokenWord.getFrequency());
+        assertTrue(word.hasMatch(wordInDictionary));
+        assertFalse(word.hasMatch(wordNotInDictionary));
+        assertEquals(1, word.getFrequency());
 
-        assertTrue(spokenWord.hasMatch(wordInDictionary2));
-        assertEquals(2, spokenWord.getFrequency());
+        assertTrue(word.hasMatch(wordInDictionary2));
+        assertEquals(2, word.getFrequency());
     }
 
 }

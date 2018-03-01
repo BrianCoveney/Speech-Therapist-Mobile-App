@@ -36,10 +36,10 @@ public class ChildPresenterImpl implements IChildPresenter {
     public void loadChildDetails() {
         String childId = childView.getChildId();
         child = childRepository.getChild(childId);
-        if (child != null) {
-            childView.displayFirstName(child.getFirstName());
-            childView.displaySecondName(child.getSecondName());
-        }
+//        if (child != null) {
+//            childView.displayFirstName(child.getFirstName());
+//            childView.displaySecondName(child.getSecondName());
+//        }
     }
 
     @Override

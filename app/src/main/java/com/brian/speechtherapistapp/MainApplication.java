@@ -3,6 +3,7 @@ package com.brian.speechtherapistapp;
 import android.app.Application;
 
 public class MainApplication extends Application {
+
     private PresenterComponent presenterComponent;
 
     @Override
