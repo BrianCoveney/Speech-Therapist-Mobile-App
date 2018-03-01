@@ -16,7 +16,7 @@ public class WordTest {
 
     @Before
     public void setUp() throws Exception {
-        word = new Word(wordInDictionary);
+        word = new Word();
     }
 
     @Test
