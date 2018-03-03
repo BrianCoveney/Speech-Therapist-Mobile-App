@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
 
-    private static final String TAG = WordAdapter.class.getSimpleName();
+    private static final String LOG_TAG = WordAdapter.class.getSimpleName();
     private WordAdapterClickListener mOnClickListener;
     private static int viewHolderCount;
     private int mNumberItems;
@@ -45,13 +45,13 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         WordViewHolder viewHolder = new WordViewHolder(view);
 
         viewHolderCount++;
-        Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: " + viewHolderCount);
+        Log.d(LOG_TAG, "onCreateViewHolder: number of ViewHolders created: " + viewHolderCount);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(WordViewHolder holder, int position) {
-        Log.d(TAG, "#" + position);
+        Log.d(LOG_TAG, "#" + position);
         holder.bind(position);
     }
 

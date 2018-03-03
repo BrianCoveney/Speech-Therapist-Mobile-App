@@ -3,7 +3,6 @@ package com.brian.speechtherapistapp.view.activities;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,17 +39,6 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
 
     @Inject
     IWordPresenter wordPresenter;
-
-    private static final String WORD_ID = "word_id";
-
-    private final String LOG_TAG = GameOneActivity.class.getSimpleName();
-
-    private ArrayAdapter<String> arrayAdapter;
-    private List words = Const.GLIDING_OF_LIQUIDS_VALID_LIST;
-
-    SharedPreferences sharedPreferences;
-    public static final String KEY = "key";
-    public static final String SPEECH_PREFERENCES = "Speech_Shared_Preferences";
 
     @BindView(R.id.game_one_list_view)
     ListView listView;
@@ -70,6 +57,11 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
 
     @BindView(R.id.test_edit_text)
     TextView editText;
+
+
+    private static final String LOG_TAG = GameOneActivity.class.getSimpleName();
+    private static final String WORD_ID = "word_id";
+    private ArrayAdapter<String> arrayAdapter;
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
@@ -98,9 +90,12 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
         captions.put(TEXT_SEARCH, R.string.test_caption);
 
         // Check if user has given permission to record audio
-        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.RECORD_AUDIO);
+
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
             return;
         }
         // Recognizer initialization is a time-consuming and it involves IO,
@@ -108,11 +103,6 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
         new SetupTask(this).execute();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        wordPresenter.setView(this);
-    }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<GameOneActivity> activityReference;
@@ -141,7 +131,8 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
     }
 
     private void populateListView() {
-        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words);
+        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                Const.GLIDING_OF_LIQUIDS_INVALID_LIST);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -217,6 +208,13 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
     /*----------------------------------------------------------------------------------------------
       MVP
     */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wordPresenter.setView(this);
+    }
+
     @Override
     public String getWordId() {
         return WORD_ID;
