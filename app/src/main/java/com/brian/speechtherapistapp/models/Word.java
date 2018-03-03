@@ -10,7 +10,7 @@ public class Word {
     private String id;
     private String word;
     private int frequency;
-    private List<String> glidingLiquidsWords = Const.GLIDING_OF_LIQUIDS_INVALID;
+    private List<String> glidingLiquidsWords = Const.GLIDING_OF_LIQUIDS_INVALID_LIST;
 
     public Word() { }
 

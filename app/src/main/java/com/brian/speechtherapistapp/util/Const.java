@@ -7,9 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by brian on 26/01/18.
- */
 
 public final class
 Const {
@@ -27,7 +24,7 @@ Const {
     }
 
     // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
-    public static final List<String> GLIDING_OF_LIQUIDS_INVALID = Collections.unmodifiableList(
+    public static final List<String> GLIDING_OF_LIQUIDS_INVALID_LIST = Collections.unmodifiableList(
             Arrays.asList(
                     "teffone",  // telephone
                     "pider",        // spider
@@ -47,7 +44,7 @@ Const {
     );
 
     // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
-    public static final List<String> GLIDING_OF_LIQUIDS_VALID = Collections.unmodifiableList(
+    public static final List<String> GLIDING_OF_LIQUIDS_VALID_LIST = Collections.unmodifiableList(
             Arrays.asList(
                     "telephone",
                     "spider",

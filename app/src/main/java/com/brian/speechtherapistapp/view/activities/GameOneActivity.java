@@ -47,7 +47,7 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
     private final String LOG_TAG = GameOneActivity.class.getSimpleName();
 
     private ArrayAdapter<String> arrayAdapter;
-    private List words = Const.GLIDING_OF_LIQUIDS_VALID;
+    private List words = Const.GLIDING_OF_LIQUIDS_VALID_LIST;
 
     SharedPreferences sharedPreferences;
     public static final String KEY = "key";
@@ -73,9 +73,6 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
-
-    /* Keyword we are looking for to activate menu */
-    private static final String KEYPHRASE = "words";
 
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
@@ -217,10 +214,8 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
     @Override
     public void onEndOfSpeech() { }
 
-    /*
-      ----------------------------------------------------------------------------------------------
+    /*----------------------------------------------------------------------------------------------
       MVP
-      ----------------------------------------------------------------------------------------------
     */
     @Override
     public String getWordId() {
