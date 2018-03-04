@@ -4,7 +4,6 @@ package com.brian.speechtherapistapp.view.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,13 +22,11 @@ import com.brian.speechtherapistapp.view.IGameOneView;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -70,6 +67,8 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
     private HashMap<String, Integer> captions;
     private static final String TEXT_SEARCH = "words";
 
+    private String result;
+
 
     @Override
     protected int getContentView() {
@@ -100,48 +99,14 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
         }
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
-        new SetupTask(this).execute();
+        new SetupSphinxRecognizerTask(this).execute();
     }
 
 
-    private static class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<GameOneActivity> activityReference;
-        SetupTask(GameOneActivity activity) {
-            this.activityReference = new WeakReference<>(activity);
-        }
-        @Override
-        protected Exception doInBackground(Void... params) {
-            try {
-                Assets assets = new Assets(activityReference.get());
-                File assetDir = assets.syncAssets();
-                activityReference.get().setupRecognizer(assetDir);
-            } catch (IOException e) {
-                return e;
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Exception result) {
-            if (result != null) {
-                activityReference.get().captionTextView.setText("Failed to init recognizer " + result);
-            } else {
-                activityReference.get().captionTextView.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    private void populateListView() {
-        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                Const.GLIDING_OF_LIQUIDS_INVALID_LIST);
-        listView.setAdapter(arrayAdapter);
-    }
-
-    /*
-      ----------------------------------------------------------------------------------------------
+    /*----------------------------------------------------------------------------------------------
       CMU Speech Recognition Listeners
-      ----------------------------------------------------------------------------------------------
     */
-    private void setupRecognizer(File assetsDir) throws IOException {
+    protected void setupRecognizer(File assetsDir) throws IOException {
         recognizer = SpeechRecognizerSetup.defaultSetup()
                 .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                 .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
@@ -159,15 +124,20 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
         captionTextView.setText(startRecordingButton.getText());
         stopRecordingButton.setVisibility(View.VISIBLE);
         startRecordingButton.setVisibility(View.INVISIBLE);
-
-        wordPresenter.saveWord();
     }
 
     public void onStopButtonClick(View view) {
         stopRecordingButton.setVisibility(View.INVISIBLE);
         startRecordingButton.setVisibility(View.VISIBLE);
+
+        wordPresenter.saveWord();
+
         recognizer.stop();
         recognizer.cancel();
+
+        /* Should we return to the game menu screen after getting the recognized word? */
+        //Intent intent = new Intent(this, GameMenuActivity.class);
+        // startActivity(intent);
     }
 
     @Override
@@ -188,6 +158,8 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
             String text = hypothesis.getHypstr();
             showToast(text);
             Log.i(LOG_TAG, "onResult: " + text);
+
+            result = hypothesis.getHypstr();
         }
     }
 
@@ -220,9 +192,22 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
         return WORD_ID;
     }
 
+
+
     @Override
     public String getRecognizerWordResult() {
-        return startRecordingButton.getText().toString();
+        return resultTextView.getText().toString();
     }
 
+
+
+    /*----------------------------------------------------------------------------------------------
+      Activity related
+    */
+
+    private void populateListView() {
+        this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                Const.GLIDING_OF_LIQUIDS_INVALID_LIST);
+        listView.setAdapter(arrayAdapter);
+    }
 }
