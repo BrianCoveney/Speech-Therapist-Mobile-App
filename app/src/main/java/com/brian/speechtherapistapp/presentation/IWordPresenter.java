@@ -1,9 +1,9 @@
 package com.brian.speechtherapistapp.presentation;
 
-import com.brian.speechtherapistapp.view.IGameOneView;
+import com.brian.speechtherapistapp.view.IGameView;
 
 public interface IWordPresenter {
-    void setView(IGameOneView gameOneView);
+    void setView(IGameView gameOneView);
     void saveWord();
     void loadWordDetails();
 }

@@ -10,18 +10,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.presentation.IWordPresenter;
+import com.brian.speechtherapistapp.view.IGameView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 
-public class GameTwoActivity extends BaseActivity implements WordAdapter.WordAdapterClickListener {
+public class GameTwoActivity extends BaseActivity
+        implements WordAdapter.WordAdapterClickListener, IGameView {
+
+    @Inject
+    IWordPresenter wordPresenter;
 
     @BindView(R.id.rv_words)
     RecyclerView recyclerView;
 
     private WordAdapter adapter;
     private static final int NUM_LIST_ITEMS = 14;
+    private static final String WORD_ID = "word_id";
+    private String result;
+
 
 
     @Override
@@ -32,6 +44,8 @@ public class GameTwoActivity extends BaseActivity implements WordAdapter.WordAda
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+        ((MainApplication)getApplication()).getPresenterComponent().inject(this);
+
 
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
@@ -69,6 +83,31 @@ public class GameTwoActivity extends BaseActivity implements WordAdapter.WordAda
 
     @Override
     public void onListItemClicked(String itemClicked) {
-        showToast(itemClicked);
+        result = itemClicked;
+        showToast("Saved " + result);
+        wordPresenter.saveWord();
+    }
+
+
+    /*----------------------------------------------------------------------------------------------
+      MVP
+    */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wordPresenter.setView(this);
+    }
+
+    @Override
+    public String getWordId() {
+        return WORD_ID;
+    }
+
+
+
+    @Override
+    public String getRecognizerWordResult() {
+        return result;
     }
 }

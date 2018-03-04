@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.repository.persistors.MongoRemoteConnector;
-import com.brian.speechtherapistapp.view.IGameOneView;
+import com.brian.speechtherapistapp.view.IGameView;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 public class WordRepositoryImpl implements IWordRepository {
     private Word word;
-    private IGameOneView gameOneView;
+    private IGameView gameOneView;
     private MongoCollection childCollection;
     private MongoDatabase database;
     private static final String DB_NAME = "speech";

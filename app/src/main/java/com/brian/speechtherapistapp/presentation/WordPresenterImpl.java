@@ -2,14 +2,14 @@ package com.brian.speechtherapistapp.presentation;
 
 import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.repository.IWordRepository;
-import com.brian.speechtherapistapp.view.IGameOneView;
+import com.brian.speechtherapistapp.view.IGameView;
 
 import javax.inject.Inject;
 
 
 public class WordPresenterImpl implements IWordPresenter {
 
-    private IGameOneView gameOneView;
+    private IGameView gameOneView;
     private Word word;
     private IWordRepository wordRepository;
 
@@ -19,7 +19,7 @@ public class WordPresenterImpl implements IWordPresenter {
     }
 
     @Override
-    public void setView(IGameOneView gameOneView) {
+    public void setView(IGameView gameOneView) {
         this.gameOneView = gameOneView;
         loadWordDetails();
     }

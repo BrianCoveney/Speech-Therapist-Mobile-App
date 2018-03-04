@@ -18,7 +18,7 @@ import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.util.Const;
-import com.brian.speechtherapistapp.view.IGameOneView;
+import com.brian.speechtherapistapp.view.IGameView;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
-public class GameOneActivity extends BaseActivity implements IGameOneView, RecognitionListener {
+public class GameOneActivity extends BaseActivity implements IGameView, RecognitionListener {
 
     @Inject
     IWordPresenter wordPresenter;
@@ -147,6 +147,8 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
 
         String text = hypothesis.getHypstr();
         resultTextView.setText(text);
+        result = hypothesis.getHypstr();
+
     }
 
     /**
@@ -159,7 +161,6 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
             showToast(text);
             Log.i(LOG_TAG, "onResult: " + text);
 
-            result = hypothesis.getHypstr();
         }
     }
 
@@ -194,9 +195,16 @@ public class GameOneActivity extends BaseActivity implements IGameOneView, Recog
 
 
 
+
+
+    /**
+     * The result is a class variable which is set in this method:
+     * @see #onPartialResult(Hypothesis)
+     */
     @Override
     public String getRecognizerWordResult() {
-        return resultTextView.getText().toString();
+        // return resultTextView.getText().toString();
+        return result;
     }
 
 

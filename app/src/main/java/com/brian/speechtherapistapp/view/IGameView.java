@@ -1,7 +1,7 @@
 package com.brian.speechtherapistapp.view;
 
 
-public interface IGameOneView {
+public interface IGameView {
     String getWordId();
     String getRecognizerWordResult();
 }
