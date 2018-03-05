@@ -9,7 +9,9 @@ import com.mongodb.MongoException;
 public class MongoLocalConnection {
     private static final String LOG_TAG = MongoLocalConnection.class.getSimpleName();
     private static final String EMULATOR_IP = "10.0.2.2";
-//    private static final String LOCAL_IP = "87.42.43.167";
+    private static final String LOCAL_IP = "87.42.43.167"; // An IP     (MongoSocketOpenException: Exception opening socket)
+    private static final String LOCAL = "10.178.109.193";  // Laptop IP (MongoSocketOpenException: Exception opening socket)
+
 
     public MongoLocalConnection() { }
 
@@ -17,7 +19,10 @@ public class MongoLocalConnection {
 
         MongoClient dbConnection = null;
         try {
-            dbConnection = new MongoClient(EMULATOR_IP, 27017);
+
+
+            dbConnection = new MongoClient(LOCAL, 27017);
+
             if (dbConnection != null)
                 Log.d(LOG_TAG,"Connected to MongoDB!");
         } catch (MongoException e) {

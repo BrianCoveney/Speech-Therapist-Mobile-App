@@ -39,20 +39,20 @@
         android:layout_height="40dp"
         android:layout_marginTop="32dp"
         android:onClick="onStartButtonClick"
-        android:text="Start 2"
+        android:text="@string/start"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/result_text_2" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/stop_recording_button"
+        android:id="@+id/save_recording_button"
         style="@style/AppTheme.RedButton"
         android:layout_width="276dp"
         android:layout_height="40dp"
         android:layout_marginTop="32dp"
         android:onClick="onStopButtonClick"
-        android:text="Stop"
+        android:text="Save"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

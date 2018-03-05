@@ -21,7 +21,6 @@ public class ChildRepositoryImpl implements IChildRepository {
     private MongoDatabase database;
     private static final String DB_NAME = "speech";
     private static final String DB_COLLECTION = "children";
-    private Document saveChildMongoDocument = new Document();
     private static final String LOG_TAG = ChildRepositoryImpl.class.getSimpleName();
 
     @Inject
@@ -50,19 +49,20 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public void saveChild(ChildList childList) {
+        final Document document = new Document();
         for (Child c : childList.getChildList()) {
             this.child = Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
                               .build();
-            saveChildMongoDocument.put("first_name", this.child.getFirstName());
-            saveChildMongoDocument.put("second_name", this.child.getSecondName());
-            saveChildMongoDocument.put("test_name", "test name");
+            document.put("first_name", this.child.getFirstName());
+            document.put("second_name", this.child.getSecondName());
+            document.put("test_name", "test name");
 
             Log.i(LOG_TAG, "Word: " + this.child.getFirstName());
         }
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                childCollection.insertOne(saveChildMongoDocument);
+                childCollection.insertOne(document);
             }
         });
         thread.start();

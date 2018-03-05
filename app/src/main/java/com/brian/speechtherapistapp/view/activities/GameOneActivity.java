@@ -49,8 +49,8 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
     @BindView(R.id.start_recording_button)
     Button startRecordingButton;
 
-    @BindView(R.id.stop_recording_button)
-    Button stopRecordingButton;
+    @BindView(R.id.save_recording_button)
+    Button saveRecordingButton;
 
     @BindView(R.id.test_edit_text)
     TextView editText;
@@ -82,7 +82,7 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
 
         populateListView();
 
-        stopRecordingButton.setVisibility(View.INVISIBLE);
+        saveRecordingButton.setVisibility(View.INVISIBLE);
 
         // Prepare the data for UI
         captions = new HashMap<>();
@@ -122,12 +122,12 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
         recognizer.startListening(TEXT_SEARCH);
         captionTextView.setVisibility(View.VISIBLE);
         captionTextView.setText(startRecordingButton.getText());
-        stopRecordingButton.setVisibility(View.VISIBLE);
+        saveRecordingButton.setVisibility(View.VISIBLE);
         startRecordingButton.setVisibility(View.INVISIBLE);
     }
 
     public void onStopButtonClick(View view) {
-        stopRecordingButton.setVisibility(View.INVISIBLE);
+        saveRecordingButton.setVisibility(View.INVISIBLE);
         startRecordingButton.setVisibility(View.VISIBLE);
 
         wordPresenter.saveWord();

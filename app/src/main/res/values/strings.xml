@@ -25,4 +25,5 @@
     <string name="game_menu">Game Menu</string>
     <string name="play_game">Play Game!</string>
     <string name="reset">Reset</string>
+    <string name="start">Start</string>
 </resources>

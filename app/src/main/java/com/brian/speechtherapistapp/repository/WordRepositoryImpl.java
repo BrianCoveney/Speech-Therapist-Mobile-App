@@ -22,13 +22,16 @@ public class WordRepositoryImpl implements IWordRepository {
     private MongoDatabase database;
     private static final String DB_NAME = "speech";
     private static final String DB_COLLECTION = "children";
-    private Document saveChildMongoDocument = new Document();
     private static final String LOG_TAG = WordRepositoryImpl.class.getSimpleName();
 
     @Inject
     public WordRepositoryImpl() {
         try {
+
+//            MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
+
             MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
+
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);
         } catch (MongoException e) {
