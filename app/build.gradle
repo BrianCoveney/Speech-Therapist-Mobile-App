@@ -29,6 +29,12 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-auth:12.0.1'
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
+    implementation 'com.google.android.gms:play-services-auth:12.0.1'
+
+
     implementation 'com.google.dagger:dagger-android:2.11'
     implementation 'com.google.dagger:dagger-android-support:2.11'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
@@ -55,9 +61,8 @@ dependencies {
     implementation project(':pocketsphinx-android-5prealpha-release')
 
     implementation 'com.android.support:recyclerview-v7:26.1.0'
-
 }
-
+apply plugin: 'com.google.gms.google-services'
 ant.importBuild 'assets.xml'
 preBuild.dependsOn(list, checksum)
 clean.dependsOn(clean_assets)

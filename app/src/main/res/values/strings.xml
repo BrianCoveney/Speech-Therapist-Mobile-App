@@ -26,4 +26,5 @@
     <string name="play_game">Play Game!</string>
     <string name="reset">Reset</string>
     <string name="start">Start</string>
+    <string name="name">Name</string>
 </resources>

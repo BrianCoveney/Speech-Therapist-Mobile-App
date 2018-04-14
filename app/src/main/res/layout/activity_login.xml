@@ -39,15 +39,15 @@
         android:layout_width="77dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
-        android:text="Username"
+        android:text="@string/name"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/username_edit_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_name"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_constraintBaseline_toBaselineOf="@+id/username_edit_text"
         tools:layout_editor_absoluteY="199dp" />
 
     <EditText
-        android:id="@+id/username_edit_text"
+        android:id="@+id/et_name"
         android:layout_width="0dp"
         android:layout_height="67dp"
         android:layout_marginEnd="16dp"
@@ -60,18 +60,18 @@
         app:layout_constraintTop_toBottomOf="@+id/bubbles_image_view" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="Password"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/password_edit_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/et_email"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintBaseline_toBaselineOf="@+id/password_edit_text" />
 
     <EditText
-        android:id="@+id/password_edit_text"
+        android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -79,31 +79,29 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/username_edit_text"
-        app:layout_constraintTop_toBottomOf="@+id/username_edit_text" />
+        app:layout_constraintStart_toStartOf="@+id/et_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/login_button"
-        style="@style/AppTheme.RedButton"
-        android:layout_width="276dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/skip_button"
+        android:id="@+id/btn_skip"
         style="@style/AppTheme.RedButton"
         android:layout_width="276dp"
         android:layout_height="40dp"
         android:layout_marginBottom="32dp"
         android:text="@string/skip"
-        app:layout_constraintBottom_toTopOf="@+id/login_button"
+        app:layout_constraintBottom_toTopOf="@+id/btn_google_sign_in"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_google_sign_in"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

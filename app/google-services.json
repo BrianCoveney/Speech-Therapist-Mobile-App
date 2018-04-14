@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "471238610985",
+    "firebase_url": "https://speechtherapistapplication.firebaseio.com",
+    "project_id": "speechtherapistapplication",
+    "storage_bucket": "speechtherapistapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471238610985:android:6d6460695ae7ae07",
+        "android_client_info": {
+          "package_name": "com.brian.speechtherapistapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471238610985-l3m4sujv0eapvutuaokc944il4tpg3pm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brian.speechtherapistapp",
+            "certificate_hash": "6861a6b13e358fa9c70d4ead9dc8bde1b43eee2d"
+          }
+        },
+        {
+          "client_id": "471238610985-lot4um5hbrg5vp2s3jvakocp4vc0t36h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2-IAaocIOZhoqF4NdbwfJJA3xPnx8xl4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471238610985-lot4um5hbrg5vp2s3jvakocp4vc0t36h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
