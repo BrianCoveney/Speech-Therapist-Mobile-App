@@ -34,9 +34,9 @@
         <item name="android:textColor">@drawable/red_button_text</item>
     </style>
 
-    <style name="AppTheme.CyanButton" parent="AppTheme.Button">
-        <item name="android:background">@drawable/cyan_button_background</item>
-        <item name="android:textColor">@drawable/cyan_button_text</item>
+    <style name="AppTheme.BlueButton" parent="AppTheme.Button">
+        <item name="android:background">@drawable/blue_button_background</item>
+        <item name="android:textColor">@drawable/blue_button_text</item>
     </style>
 
 </resources>

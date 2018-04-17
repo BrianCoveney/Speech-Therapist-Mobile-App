@@ -34,18 +34,18 @@ public class ChildPresenterImpl implements IChildPresenter {
 
     @Override
     public void loadChildDetails() {
-        String childId = childView.getChildId();
+        int childId = childView.getChildId();
         child = childRepository.getChild(childId);
-//        if (child != null) {
-//            childView.displayFirstName(child.getFirstName());
-//            childView.displaySecondName(child.getSecondName());
-//        }
+
     }
 
     @Override
     public void saveChild() {
         child.setFirstName(childView.getFirstName());
         child.setSecondName(childView.getSecondName());
+        child.setEmail(childView.getEmail());
+        child.setBirthday(childView.getDateOfBirth());
+        child.setPassword(childView.getPassword());
 
         childList = new ChildList();
         childList.add(child);
@@ -54,6 +54,4 @@ public class ChildPresenterImpl implements IChildPresenter {
 
         childView.showChildSavedMessage();
     }
-
-
 }

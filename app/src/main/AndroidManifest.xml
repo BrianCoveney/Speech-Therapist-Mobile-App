@@ -21,12 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.LoginActivity"
-            android:label="@string/login_activity"
+        <activity android:name=".view.activities.HomeActivity"
+            android:label="@string/home_activity"
             android:parentActivityName=".view.activities.SplashActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.SplashActivity"/>
+        </activity>
+        <activity android:name=".view.activities.LoginActivity"
+            android:label="@string/login_activity"
+            android:parentActivityName=".view.activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.HomeActivity"/>
         </activity>
         <activity android:name=".view.activities.GameMenuActivity"
             android:label="@string/game_menu"
@@ -65,6 +72,13 @@
         </activity>
         <activity android:name=".view.activities.CreateChildActivity"
             android:label="@string/create_child_screen"
+            android:parentActivityName=".view.activities.TherapistMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.TherapistMenuActivity"/>
+        </activity>
+        <activity android:name=".view.activities.ChildListActivity"
+            android:label="@string/child_list"
             android:parentActivityName=".view.activities.TherapistMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

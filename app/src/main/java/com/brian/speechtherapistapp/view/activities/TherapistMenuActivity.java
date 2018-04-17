@@ -71,7 +71,7 @@ public class TherapistMenuActivity extends BaseActivity {
                 startActivity(intentStartCreateChildActivity);
                 break;
             case R.id.view_child_list_button:
-                Intent intentStartLoginActivity = new Intent(this, LoginActivity.class);
+                Intent intentStartLoginActivity = new Intent(this, ChildListActivity.class);
                 startActivity(intentStartLoginActivity);
                 break;
         }

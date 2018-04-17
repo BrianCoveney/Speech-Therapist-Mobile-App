@@ -1,10 +1,10 @@
 package com.brian.speechtherapistapp.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -65,24 +65,24 @@ Const {
     );
 
     public static final class ParamsNames {
-        public static final String CHILD_ID = "childId";
+        public static final int CHILD_ID = 1;
         public static final String CHILD_GENDER = "male";
         public static final String CHILD_SCHOOL = "Scoil Barra Naofa";
-        public static final Date CHILD_BIRTHDAY = setDefaultBirthday();
+        public static final String CHILD_PASSWORD = "password";
+        public static final String CHILD_BIRTHDAY = setDefaultBirthday();
     }
 
     public static final String NULL_PARAMETER = "ERROR_NULL_PARAMETER";
     public static final String VALID_EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
 
-    public static Date setDefaultBirthday() {
+    public static String setDefaultBirthday() {
         Calendar cal = Calendar.getInstance();
         cal.set(2012, 1, 18);
-        return cal.getTime();
+        DateFormat dateFormatDay = new SimpleDateFormat("F EEEE, dd/MM/yyyy");
+        String date = dateFormatDay.format(cal.getTime());
+        return date;
     }
 
-    public static String formatDate(Date date) {
-        return new SimpleDateFormat("dd/MM/YYYY").format(date.getTime());
-    }
 
 }

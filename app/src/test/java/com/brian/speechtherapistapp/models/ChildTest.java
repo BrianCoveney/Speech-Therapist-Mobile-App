@@ -2,12 +2,10 @@ package com.brian.speechtherapistapp.models;
 
 import com.brian.speechtherapistapp.util.Const;
 
-import org.exparity.hamcrest.date.DateMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ChildTest {
 
-    private String id = "validId";
+    private int id = 1;
     private String firstName = "brian";
     private String secondName = "Coveney";
     private String email =  "brian@email.com";
@@ -36,8 +34,8 @@ public class ChildTest {
 
         assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithDefaultValues.getGender()));
         assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithDefaultValues.getSchool()));
-        assertThat(Const.ParamsNames.CHILD_BIRTHDAY,
-                DateMatchers.within(2, ChronoUnit.SECONDS, childWithDefaultValues.getBirthday()));
+        assertThat(Const.ParamsNames.CHILD_PASSWORD, is(childWithDefaultValues.getPassword()));
+        assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
     }
 
     @Test
@@ -52,16 +50,8 @@ public class ChildTest {
 
         assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithOptionalArguments.getGender()));
         assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithOptionalArguments.getSchool()));
-        assertThat(Const.ParamsNames.CHILD_BIRTHDAY,
-                DateMatchers.within(2, ChronoUnit.SECONDS, childWithOptionalArguments.getBirthday()));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testBuilderWithNullId() {
-        print("failure: id cannot be null)");
-
-        Child.builder(null,  firstName, secondName, email)
-                .build();
+        assertThat(Const.ParamsNames.CHILD_PASSWORD, is(childWithOptionalArguments.getPassword()));
+        assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
     }
 
     @Test(expected = NullPointerException.class)

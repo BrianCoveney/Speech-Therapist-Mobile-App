@@ -20,7 +20,7 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/game_two_button"
-        style="@style/AppTheme.CyanButton"
+        style="@style/AppTheme.BlueButton"
         android:layout_width="276dp"
         android:layout_height="100dp"
         android:layout_marginTop="32dp"

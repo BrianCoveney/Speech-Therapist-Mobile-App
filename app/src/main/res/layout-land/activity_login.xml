@@ -11,7 +11,7 @@
 
 
     <ImageView
-        android:id="@+id/bubbles_image_view"
+        android:id="@+id/iv_app_image"
         android:layout_width="@dimen/zero"
         android:layout_height="136dp"
         android:contentDescription="TODO"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/bubbles" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/iv_app_image_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
@@ -28,7 +28,7 @@
         tools:layout_editor_absoluteY="64dp" />
 
     <EditText
-        android:id="@+id/et_name"
+        android:id="@+id/tv_name"
         android:hint="@string/email"
         android:layout_width="300dp"
         android:layout_height="67dp"
@@ -37,12 +37,12 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/et_email"
+        app:layout_constraintBottom_toTopOf="@+id/tv_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubbles_image_view" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_app_image" />
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/tv_email"
         android:hint="@string/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

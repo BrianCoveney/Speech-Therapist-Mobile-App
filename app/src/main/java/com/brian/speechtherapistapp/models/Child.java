@@ -2,8 +2,8 @@ package com.brian.speechtherapistapp.models;
 
 import com.brian.speechtherapistapp.util.Const;
 
-import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,28 +14,31 @@ import java.util.regex.Pattern;
 public class Child {
 
     private Address address;
+    private static AtomicInteger next_id = new AtomicInteger(0);
 
     // Required fields
-    private String id;
+    private int id;
     private String firstName;
     private String secondName;
     private String email;
+    private String password;
 
     // Optional fields
-    private Date birthday;
+    private String birthday;
     private String gender;
     private String school;
 
 
     private Child() {
         id = Const.ParamsNames.CHILD_ID;
-        birthday = Const.setDefaultBirthday();
+        birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         gender = Const.ParamsNames.CHILD_GENDER;
         school = Const.ParamsNames.CHILD_SCHOOL;
+        password = Const.ParamsNames.CHILD_PASSWORD;
     }
 
 
-    public static ChildBuilder builder(String id, String firstName, String secondName, String email) {
+    public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
     }
 
@@ -43,7 +46,7 @@ public class Child {
         this.address = address;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -63,9 +66,9 @@ public class Child {
         return email;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
+    public String getPassword() { return password; }
+
+    public String getBirthday() { return birthday; }
 
     public String getGender() {
         return gender;
@@ -73,6 +76,18 @@ public class Child {
 
     public String getSchool() {
         return school;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public void setFirstName(String firstName) {
@@ -100,7 +115,7 @@ public class Child {
                 "firstName = '" + firstName + '\'' + "\n" +
                 "secondName = '" + secondName + '\'' + "\n" +
                 "email = '" + email + '\'' + "\n" +
-                "birthday = " + Const.formatDate(birthday) + "\n" +
+                "birthday = " + birthday + "\n" +
                 "gender = '" + gender + '\'' + "\n" +
                 "school = '" + school + '\'' + "\n" +
                 ",Address = " + address + "\n" +
@@ -111,18 +126,18 @@ public class Child {
 
         private final Child child;
 
-        public ChildBuilder(String id, String firstName, String secondName, String email) {
+        public ChildBuilder(int id, String firstName, String secondName, String email) {
 
             validateRequiredFields(id, firstName, secondName, email);
 
             child = new Child();
-            child.id = id;
+            child.id = Child.next_id.incrementAndGet();
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
         }
 
-        public ChildBuilder withBirthday(Date birthday) {
+        public ChildBuilder withBirthday(String birthday) {
             if (birthday != null) {
                 child.birthday = birthday;
             }
@@ -139,6 +154,13 @@ public class Child {
         public ChildBuilder withSchool(String school) {
             if (school != null) {
                 child.school = school;
+            }
+            return this;
+        }
+
+        public ChildBuilder withPassword(String password) {
+            if (password != null) {
+                child.password = password;
             }
             return this;
         }

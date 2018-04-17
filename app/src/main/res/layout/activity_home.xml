@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.brian.speechtherapistapp.view.activities.SplashActivity"
+    tools:layout_editor_absoluteY="81dp"
+    android:background="@color/background"
+    android:id="@+id/home_constraint_layout">
+
+    <ImageView
+        android:id="@+id/iv_app_image"
+        android:layout_width="@dimen/zero"
+        android:layout_height="200dp"
+        android:contentDescription="TODO"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bubbles" />
+
+    <ImageView
+        android:id="@+id/iv_app_image_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login_therapist"
+        style="@style/AppTheme.GreenButton"
+        android:layout_width="276dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/login_therapist"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login_child"
+        style="@style/AppTheme.BlueButton"
+        android:layout_width="276dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/login_child"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

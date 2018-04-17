@@ -26,5 +26,10 @@
     <string name="play_game">Play Game!</string>
     <string name="reset">Reset</string>
     <string name="start">Start</string>
-    <string name="name">Name</string>
+    <string name="welcome">Welcome back</string>
+    <string name="login_therapist">Login Therapist</string>
+    <string name="login_child">Login Child</string>
+    <string name="home_activity">Home Activity</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="child_list">Child List</string>
 </resources>

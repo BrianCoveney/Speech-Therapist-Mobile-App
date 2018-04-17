@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
@@ -42,18 +42,26 @@ public class LoginActivity extends BaseActivity
     private FirebaseAuth.AuthStateListener mAuthListener;
     boolean boolean_google;
     ProgressDialog dialog;
+    private boolean isLoginTherapist;
+    private boolean isLoginChild;
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
 
-    @BindView((R.id.btn_google_sign_in))
+    @BindView(R.id.btn_google_sign_in)
     SignInButton googleSignInButton;
 
-    @BindView((R.id.et_name))
-    EditText nameEditText;
+    @BindView(R.id.tv_name_caption)
+    TextView nameCaptionTextView;
 
-    @BindView(R.id.et_email)
-    EditText emailEditText;
+    @BindView(R.id.tv_name)
+    TextView nameTextView;
+
+    @BindView(R.id.tv_email)
+    TextView emailTextView;
+
+    @BindView(R.id.iv_app_image)
+    ImageView appImage;
 
     public static final String EXTRA_MESSAGE = "therapist_name";
 
@@ -67,6 +75,21 @@ public class LoginActivity extends BaseActivity
         super.onViewReady(savedInstanceState, intent);
 
         init();
+        displayLoginType();
+
+        if (isLoginTherapist == true) {
+            appImage.setImageResource(R.drawable.therapist2);
+        } else if (isLoginChild == true) {
+            appImage.setImageResource(R.drawable.bubbles);
+        }
+    }
+
+    private void displayLoginType() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isLoginChild = extras.getBoolean("child_login");
+            isLoginTherapist = extras.getBoolean("therapist_login");
+        }
     }
 
     private void init() {
@@ -81,6 +104,7 @@ public class LoginActivity extends BaseActivity
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
+                    setTextViewsInvisible();
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_out");
                 }
                 updateUI(user);
@@ -101,17 +125,22 @@ public class LoginActivity extends BaseActivity
 
     @OnClick({R.id.btn_google_sign_in, R.id.btn_skip})
     public void onButtonClicked(View view) {
-
         switch (view.getId()) {
             case R.id.btn_skip:
-                Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
-                startActivity(intentGameMenuActivity);
+                if (isLoginChild == true) {
+                    Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
+                    startActivity(intentGameMenuActivity);
+                }
+                else if (isLoginTherapist == true) {
+                    Intent intentTherapistActivity = new Intent(this, TherapistMenuActivity.class);
+                    startActivity(intentTherapistActivity);
+                }
                 break;
             case R.id.btn_google_sign_in:
                 if (boolean_google) {
                     signOut();
-                    nameEditText.setText("");
-                    emailEditText.setText("");
+                    nameTextView.setText("");
+                    emailTextView.setText("");
                     boolean_google = false;
                 } else {
                     signIn();
@@ -145,6 +174,15 @@ public class LoginActivity extends BaseActivity
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
+                if (isLoginChild == true) {
+                    Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
+                    startActivity(intentGameMenuActivity);
+                }
+                else if (isLoginTherapist == true) {
+                    Intent intentTherapistActivity = new Intent(this, TherapistMenuActivity.class);
+                    startActivity(intentTherapistActivity);
+                }
             } else {
                 // Google Sign In failed, update UI appropriately
 
@@ -166,7 +204,7 @@ public class LoginActivity extends BaseActivity
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(LOG_TAG, "signInWithCredential:onComplete:"+task.isSuccessful());
+                        Log.d(LOG_TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -205,8 +243,8 @@ public class LoginActivity extends BaseActivity
         } catch (Exception e) {
 
         }
-        showToast("You have signed out successfully");
         setTextOfGoogleSignInButton("Sign In");
+
     }
 
     private void updateUI(FirebaseUser user) {
@@ -217,10 +255,14 @@ public class LoginActivity extends BaseActivity
         }
 
         if (user != null) {
-            String str_emailgoogle = user.getEmail();
-            Log.e(LOG_TAG, "Email: " + str_emailgoogle);
-            emailEditText.setText(str_emailgoogle);
-            nameEditText.setText(user.getDisplayName());
+            emailTextView.setVisibility(View.VISIBLE);
+            nameTextView.setVisibility(View.VISIBLE);
+            nameCaptionTextView.setVisibility(View.VISIBLE);
+
+            String str_emailGoogle = user.getEmail();
+            Log.e(LOG_TAG, "Email: " + str_emailGoogle);
+            emailTextView.setText(str_emailGoogle);
+            nameTextView.setText(user.getDisplayName());
             boolean_google = true;
 
             Log.e(LOG_TAG, "Profile: " + user.getPhotoUrl() + "");
@@ -235,8 +277,22 @@ public class LoginActivity extends BaseActivity
         showToast("Google Play Services error.");
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        signOut();
+        Intent intentHomeActivity = new Intent(this, HomeActivity.class);
+        startActivity(intentHomeActivity);
+    }
+
     private void setTextOfGoogleSignInButton(String text) {
         TextView textView = (TextView) googleSignInButton.getChildAt(0);
         textView.setText(text);
+    }
+
+    private void setTextViewsInvisible() {
+        emailTextView.setVisibility(View.INVISIBLE);
+        nameCaptionTextView.setVisibility(View.INVISIBLE);
+        nameTextView.setVisibility(View.INVISIBLE);
     }
 }

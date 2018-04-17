@@ -22,7 +22,7 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/create_child_button"
-        style="@style/AppTheme.RedButton"
+        style="@style/AppTheme.GreenButton"
         android:layout_width="276dp"
         android:layout_height="40dp"
         android:layout_marginBottom="32dp"
@@ -35,7 +35,7 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/view_child_list_button"
-        style="@style/AppTheme.RedButton"
+        style="@style/AppTheme.BlueButton"
         android:layout_width="276dp"
         android:layout_height="40dp"
         android:layout_marginBottom="334dp"
