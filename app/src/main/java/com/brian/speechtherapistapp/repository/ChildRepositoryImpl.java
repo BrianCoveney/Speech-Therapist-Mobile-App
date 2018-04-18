@@ -66,8 +66,6 @@ public class ChildRepositoryImpl implements IChildRepository {
             document.put("email", this.child.getEmail());
             document.put("birthday", this.child.getBirthday());
             document.put("password", this.child.getPassword());
-
-            Log.i(LOG_TAG, "Word: " + this.child.getFirstName());
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -80,11 +78,10 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public List<Child> getChildListFromDB() {
-        final List<Child> childList = new ArrayList<>();
+        List<Child> childList = new ArrayList<>();
 
         FindIterable<Document> databaseRecords = database.getCollection("children").find();
         MongoCursor<Document> cursor = databaseRecords.iterator();
-
 
         try {
             while (cursor.hasNext()) {
@@ -101,8 +98,7 @@ public class ChildRepositoryImpl implements IChildRepository {
         } finally {
             cursor.close();
         }
-
-        Log.i(LOG_TAG, "From ChildRepositoryImpl: " + childList.toString());
         return childList;
     }
+
 }

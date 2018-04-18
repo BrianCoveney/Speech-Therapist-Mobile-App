@@ -1,6 +1,7 @@
 package com.brian.speechtherapistapp.view.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.ListView;
@@ -45,15 +46,25 @@ public class ChildListActivity extends BaseActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        populateListView();
+        new PopulateListViewTask().execute();
     }
 
-    private void populateListView() {
 
+    private class PopulateListViewTask extends AsyncTask<Void, Void, List<Child>> {
 
-        childList = iChildPresenter.getChildren();
+        @Override
+        protected List<Child> doInBackground(Void... voids) {
+            // Call to DB
+            childList = iChildPresenter.getChildren();
+            return childList;
+        }
 
-        childAdapter = new ChildAdapter(getApplicationContext(), childList);
-        childListView.setAdapter(childAdapter);
+        @Override
+        protected void onPostExecute(List<Child> children) {
+            super.onPostExecute(children);
+            // Create and populate our custom adapter
+            childAdapter = new ChildAdapter(getApplicationContext(), childList);
+            childListView.setAdapter(childAdapter);
+        }
     }
 }

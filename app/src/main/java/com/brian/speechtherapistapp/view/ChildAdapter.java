@@ -34,9 +34,6 @@ public class ChildAdapter extends ArrayAdapter<Child> {
 
         Child currentChild = childList.get(position);
 
-
-
-
         TextView nameTextView = listItem.findViewById(R.id.tv_first_name);
         nameTextView.setText(currentChild.getFirstName());
 
