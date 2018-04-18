@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.ListView;
 
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.controllers.DBController;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.view.ChildAdapter;
@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class ChildListActivity extends BaseActivity{
+public class ChildListActivity extends BaseActivity {
 
     private ChildAdapter childAdapter;
     private List<Child> childList;
@@ -36,6 +36,7 @@ public class ChildListActivity extends BaseActivity{
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+        ((MainApplication) getApplication()).getPresenterComponent().inject(this);
 
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -48,7 +49,10 @@ public class ChildListActivity extends BaseActivity{
     }
 
     private void populateListView() {
-        childList = DBController.getInstance().selectChildListFromDB();
+
+
+        childList = iChildPresenter.getChildren();
+
         childAdapter = new ChildAdapter(getApplicationContext(), childList);
         childListView.setAdapter(childAdapter);
     }

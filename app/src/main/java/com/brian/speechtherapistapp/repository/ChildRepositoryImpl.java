@@ -96,8 +96,6 @@ public class ChildRepositoryImpl implements IChildRepository {
                 // create child with values set from DB
                 Child childToAdd = Child.builder(1, firstName, secondName, email).build();
 
-//                        Log.i(LOG_TAG, "From ChildRepositoryImpl: " + childToAdd.getFirstName());
-
                 childList.add(childToAdd);
             }
         } finally {

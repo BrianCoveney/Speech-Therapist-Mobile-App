@@ -5,6 +5,8 @@ import com.brian.speechtherapistapp.models.ChildList;
 import com.brian.speechtherapistapp.repository.IChildRepository;
 import com.brian.speechtherapistapp.view.IChildView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -36,6 +38,12 @@ public class ChildPresenterImpl implements IChildPresenter {
     public void loadChildDetails() {
         int childId = childView.getChildId();
         child = childRepository.getChild(childId);
+
+    }
+
+    @Override
+    public List<Child> getChildren() {
+        return this.childRepository.getChildListFromDB();
 
     }
 
