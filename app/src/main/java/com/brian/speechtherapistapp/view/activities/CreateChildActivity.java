@@ -25,6 +25,8 @@ import com.brian.speechtherapistapp.view.IChildView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -65,7 +67,9 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
     private Calendar calendar = Calendar.getInstance();
     private static final int CHILD_ID = 1;
     private static final String LOG_TAG = CreateChildActivity.class.getSimpleName();
-    private String VALID_TEXT = "[a-zA-z]+([ '-][a-zA-Z]+)*";
+    private static final String VALID_TEXT = "[a-zA-z]+([ '-][a-zA-Z]+)*";
+    private static final String VALID_EMAIL_REGEX =
+            "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
 
     @Override
@@ -82,12 +86,16 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
             @Override
             public void onClick(View view) {
 
-                boolean isFieldsSet = isRequiredFieldsSet();
-                if (isFieldsSet) {
+                boolean validFieldsSet = isRequiredFieldsSet();
+                boolean validStringInput = isInputString();
+                boolean validEmail = isEmailValid();
+
+                if (validFieldsSet && validStringInput && validEmail) {
 
                     passwordConfirmListener(saveButton);
 
                     boolean passwordMatch = isPasswordMatching();
+
                     if (passwordMatch) {
                         iChildPresenter.saveChild();
                         Intent intentTherapistActivity = new Intent(getApplicationContext(),
@@ -271,6 +279,31 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
             return false;
         }
         return true;
+    }
+
+    private boolean isInputString() {
+        if (!firstNameEditText.getText().toString().matches(VALID_TEXT)) {
+            showToast("Doesn't look like a valid first name!");
+            return false;
+        }
+        else if (!secondNameEditText.getText().toString().matches(VALID_TEXT)) {
+            showToast("Doesn't look like a valid second name!");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isEmailValid() {
+        String email = emailEditText.getText().toString();
+        if(email != null) {
+            Pattern pattern = Pattern.compile(VALID_EMAIL_REGEX);
+            Matcher matcher = pattern.matcher(email);
+            if(matcher.matches()) {
+                return true;
+            }
+            showToast("Doesn't look like a valid email!");
+        }
+        return false;
     }
 
     private void displayButtonAsInputError(final Button button) {
