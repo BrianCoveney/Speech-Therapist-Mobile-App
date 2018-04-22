@@ -69,6 +69,9 @@ Const {
         public static final String CHILD_GENDER = "male";
         public static final String CHILD_SCHOOL = "Scoil Barra Naofa";
         public static final String CHILD_PASSWORD = "password";
+        public static final String CHILD_EMAIL = "name@email.com";
+        public static final String CHILD_FIRST_NAME = "firstname";
+        public static final String CHILD_SECOND_NAME = "secondtname";
         public static final String CHILD_BIRTHDAY = setDefaultBirthday();
     }
 

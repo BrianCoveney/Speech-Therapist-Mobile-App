@@ -34,7 +34,7 @@ public class ChildTest {
 
         assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithDefaultValues.getGender()));
         assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithDefaultValues.getSchool()));
-        assertThat(Const.ParamsNames.CHILD_PASSWORD, is(childWithDefaultValues.getPassword()));
+        assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
         assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
     }
 
@@ -50,7 +50,7 @@ public class ChildTest {
 
         assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithOptionalArguments.getGender()));
         assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithOptionalArguments.getSchool()));
-        assertThat(Const.ParamsNames.CHILD_PASSWORD, is(childWithOptionalArguments.getPassword()));
+        assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
         assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
     }
 

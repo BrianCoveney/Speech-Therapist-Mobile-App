@@ -32,4 +32,5 @@
     <string name="home_activity">Home Activity</string>
     <string name="confirm_password">Confirm password</string>
     <string name="child_list">Child List</string>
+    <string name="Add">add</string>
 </resources>

@@ -34,7 +34,7 @@ public class Child {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         gender = Const.ParamsNames.CHILD_GENDER;
         school = Const.ParamsNames.CHILD_SCHOOL;
-        password = Const.ParamsNames.CHILD_PASSWORD;
+        password = Const.ParamsNames.CHILD_EMAIL;
     }
 
 
