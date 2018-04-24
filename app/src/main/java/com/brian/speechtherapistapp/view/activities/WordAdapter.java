@@ -78,7 +78,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         }
 
         void bind(int listIndex) {
-            String wordClicked = Const.GLIDING_OF_LIQUIDS_INVALID_LIST.get(listIndex);
+            String wordClicked = Const.GLIDING_OF_LIQUIDS_VALID_LIST.get(listIndex);
             listItemNumberView.setText(wordClicked);
         }
 

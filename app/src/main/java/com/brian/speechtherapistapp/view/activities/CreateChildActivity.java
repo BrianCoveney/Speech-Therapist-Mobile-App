@@ -193,8 +193,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch (item.getItemId()) {
             case R.id.action_add_default_child:
                 autoFillForm();

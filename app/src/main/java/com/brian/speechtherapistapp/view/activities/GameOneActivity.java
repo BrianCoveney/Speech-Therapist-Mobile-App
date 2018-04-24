@@ -58,6 +58,7 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
 
     private static final String LOG_TAG = GameOneActivity.class.getSimpleName();
     private static final String WORD_ID = "word_id";
+    private static final int TIMEOUT = 10000;
     private ArrayAdapter<String> arrayAdapter;
 
     /* Used to handle permission request */
@@ -86,7 +87,7 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
 
         // Prepare the data for UI
         captions = new HashMap<>();
-        captions.put(TEXT_SEARCH, R.string.test_caption);
+        captions.put(TEXT_SEARCH, R.string.text_caption);
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -110,8 +111,12 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
         recognizer = SpeechRecognizerSetup.defaultSetup()
                 .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                 .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
+
+                .setRawLogDir(assetsDir) // To disable logging of raw audio comment out this call (takes a lot of space on the device)
+
                 .getRecognizer();
         recognizer.addListener(this);
+
 
         // Create grammar-based search for custom recognition
         File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
@@ -119,7 +124,11 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
     }
 
     public void onStartButtonClick(View view) {
-        recognizer.startListening(TEXT_SEARCH);
+        try {
+            recognizer.startListening(TEXT_SEARCH, TIMEOUT);
+        } catch (NullPointerException e) {
+            e.getMessage();
+        }
         captionTextView.setVisibility(View.VISIBLE);
         captionTextView.setText(startRecordingButton.getText());
         saveRecordingButton.setVisibility(View.VISIBLE);
@@ -132,9 +141,12 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
 
         wordPresenter.saveWord();
 
-        recognizer.stop();
-        recognizer.cancel();
-
+        try {
+            recognizer.stop();
+            recognizer.cancel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         /* Should we return to the game menu screen after getting the recognized word? */
         //Intent intent = new Intent(this, GameMenuActivity.class);
         // startActivity(intent);

@@ -42,7 +42,7 @@ public class SpeechActivity extends AppCompatActivity implements
     private static final String KWS_SEARCH = "wakeup";
     private static final String DIGITS_SEARCH = "digits";
     private static final String MENU_SEARCH = "menu";
-    private static final String TEXT_SEARCH = "words";
+    private static final String TEXT_SEARCH = "blak";
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "recording on";
@@ -62,7 +62,7 @@ public class SpeechActivity extends AppCompatActivity implements
         captions.put(KWS_SEARCH, R.string.kws_caption);
         captions.put(MENU_SEARCH, R.string.menu_caption);
         captions.put(DIGITS_SEARCH, R.string.digits_caption);
-        captions.put(TEXT_SEARCH, R.string.test_caption);
+        captions.put(TEXT_SEARCH, R.string.text_caption);
         setContentView(R.layout.activity_speech);
 
         ButterKnife.bind(this);

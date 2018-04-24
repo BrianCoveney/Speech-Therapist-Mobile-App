@@ -74,10 +74,24 @@ public class GameTwoActivity extends BaseActivity
         super.onViewReady(savedInstanceState, intent);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
 
+        // Recycler view
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecorator);
 
-        // Prepare the data for UI
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        adapter = new WordAdapter(NUM_LIST_ITEMS, this);
+        recyclerView.setAdapter(adapter);
+
+
+        // Speech Recognition
         captions = new HashMap<>();
-        captions.put(TEXT_SEARCH, R.string.test_caption);
+        captions.put(TEXT_SEARCH, R.string.text_caption);
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -92,24 +106,10 @@ public class GameTwoActivity extends BaseActivity
         // so we execute it in async task
         new SetupTask(this).execute();
 
-
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
-        recyclerView.addItemDecoration(itemDecorator);
-
-        recyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        adapter = new WordAdapter(NUM_LIST_ITEMS, this);
-        recyclerView.setAdapter(adapter);
     }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<GameTwoActivity> activityReference;
-
         SetupTask(GameTwoActivity activity) {
             this.activityReference = new WeakReference<>(activity);
         }
@@ -124,6 +124,7 @@ public class GameTwoActivity extends BaseActivity
                 return e;
             }
             return null;
+
         }
 
         @Override
@@ -131,23 +132,35 @@ public class GameTwoActivity extends BaseActivity
             if (result != null) {
                 String toastMessage = "Failed to init recognizer " + result;
                 Toast.makeText(activityReference.get(), toastMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                activityReference.get().reset(TEXT_SEARCH);
             }
         }
+    }
+
+    private void reset(String searchName) {
+        recognizer.stop();
+        recognizer.startListening(searchName);
     }
 
     /*----------------------------------------------------------------------------------------------
       CMU Speech Recognition Listeners
     */
     protected void setupRecognizer(File assetsDir) throws IOException {
-        recognizer = SpeechRecognizerSetup.defaultSetup()
-                .setAcousticModel(new File(assetsDir, "en-us-ptm"))
-                .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
-                .getRecognizer();
-        recognizer.addListener(this);
+        try {
+            recognizer = SpeechRecognizerSetup.defaultSetup()
+                    .setAcousticModel(new File(assetsDir, "en-us-ptm"))
+                    .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
+                    .setRawLogDir(assetsDir)
+                    .getRecognizer();
+            recognizer.addListener(this);
 
-        // Create grammar-based search for custom recognition
-        File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
-        recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
+            // Create grammar-based search for custom recognition
+            File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
+            recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     @Override
@@ -236,9 +249,8 @@ public class GameTwoActivity extends BaseActivity
 
 
     /*----------------------------------------------------------------------------------------------
-      Custom Dialog
+      Custom Dialog - where we record and save the word
     */
-
     public void showCustomDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Say: " + onItemClickResult);
@@ -255,22 +267,27 @@ public class GameTwoActivity extends BaseActivity
         final Button saveButtonDialog = dialogView.findViewById(R.id.save_recording_button_dialog);
         saveButtonDialog.setVisibility(View.INVISIBLE);
 
-        final Button startButtonDialog = dialogView.findViewById(R.id.start_recording_button_dialog);
+        final Button startButtonDialog = dialogView.findViewById(R.id.btn_dialog_start_recording);
         startButtonDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recognizer.startListening(TEXT_SEARCH);
+                recognizer.startListening("words");
                 startButtonDialog.setVisibility(View.INVISIBLE);
                 saveButtonDialog.setVisibility(View.VISIBLE);
+                reset(TEXT_SEARCH);
             }
         });
 
         saveButtonDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 wordPresenter.saveWord();
-                recognizer.stop();
-                recognizer.cancel();
+                if (recognizer != null) {
+                    recognizer.stop();
+                    recognizer.cancel();
+                }
+
                 alertDialog.dismiss();
             }
         });

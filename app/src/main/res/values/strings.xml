@@ -14,7 +14,7 @@
     <string name="kws_caption">To start demonstration say \"recording on\".</string>
     <string name="menu_caption">Say \"digits\" or \"words\".</string>
     <string name="digits_caption">To try recognition of digits: say something like \"one two three four five\".</string>
-    <string name="test_caption">To try recognition of words: \"say something like telephone\".</string>
+    <string name="text_caption">To try recognition of words: \"say something like telephone\".</string>
     <string name="create_child_screen">Create Child</string>
     <string name="speech_activity">Speech Activity</string>
     <string name="email">Email</string>

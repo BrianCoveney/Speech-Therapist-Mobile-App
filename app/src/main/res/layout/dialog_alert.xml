@@ -8,7 +8,7 @@
     style="@style/AlertDialog.AppCompat.Light">
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/start_recording_button_dialog"
+        android:id="@+id/btn_dialog_start_recording"
         style="@style/AppTheme.GreenButton"
         android:layout_width="250dp"
         android:layout_height="30dp"
