@@ -38,7 +38,6 @@ public class ChildPresenterImpl implements IChildPresenter {
     public void loadChildDetails() {
         int childId = childView.getChildId();
         child = childRepository.getChild(childId);
-
     }
 
     @Override

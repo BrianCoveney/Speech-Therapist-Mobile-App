@@ -27,7 +27,7 @@ public class Child {
     private String birthday;
     private String gender;
     private String school;
-
+    private String word;
 
     private Child() {
         id = Const.ParamsNames.CHILD_ID;
@@ -108,6 +108,9 @@ public class Child {
         return false;
     }
 
+    public String getWord() {
+        return word;
+    }
 
     @Override
     public String toString() {
@@ -122,6 +125,8 @@ public class Child {
                 '}';
     }
 
+
+
     public static class ChildBuilder {
 
         private final Child child;
@@ -135,6 +140,14 @@ public class Child {
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
+
+        }
+
+        public ChildBuilder withWordSaid(String word) {
+            if (word != null) {
+                child.word = word;
+            }
+            return this;
         }
 
         public ChildBuilder withBirthday(String birthday) {

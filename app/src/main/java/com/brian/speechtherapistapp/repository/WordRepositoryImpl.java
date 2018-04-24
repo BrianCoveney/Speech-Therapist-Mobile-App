@@ -2,6 +2,7 @@ package com.brian.speechtherapistapp.repository;
 
 import android.util.Log;
 
+import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.repository.persistors.MongoRemoteConnector;
 import com.brian.speechtherapistapp.view.IGameView;
@@ -55,16 +56,20 @@ public class WordRepositoryImpl implements IWordRepository {
         this.word.setId(w.getId());
         this.word.setWord(w.getWord());
 
+        Child child = Child.builder(2, "fname", "lname", "email")
+                .withWordSaid(this.word.getWord())
+                .build();
+
         final Document document = new Document();
         try {
-            document.put("word", this.word.getWord());
-        }catch (MongoException e) {
+            document.put("child_id", child.getId());
+            document.put("first_name", child.getFirstName());
+            document.put("second_name", child.getSecondName());
+            document.put("email", child.getEmail());
+            document.put("word", child.getWord());
+        }catch (MongoException e){
             Log.d(LOG_TAG, "exception: " + e);
-
         }
-
-        Log.i(LOG_TAG, "Word: " + this.word.getWord());
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -72,5 +77,23 @@ public class WordRepositoryImpl implements IWordRepository {
             }
         });
         thread.start();
+
+
+
+//        final Document document = new Document();
+//        try {
+//            document.put("word", this.word.getWord());
+//        }catch (MongoException e) {
+//            Log.d(LOG_TAG, "exception: " + e);
+//        }
+//
+//
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                childCollection.insertOne(document);
+//            }
+//        });
+//        thread.start();
     }
 }

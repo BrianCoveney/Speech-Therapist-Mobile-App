@@ -22,13 +22,13 @@ import android.widget.Toast;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.view.IGameView;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -54,13 +54,13 @@ public class GameTwoActivity extends BaseActivity
     private static final String WORD_ID = "word_id";
     private String result;
     private String onItemClickResult;
+    private Child child;
 
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     private SpeechRecognizer recognizer;
-    private HashMap<String, Integer> captions;
     private static final String TEXT_SEARCH = "words";
 
 
@@ -74,7 +74,8 @@ public class GameTwoActivity extends BaseActivity
         super.onViewReady(savedInstanceState, intent);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
 
-        // Recycler view
+        /* Recycler view */
+
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
         recyclerView.addItemDecoration(itemDecorator);
@@ -89,9 +90,7 @@ public class GameTwoActivity extends BaseActivity
         recyclerView.setAdapter(adapter);
 
 
-        // Speech Recognition
-        captions = new HashMap<>();
-        captions.put(TEXT_SEARCH, R.string.text_caption);
+        /* Speech Recognition */
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -254,7 +253,6 @@ public class GameTwoActivity extends BaseActivity
     public void showCustomDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Say: " + onItemClickResult);
-        // builder.setMessage("Say: " + onItemClickResult);
 
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_alert, null);
@@ -283,6 +281,7 @@ public class GameTwoActivity extends BaseActivity
             public void onClick(View view) {
 
                 wordPresenter.saveWord();
+
                 if (recognizer != null) {
                     recognizer.stop();
                     recognizer.cancel();

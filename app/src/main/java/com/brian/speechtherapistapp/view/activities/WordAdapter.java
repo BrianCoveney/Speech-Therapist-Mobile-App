@@ -85,7 +85,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
-            String itemClicked = Const.GLIDING_OF_LIQUIDS_INVALID_LIST.get(clickedPosition);
+            String itemClicked = Const.GLIDING_OF_LIQUIDS_VALID_LIST.get(clickedPosition);
             mOnClickListener.onListItemClicked(itemClicked);
         }
     }
