@@ -65,7 +65,7 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
 
 
     private Calendar calendar = Calendar.getInstance();
-    private static final int CHILD_ID = 1;
+    private static final int CHILD_ID = 0;
     private static final String LOG_TAG = CreateChildActivity.class.getSimpleName();
     private static final String VALID_TEXT = "[a-zA-z]+([ '-][a-zA-Z]+)*";
     private static final String VALID_EMAIL_REGEX =
@@ -165,6 +165,11 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         secondNameEditText.setText(secondName);
     }
 
+    @Override
+    public void displayEmail(String email) {
+        emailEditText.setText(email);
+    }
+
 
     DatePickerDialog.OnDateSetListener date = (new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -186,7 +191,11 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         addFormMenuButton = menu.findItem(R.id.action_add_default_child);
         clearFormMenuButton = menu.findItem(R.id.action_clear_default_child);
 
-        clearFormMenuButton.setVisible(false);
+        if (firstNameEditText.getText() == null) {
+            clearFormMenuButton.setVisible(false);
+        } else {
+            addFormMenuButton.setVisible(false);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }

@@ -16,7 +16,6 @@ import javax.inject.Inject;
 public class ChildPresenterImpl implements IChildPresenter {
 
     private Child child;
-    private ChildList childList;
     private IChildRepository childRepository;
     private IChildView childView;
 
@@ -38,12 +37,16 @@ public class ChildPresenterImpl implements IChildPresenter {
     public void loadChildDetails() {
         int childId = childView.getChildId();
         child = childRepository.getChild(childId);
+        if (child != null) {
+            childView.displayFirstName(child.getFirstName());
+            childView.displaySecondName(child.getSecondName());
+            childView.displayEmail(child.getEmail());
+        }
     }
 
     @Override
     public List<Child> getChildren() {
         return this.childRepository.getChildListFromDB();
-
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ChildPresenterImpl implements IChildPresenter {
         child.setBirthday(childView.getDateOfBirth());
         child.setPassword(childView.getPassword());
 
-        childList = new ChildList();
+        ChildList childList = new ChildList();
         childList.add(child);
 
         childRepository.saveChild(childList);

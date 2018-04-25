@@ -2,6 +2,8 @@ package com.brian.speechtherapistapp.models;
 
 import com.brian.speechtherapistapp.util.Const;
 
+import org.bson.types.ObjectId;
+
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -14,9 +16,9 @@ import java.util.regex.Pattern;
 public class Child {
 
     private Address address;
-    private static AtomicInteger next_id = new AtomicInteger(0);
 
     // Required fields
+    private ObjectId childObjectId;
     private int id;
     private String firstName;
     private String secondName;
@@ -29,14 +31,14 @@ public class Child {
     private String school;
     private String word;
 
+
     private Child() {
-        id = Const.ParamsNames.CHILD_ID;
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         gender = Const.ParamsNames.CHILD_GENDER;
         school = Const.ParamsNames.CHILD_SCHOOL;
         password = Const.ParamsNames.CHILD_EMAIL;
+        childObjectId = new ObjectId();
     }
-
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
@@ -98,6 +100,16 @@ public class Child {
         this.secondName = secondName;
     }
 
+    public void setId(int id) { this.id = id; }
+
+    public ObjectId getChildObjectId() {
+        return childObjectId;
+    }
+
+    public void setChildObjectId(ObjectId childObjectId) {
+        this.childObjectId = childObjectId;
+    }
+
     boolean isEmailValid(String eMail) {
         if(eMail != null) {
             Pattern pattern = Pattern.compile(Const.VALID_EMAIL_REGEX);
@@ -130,17 +142,17 @@ public class Child {
     public static class ChildBuilder {
 
         private final Child child;
+        private static AtomicInteger next_id = new AtomicInteger(-1);
 
         public ChildBuilder(int id, String firstName, String secondName, String email) {
 
             validateRequiredFields(id, firstName, secondName, email);
 
             child = new Child();
-            child.id = Child.next_id.incrementAndGet();
+            child.id = next_id.incrementAndGet();
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
-
         }
 
         public ChildBuilder withWordSaid(String word) {
@@ -174,6 +186,13 @@ public class Child {
         public ChildBuilder withPassword(String password) {
             if (password != null) {
                 child.password = password;
+            }
+            return this;
+        }
+
+        public ChildBuilder withChildObjectId(ObjectId childObjectId) {
+            if (childObjectId != null) {
+                child.childObjectId = childObjectId;
             }
             return this;
         }

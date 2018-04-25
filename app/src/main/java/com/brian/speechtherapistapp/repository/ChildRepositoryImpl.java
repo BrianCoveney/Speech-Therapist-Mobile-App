@@ -14,11 +14,16 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_EMAIL;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_FIRST_NAME;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_SECOND_NAME;
 
 public class ChildRepositoryImpl implements IChildRepository {
     private Child child;
@@ -31,10 +36,9 @@ public class ChildRepositoryImpl implements IChildRepository {
     @Inject
     public ChildRepositoryImpl() {
         try {
+            // MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
 
-//             MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
-
-              MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
+            MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
 
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);
@@ -43,29 +47,67 @@ public class ChildRepositoryImpl implements IChildRepository {
         }
     }
 
+    /* getChild with mongo 'ObjectId' */
     @Override
     public Child getChild(int id) {
         if (child == null) {
-            child = Child.builder(id, "Brian", "Coveney", "bri@gmail.com")
+            child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL)
                     .build();
+        }
+        MongoCursor<Document> cursor = childCollection.find().iterator();
+        try {
+            while (cursor.hasNext()) {
+                Document document = cursor.next();
+                ObjectId childObjectId = document.getObjectId("_id");
+                if (child != null) {
+                    child.setChildObjectId(childObjectId);
+                }
+            }
+        } finally {
+            cursor.close();
+
         }
         return child;
     }
+
+    /* getChild with 'childID' - The problem here is 'child_id' will reset when app is relaunched */
+//
+//    @Override
+//    public Child getChild(int id) {
+//        if (child == null) {
+//            child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL)
+//                    .build();
+//        }
+//        MongoCursor<Document> cursor = childCollection.find().iterator();
+//        try {
+//            while (cursor.hasNext()) {
+//                Document document = cursor.next();
+//                int childId = document.getInteger("child_id");
+//                if (child != null) {
+//                    child.setId(childId);
+//                }
+//            }
+//        } finally {
+//            cursor.close();
+//
+//        }
+//        return child;
+//    }
 
     @Override
     public void saveChild(ChildList childList) {
         final Document document = new Document();
         for (Child c : childList.getChildList()) {
-            this.child = Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
-                              .withBirthday(c.getBirthday())
-                              .withPassword(c.getPassword())
-                              .build();
-            document.put("child_id", this.child.getId());
-            document.put("first_name", this.child.getFirstName());
-            document.put("second_name", this.child.getSecondName());
-            document.put("email", this.child.getEmail());
-            document.put("birthday", this.child.getBirthday());
-            document.put("password", this.child.getPassword());
+            Child child = Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
+                    .withBirthday(c.getBirthday())
+                    .withPassword(c.getPassword())
+                    .build();
+            document.put("child_id", child.getId());
+            document.put("first_name", child.getFirstName());
+            document.put("second_name", child.getSecondName());
+            document.put("email", child.getEmail());
+            document.put("birthday", child.getBirthday());
+            document.put("password", child.getPassword());
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -91,9 +133,9 @@ public class ChildRepositoryImpl implements IChildRepository {
                 String email = document.getString("email");
 
                 // create child with values set from DB
-                Child childToAdd = Child.builder(1, firstName, secondName, email).build();
+                Child child = Child.builder(0, firstName, secondName, email).build();
 
-                childList.add(childToAdd);
+                childList.add(child);
             }
         } finally {
             cursor.close();

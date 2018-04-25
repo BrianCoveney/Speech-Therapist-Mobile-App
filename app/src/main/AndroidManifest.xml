@@ -71,11 +71,7 @@
                 android:value=".view.activities.LoginActivity"/>
         </activity>
         <activity android:name=".view.activities.CreateChildActivity"
-            android:label="@string/create_child_screen"
-            android:parentActivityName=".view.activities.TherapistMenuActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.TherapistMenuActivity"/>
+            android:label="@string/create_child_screen">
         </activity>
         <activity android:name=".view.activities.ChildListActivity"
             android:label="@string/child_list"

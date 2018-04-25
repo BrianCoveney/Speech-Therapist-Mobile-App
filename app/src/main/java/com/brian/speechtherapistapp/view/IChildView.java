@@ -11,4 +11,5 @@ public interface IChildView {
     void showChildSavedMessage();
     void displayFirstName(String firstName);
     void displaySecondName(String secondName);
+    void displayEmail(String email);
 }

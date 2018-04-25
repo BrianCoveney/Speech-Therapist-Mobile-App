@@ -65,7 +65,7 @@ Const {
     );
 
     public static final class ParamsNames {
-        public static final int CHILD_ID = 1;
+        public static final int CHILD_ID = 0;
         public static final String CHILD_GENDER = "male";
         public static final String CHILD_SCHOOL = "Scoil Barra Naofa";
         public static final String CHILD_PASSWORD = "password";
