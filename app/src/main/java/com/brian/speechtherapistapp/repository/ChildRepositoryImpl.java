@@ -14,16 +14,11 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_EMAIL;
-import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_FIRST_NAME;
-import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_SECOND_NAME;
 
 public class ChildRepositoryImpl implements IChildRepository {
     private Child child;
@@ -47,52 +42,25 @@ public class ChildRepositoryImpl implements IChildRepository {
         }
     }
 
-    /* getChild with mongo 'ObjectId' */
     @Override
     public Child getChild(int id) {
-        if (child == null) {
-            child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL)
-                    .build();
-        }
+        Child child = null;
         MongoCursor<Document> cursor = childCollection.find().iterator();
         try {
             while (cursor.hasNext()) {
                 Document document = cursor.next();
-                ObjectId childObjectId = document.getObjectId("_id");
-                if (child != null) {
-                    child.setChildObjectId(childObjectId);
-                }
+                int childId = document.getInteger("child_id");
+                String firstName = document.getString("first_name");
+                String secondName = document.getString("second_name");
+                String email = document.getString("email");
+
+                child = Child.builder(childId, firstName, secondName, email).build();
             }
         } finally {
             cursor.close();
-
         }
         return child;
     }
-
-    /* getChild with 'childID' - The problem here is 'child_id' will reset when app is relaunched */
-//
-//    @Override
-//    public Child getChild(int id) {
-//        if (child == null) {
-//            child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL)
-//                    .build();
-//        }
-//        MongoCursor<Document> cursor = childCollection.find().iterator();
-//        try {
-//            while (cursor.hasNext()) {
-//                Document document = cursor.next();
-//                int childId = document.getInteger("child_id");
-//                if (child != null) {
-//                    child.setId(childId);
-//                }
-//            }
-//        } finally {
-//            cursor.close();
-//
-//        }
-//        return child;
-//    }
 
     @Override
     public void saveChild(ChildList childList) {

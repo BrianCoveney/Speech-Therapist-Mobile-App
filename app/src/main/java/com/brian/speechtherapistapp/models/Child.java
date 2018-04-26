@@ -31,6 +31,11 @@ public class Child {
     private String school;
     private String word;
 
+    public static ChildBuilder createChild() {
+        return new ChildBuilder();
+    }
+
+//    public Child() {}
 
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
@@ -42,10 +47,6 @@ public class Child {
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
-    }
-
-    public void changeAddress(final Address address) {
-        this.address = address;
     }
 
     public int getId() {
@@ -141,8 +142,13 @@ public class Child {
 
     public static class ChildBuilder {
 
-        private final Child child;
+        private Child child;
+        private Child childNotSet;
         private static AtomicInteger next_id = new AtomicInteger(-1);
+
+        public ChildBuilder() {
+            childNotSet = new Child();
+        }
 
         public ChildBuilder(int id, String firstName, String secondName, String email) {
 
@@ -153,6 +159,7 @@ public class Child {
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
+
         }
 
         public ChildBuilder withWordSaid(String word) {
@@ -200,6 +207,8 @@ public class Child {
         public Child build() {
             return child;
         }
+
+        public Child create() { return childNotSet; }
 
 
         private void validateRequiredFields(Object... objects) {

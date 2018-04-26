@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,12 +24,15 @@ import android.widget.Toast;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
+import com.brian.speechtherapistapp.repository.DBController;
 import com.brian.speechtherapistapp.view.IGameView;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,11 +43,16 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 
-public class GameTwoActivity extends BaseActivity
-        implements WordAdapter.WordAdapterClickListener, IGameView, edu.cmu.pocketsphinx.RecognitionListener {
+public class GameTwoActivity extends BaseActivity implements
+        WordAdapter.WordAdapterClickListener,
+        IGameView,
+        edu.cmu.pocketsphinx.RecognitionListener {
 
     @Inject
     IWordPresenter wordPresenter;
+
+    @Inject
+    IChildPresenter iChildPresenter;
 
     @BindView(R.id.rv_words)
     RecyclerView recyclerView;
@@ -55,6 +64,9 @@ public class GameTwoActivity extends BaseActivity
     private String result;
     private String onItemClickResult;
     private Child child;
+    private static final int CHILD_ID = 0;
+    private List<Child> childList;
+
 
 
     /* Used to handle permission request */
@@ -74,6 +86,13 @@ public class GameTwoActivity extends BaseActivity
         super.onViewReady(savedInstanceState, intent);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
 
+        // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         /* Recycler view */
 
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -88,6 +107,20 @@ public class GameTwoActivity extends BaseActivity
 
         adapter = new WordAdapter(NUM_LIST_ITEMS, this);
         recyclerView.setAdapter(adapter);
+
+//        Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
+
+//        for (Child c : childList) {
+//            Log.i(LOG_TAG, "First name: " + c.getFirstName());
+//            Log.i(LOG_TAG, "Second name: " + c.getSecondName());
+//            Log.i(LOG_TAG, "Email: " + c.getEmail());
+//        }
+
+        Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
+        Log.i(LOG_TAG, "Email: " + child.getId());
+        Log.i(LOG_TAG, "First name: " + child.getFirstName());
+        Log.i(LOG_TAG, "Second name: " + child.getSecondName());
+        Log.i(LOG_TAG, "Email: " + child.getEmail());
 
 
         /* Speech Recognition */

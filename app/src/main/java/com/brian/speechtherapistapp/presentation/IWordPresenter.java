@@ -6,4 +6,5 @@ public interface IWordPresenter {
     void setView(IGameView gameOneView);
     void saveWord();
     void loadWordDetails();
+
 }
