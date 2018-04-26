@@ -24,7 +24,7 @@ public class ChildTest {
     private String email =  "brian@email.com";
 
     @Test
-    public void testBuilderWithDefaultValues() throws Exception {
+    public void testBuilderWithDefaultValues() {
 
         print("valid child");
 
@@ -32,24 +32,18 @@ public class ChildTest {
 
         print("success: default values for optional params");
 
-        assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithDefaultValues.getGender()));
-        assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithDefaultValues.getSchool()));
         assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
         assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
     }
 
     @Test
-    public void testBuilderWithOptionalArguments() throws Exception {
+    public void testBuilderWithOptionalArguments() {
         Child childWithOptionalArguments = Child.builder(id, firstName, secondName, email)
                 .withBirthday(null)
-                .withGender(null)
-                .withSchool(null)
                 .build();
 
         print("success: default values for optional params");
 
-        assertThat(Const.ParamsNames.CHILD_GENDER, is(childWithOptionalArguments.getGender()));
-        assertThat(Const.ParamsNames.CHILD_SCHOOL, is(childWithOptionalArguments.getSchool()));
         assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
         assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
     }

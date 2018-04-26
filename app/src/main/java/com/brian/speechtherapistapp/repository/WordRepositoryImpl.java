@@ -57,7 +57,6 @@ public class WordRepositoryImpl implements IWordRepository {
         this.word.setWord(w.getWord());
 
         Child child = Child.builder(2, "fname", "lname", "email")
-                .withWordSaid(this.word.getWord())
                 .build();
 
         final Document document = new Document();
@@ -66,7 +65,6 @@ public class WordRepositoryImpl implements IWordRepository {
             document.put("first_name", child.getFirstName());
             document.put("second_name", child.getSecondName());
             document.put("email", child.getEmail());
-            document.put("word", child.getWord());
         }catch (MongoException e){
             Log.d(LOG_TAG, "exception: " + e);
         }
