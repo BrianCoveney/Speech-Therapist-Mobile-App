@@ -19,15 +19,22 @@ public class Child {
     // Optional fields
     private String birthday;
     private String password;
+    private Address address;
 
 
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
+        this.address = new Address();
+        address.setCity("Cork");
     }
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public int getId() {
