@@ -26,15 +26,18 @@ public class Child {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
         this.address = new Address();
-        address.setCity("Cork");
     }
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
     }
 
-    public Address getAddress() {
-        return address;
+    public String getAddress() {
+        return address.getCity();
+    }
+
+    public void setAddress(String address) {
+        this.address.setCity(address);
     }
 
     public int getId() {

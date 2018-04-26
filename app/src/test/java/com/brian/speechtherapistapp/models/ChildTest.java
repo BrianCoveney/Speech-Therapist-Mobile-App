@@ -97,8 +97,10 @@ public class ChildTest {
     @Test
     public void testChildWithAddress() {
         Child child = Child.builder(id, firstName, secondName, email).build();
-        String address = child.getAddress().getCity();
-        assertEquals("Cork", address);
+        String expected = "Cork";
+        child.setAddress("Cork");
+
+        assertEquals(expected, child.getAddress());
 
     }
 
