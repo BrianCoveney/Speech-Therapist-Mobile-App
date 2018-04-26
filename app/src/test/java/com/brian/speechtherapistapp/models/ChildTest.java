@@ -101,9 +101,33 @@ public class ChildTest {
         child.setAddress("Cork");
 
         assertEquals(expected, child.getAddress());
-
     }
 
+    @Test
+    public void testChildWithWord() {
+        Child child = Child.builder(id, firstName, secondName, email).build();
+        String expected = "telephone";
+        child.setWord("telephone");
+
+        assertEquals(expected, child.getWord());
+    }
+
+    @Test
+    public void testToString() {
+        Child child = Child.builder(id, firstName, secondName, email).build();
+        child.setWord("telephone");
+
+        StringBuilder sb =new StringBuilder("Child{");
+        sb.append("id="+child.getId()+", ");
+        sb.append("firstName='"+child.getFirstName()+"', ");
+        sb.append("secondName='"+child.getSecondName()+"', ");
+        sb.append("email='"+child.getEmail()+"', ");
+        sb.append("birthday='"+child.getBirthday()+"', ");
+        sb.append("password='"+child.getPassword()+"', ");
+        sb.append("word="+child.getWord()+"}");
+
+        assertEquals(sb.toString(), child.toString());
+    }
 
     @BeforeClass
     public static void printClassHeadder() {

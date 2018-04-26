@@ -50,10 +50,7 @@ public class Word {
 
     @Override
     public String toString() {
-        return "Word{" +
-                "word='" + word + '\'' +
-                ", frequency=" + frequency +
-                '}';
+        return word;
     }
 
 }

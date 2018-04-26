@@ -19,17 +19,29 @@ public class Child {
     // Optional fields
     private String birthday;
     private String password;
-    private Address address;
 
+    // Composition
+    private Address address;
+    private Word word;
 
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
         this.address = new Address();
+        this.word = new Word();
+
     }
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
         return new ChildBuilder(id, firstName, secondName, email);
+    }
+
+    public String getWord() {
+        return word.getWord();
+    }
+
+    public void setWord(String word) {
+        this.word.setWord(word);
     }
 
     public String getAddress() {
@@ -92,6 +104,18 @@ public class Child {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", password='" + password + '\'' +
+                ", word=" + word +
+                '}';
+    }
 
     public static class ChildBuilder {
         private Child child;
