@@ -119,7 +119,6 @@ public class Child {
 
     public static class ChildBuilder {
         private Child child;
-        private Child childNotSet;
         private static AtomicInteger next_id = new AtomicInteger(-1);
 
         public ChildBuilder(int id, String firstName, String secondName, String email) {
@@ -132,6 +131,13 @@ public class Child {
             child.secondName = secondName;
             child.firstName = firstName;
 
+        }
+
+        public ChildBuilder withWord(String word) {
+            if (word != null) {
+                child.word.setWord(word);
+            }
+            return this;
         }
 
         public ChildBuilder withBirthday(String birthday) {

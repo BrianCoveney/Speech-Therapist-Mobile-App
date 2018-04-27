@@ -108,20 +108,6 @@ public class GameTwoActivity extends BaseActivity implements
         adapter = new WordAdapter(NUM_LIST_ITEMS, this);
         recyclerView.setAdapter(adapter);
 
-//        Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
-
-//        for (Child c : childList) {
-//            Log.i(LOG_TAG, "First name: " + c.getFirstName());
-//            Log.i(LOG_TAG, "Second name: " + c.getSecondName());
-//            Log.i(LOG_TAG, "Email: " + c.getEmail());
-//        }
-
-        Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
-        Log.i(LOG_TAG, "Email: " + child.getId());
-        Log.i(LOG_TAG, "First name: " + child.getFirstName());
-        Log.i(LOG_TAG, "Second name: " + child.getSecondName());
-        Log.i(LOG_TAG, "Email: " + child.getEmail());
-
 
         /* Speech Recognition */
 
@@ -200,6 +186,7 @@ public class GameTwoActivity extends BaseActivity implements
         if (hypothesis == null)
             return;
         result = hypothesis.getHypstr();
+
     }
 
     /**
@@ -208,9 +195,21 @@ public class GameTwoActivity extends BaseActivity implements
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
-            String text = hypothesis.getHypstr();
-            showToast("Saved: " + text);
-            Log.i(LOG_TAG, "onResult: " + text);
+            String result = hypothesis.getHypstr();
+            showToast("Saved: " + result);
+
+            String currentWord;
+            Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
+            if (child != null) {
+                currentWord = child.getWord();
+                Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
+
+                DBController.getInstance().setWord(child, currentWord, result);
+                Log.i(LOG_TAG, "Child's newWord: " + child.getWord());
+            } else {
+                showToast("You need to create a user account first!");
+            }
+
         }
     }
 

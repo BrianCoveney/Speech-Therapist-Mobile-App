@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class ChildRepositoryImpl implements IChildRepository {
     private Child child;
     private MongoCollection childCollection;
@@ -53,8 +55,11 @@ public class ChildRepositoryImpl implements IChildRepository {
                 String firstName = document.getString("first_name");
                 String secondName = document.getString("second_name");
                 String email = document.getString("email");
+                String word = document.getString("word");
 
-                child = Child.builder(childId, firstName, secondName, email).build();
+                child = Child.builder(childId, firstName, secondName, email)
+                        .withWord(word)
+                        .build();
             }
         } finally {
             cursor.close();
@@ -76,6 +81,7 @@ public class ChildRepositoryImpl implements IChildRepository {
             document.put("email", child.getEmail());
             document.put("birthday", child.getBirthday());
             document.put("password", child.getPassword());
+            document.put("word", "");
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -84,6 +90,16 @@ public class ChildRepositoryImpl implements IChildRepository {
             }
         });
         thread.start();
+    }
+
+    @Override
+    public void updateWordSpoken(Child child, String currWord, String newWord) {
+
+        childCollection.updateOne(eq("word", currWord),
+                new Document("$set", new Document("word", newWord)));
+
+        child.setWord(newWord);
+
     }
 
     @Override

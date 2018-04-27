@@ -19,9 +19,12 @@ public class DBController {
         this.iChildRepository = new ChildRepositoryImpl();
     }
 
-
     public Child getChildFromDB(int id) {
         return iChildRepository.getChild(id);
+    }
+
+    public void setWord(Child child, String currWord, String newWord) {
+        iChildRepository.updateWordSpoken(child, currWord, newWord);
     }
 
 

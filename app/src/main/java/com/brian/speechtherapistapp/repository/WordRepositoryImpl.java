@@ -74,24 +74,5 @@ public class WordRepositoryImpl implements IWordRepository {
                 childCollection.insertOne(document);
             }
         });
-        thread.start();
-
-
-
-//        final Document document = new Document();
-//        try {
-//            document.put("word", this.word.getWord());
-//        }catch (MongoException e) {
-//            Log.d(LOG_TAG, "exception: " + e);
-//        }
-//
-//
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                childCollection.insertOne(document);
-//            }
-//        });
-//        thread.start();
     }
 }
