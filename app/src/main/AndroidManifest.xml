@@ -80,5 +80,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.TherapistMenuActivity"/>
         </activity>
+        <activity android:name=".view.activities.ChildDetailsActivity"
+            android:label="@string/child_list"
+            android:parentActivityName=".view.activities.ChildListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.ChildListActivity"/>
+        </activity>
     </application>
 </manifest>

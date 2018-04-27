@@ -2,13 +2,13 @@ package com.brian.speechtherapistapp.models;
 
 import com.brian.speechtherapistapp.util.Const;
 
+import java.io.Serializable;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-public class Child {
+public class Child implements Serializable{
+    private static final long serialVersionUID = -7060210544600464481L;
 
     // Required fields
     private int id;
@@ -21,15 +21,12 @@ public class Child {
     private String password;
 
     // Composition
-    private Address address;
     private Word word;
 
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
-        this.address = new Address();
         this.word = new Word();
-
     }
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
@@ -42,14 +39,6 @@ public class Child {
 
     public void setWord(String word) {
         this.word.setWord(word);
-    }
-
-    public String getAddress() {
-        return address.getCity();
-    }
-
-    public void setAddress(String address) {
-        this.address.setCity(address);
     }
 
     public int getId() {
@@ -119,18 +108,17 @@ public class Child {
 
     public static class ChildBuilder {
         private Child child;
-        private static AtomicInteger next_id = new AtomicInteger(-1);
 
         public ChildBuilder(int id, String firstName, String secondName, String email) {
 
             validateRequiredFields(id, firstName, secondName, email);
 
             child = new Child();
-            child.id = next_id.incrementAndGet();
+            child.id = id;
+
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
-
         }
 
         public ChildBuilder withWord(String word) {

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.brian.speechtherapistapp.MainApplication;
@@ -47,8 +49,9 @@ public class ChildListActivity extends BaseActivity {
         }
 
         new PopulateListViewTask().execute();
-    }
 
+        onListItemClicked();
+    }
 
     private class PopulateListViewTask extends AsyncTask<Void, Void, List<Child>> {
 
@@ -67,4 +70,36 @@ public class ChildListActivity extends BaseActivity {
             childListView.setAdapter(childAdapter);
         }
     }
+
+
+    private void onListItemClicked() {
+        childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Child childClicked = (Child) adapterView.getItemAtPosition(i);
+                Child child = Child.builder(
+                        childClicked.getId(),
+                        childClicked.getFirstName(),
+                        childClicked.getSecondName(),
+                        childClicked.getEmail())
+                        .withWord(childClicked.getWord())
+                        .build();
+
+                showToast("HERE: " + childClicked);
+
+                Intent intent = new Intent(getApplicationContext(), ChildDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("child_key", child);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+
+
+
+
+
 }

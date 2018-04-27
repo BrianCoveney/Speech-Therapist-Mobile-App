@@ -27,5 +27,8 @@ public class DBController {
         iChildRepository.updateWordSpoken(child, currWord, newWord);
     }
 
+    public Child getChildFromList(String email) {
+        return iChildRepository.getChildWithEmailIdentifier(email);
+    }
 
 }

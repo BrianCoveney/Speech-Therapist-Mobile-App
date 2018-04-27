@@ -198,16 +198,17 @@ public class GameTwoActivity extends BaseActivity implements
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
-            showToast("Saved: " + result);
 
-            String currentWord;
             child = DBController.getInstance().getChildFromDB(CHILD_ID);
-            if (child != null) {
+            String currentWord = child.getWord();
+            if (currentWord != null) {
                 currentWord = child.getWord();
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
 
                 DBController.getInstance().setWord(child, currentWord, result);
                 Log.i(LOG_TAG, "Child's newWord: " + child.getWord());
+
+                showToast("Saved: " + result);
             } else {
                 showToast("You need to create a user account first!");
             }
@@ -254,7 +255,7 @@ public class GameTwoActivity extends BaseActivity implements
     @Override
     public void onListItemClicked(String itemClicked) {
         onItemClickResult = itemClicked;
-        showToast("Clicked " + onItemClickResult);
+        Log.i(LOG_TAG,"Clicked " + onItemClickResult);
         showCustomDialog();
     }
 

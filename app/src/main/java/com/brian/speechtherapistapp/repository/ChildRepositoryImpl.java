@@ -49,13 +49,14 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public Child getChild(int id) {
+        Document document;
         if (child == null) {
             child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL).build();
         } else {
             MongoCursor<Document> cursor = childCollection.find().iterator();
             try {
                 while (cursor.hasNext()) {
-                    Document document = cursor.next();
+                    document = cursor.next();
                     int childId = document.getInteger("child_id");
                     String firstName = document.getString("first_name");
                     String secondName = document.getString("second_name");
@@ -81,7 +82,7 @@ public class ChildRepositoryImpl implements IChildRepository {
                     .withBirthday(c.getBirthday())
                     .withPassword(c.getPassword())
                     .build();
-            document.put("child_id", child.getId());
+            document.put("child_id", child.getId()+1);
             document.put("first_name", child.getFirstName());
             document.put("second_name", child.getSecondName());
             document.put("email", child.getEmail());
@@ -100,12 +101,10 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public void updateWordSpoken(Child child, String currWord, String newWord) {
-
         childCollection.updateOne(eq("word", currWord),
                 new Document("$set", new Document("word", newWord)));
 
         child.setWord(newWord);
-
     }
 
     @Override
@@ -114,16 +113,19 @@ public class ChildRepositoryImpl implements IChildRepository {
 
         FindIterable<Document> databaseRecords = database.getCollection("children").find();
         MongoCursor<Document> cursor = databaseRecords.iterator();
-
+        Document document;
         try {
             while (cursor.hasNext()) {
-                Document document = cursor.next();
+                document = cursor.next();
                 String firstName = document.getString("first_name");
                 String secondName = document.getString("second_name");
                 String email = document.getString("email");
+                String word = document.getString("word");
 
                 // create child with values set from DB
-                Child child = Child.builder(0, firstName, secondName, email).build();
+                Child child = Child.builder(0, firstName, secondName, email)
+                        .withWord(word)
+                        .build();
 
                 childList.add(child);
             }
@@ -131,6 +133,28 @@ public class ChildRepositoryImpl implements IChildRepository {
             cursor.close();
         }
         return childList;
+    }
+
+    @Override
+    public Child getChildWithEmailIdentifier(String email) {
+        Child child = null;
+
+        FindIterable<Document> databaseRecords = childCollection.find(eq("email", email));
+        MongoCursor<Document> cursor = databaseRecords.iterator();
+        Document document;
+        try {
+            while (cursor.hasNext()) {
+                document = cursor.next();
+                String firstName = document.getString("first_name");
+                String secondName = document.getString("second_name");
+                String childsEmail = document.getString("email");
+                child = Child.builder(0, firstName, secondName, childsEmail).build();
+            }
+        } finally {
+            cursor.close();
+        }
+        return child;
+
     }
 
 }

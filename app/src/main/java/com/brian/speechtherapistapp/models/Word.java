@@ -3,10 +3,12 @@ package com.brian.speechtherapistapp.models;
 
 import com.brian.speechtherapistapp.util.Const;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Word {
-
+@SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
+public class Word implements Serializable{
+    private static final long serialVersionUID = -8060210544600464481L;
     private String id;
     private String word;
     private int frequency;

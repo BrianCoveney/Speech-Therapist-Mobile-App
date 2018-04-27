@@ -95,15 +95,6 @@ public class ChildTest {
     }
 
     @Test
-    public void testChildWithAddress() {
-        Child child = Child.builder(id, firstName, secondName, email).build();
-        String expected = "Cork";
-        child.setAddress("Cork");
-
-        assertEquals(expected, child.getAddress());
-    }
-
-    @Test
     public void testChildWithWord() {
         Child child = Child.builder(id, firstName, secondName, email).build();
         String expected = "telephone";

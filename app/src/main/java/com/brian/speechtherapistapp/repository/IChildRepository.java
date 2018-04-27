@@ -14,5 +14,6 @@ public interface IChildRepository {
     void saveChild(ChildList childList);
     List<Child> getChildListFromDB();
     void updateWordSpoken(Child child, String currWord, String newWord);
+    Child getChildWithEmailIdentifier(String email);
 
 }

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
@@ -113,7 +112,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -152,7 +150,7 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
 
     @Override
     public void showChildSavedMessage() {
-        Toast.makeText(this, R.string.child_saved, Toast.LENGTH_SHORT).show();
+        showToast(firstNameEditText.getText().toString() +" saved!");
     }
 
     @Override
