@@ -1,14 +1,15 @@
 package com.brian.speechtherapistapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.brian.speechtherapistapp.util.Const;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Child implements Serializable{
-    private static final long serialVersionUID = -7060210544600464481L;
+public class Child implements Parcelable{
 
     // Required fields
     private int id;
@@ -104,6 +105,40 @@ public class Child implements Serializable{
                 ", password='" + password + '\'' +
                 ", word=" + word +
                 '}';
+    }
+
+    public static final Parcelable.Creator<Child> CREATOR = new Creator<Child>() {
+        @Override
+        public Child createFromParcel(Parcel parcel) {
+            int id = parcel.readInt();
+            String firstName = parcel.readString();
+            String secondName = parcel.readString();
+            String email = parcel.readString();
+            String word = parcel.readString();
+
+            Child child = Child.builder(id, firstName, secondName, email).withWord(word)
+                    .build();
+            return child;
+        }
+
+        @Override
+        public Child[] newArray(int size) {
+            return new Child[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(firstName);
+        parcel.writeString(secondName);
+        parcel.writeString(email);
+        parcel.writeString(word.getWord());
     }
 
     public static class ChildBuilder {

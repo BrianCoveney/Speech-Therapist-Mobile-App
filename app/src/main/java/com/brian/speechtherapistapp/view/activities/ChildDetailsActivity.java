@@ -24,9 +24,9 @@ public class ChildDetailsActivity extends BaseActivity{
         super.onViewReady(savedInstanceState, intent);
 
         Intent i = getIntent();
-        Child child = (Child) i.getSerializableExtra("child_key");
+        Child child = i.getParcelableExtra("child_key");
 
-        showToast("Here"+ child);
+        showToast("Here: "+ child);
 
     }
 }

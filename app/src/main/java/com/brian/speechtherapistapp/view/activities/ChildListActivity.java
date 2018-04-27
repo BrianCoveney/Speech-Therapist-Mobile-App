@@ -85,11 +85,9 @@ public class ChildListActivity extends BaseActivity {
                         .withWord(childClicked.getWord())
                         .build();
 
-                showToast("HERE: " + childClicked);
-
                 Intent intent = new Intent(getApplicationContext(), ChildDetailsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("child_key", child);
+                bundle.putParcelable("child_key", child);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
