@@ -20,6 +20,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_EMAIL;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_FIRST_NAME;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_SECOND_NAME;
 import static com.mongodb.client.model.Filters.eq;
 
 public class ChildRepositoryImpl implements IChildRepository {
@@ -46,23 +49,26 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public Child getChild(int id) {
-        Child child = null;
-        MongoCursor<Document> cursor = childCollection.find().iterator();
-        try {
-            while (cursor.hasNext()) {
-                Document document = cursor.next();
-                int childId = document.getInteger("child_id");
-                String firstName = document.getString("first_name");
-                String secondName = document.getString("second_name");
-                String email = document.getString("email");
-                String word = document.getString("word");
+        if (child == null) {
+            child = Child.builder(id, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL).build();
+        } else {
+            MongoCursor<Document> cursor = childCollection.find().iterator();
+            try {
+                while (cursor.hasNext()) {
+                    Document document = cursor.next();
+                    int childId = document.getInteger("child_id");
+                    String firstName = document.getString("first_name");
+                    String secondName = document.getString("second_name");
+                    String email = document.getString("email");
+                    String word = document.getString("word");
 
-                child = Child.builder(childId, firstName, secondName, email)
-                        .withWord(word)
-                        .build();
+                    child = Child.builder(childId, firstName, secondName, email)
+                            .withWord(word)
+                            .build();
+                }
+            } finally {
+                cursor.close();
             }
-        } finally {
-            cursor.close();
         }
         return child;
     }

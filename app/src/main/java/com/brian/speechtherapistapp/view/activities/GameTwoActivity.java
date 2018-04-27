@@ -93,6 +93,8 @@ public class GameTwoActivity extends BaseActivity implements
             StrictMode.setThreadPolicy(policy);
         }
 
+        child = DBController.getInstance().getChildFromDB(CHILD_ID);
+
         /* Recycler view */
 
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -199,7 +201,7 @@ public class GameTwoActivity extends BaseActivity implements
             showToast("Saved: " + result);
 
             String currentWord;
-            Child child = DBController.getInstance().getChildFromDB(CHILD_ID);
+            child = DBController.getInstance().getChildFromDB(CHILD_ID);
             if (child != null) {
                 currentWord = child.getWord();
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
