@@ -11,8 +11,18 @@ import butterknife.BindView;
 
 public class ChildDetailsActivity extends BaseActivity{
 
-    @BindView(R.id.box1)
-    TextView textView;
+    @BindView(R.id.tv_first_name)
+    TextView firstNameTextView;
+
+    @BindView(R.id.tv_second_name)
+    TextView secondNameTextView;
+
+    @BindView(R.id.tv_email)
+    TextView emailTextView;
+
+    @BindView(R.id.tv_word)
+    TextView wordTextView;
+
 
     @Override
     protected int getContentView() {
@@ -23,10 +33,25 @@ public class ChildDetailsActivity extends BaseActivity{
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        Intent i = getIntent();
-        Child child = i.getParcelableExtra("child_key");
+        Child child = getChildFromChildListActivity();
 
-        showToast("Here: "+ child);
-
+        setFields(child);
     }
+
+    private void setFields(Child child) {
+        firstNameTextView.setText(child.getFirstName());
+        secondNameTextView.setText(child.getSecondName());
+        emailTextView.setText(child.getEmail());
+        wordTextView.setText(child.getWord());
+    }
+
+    private Child getChildFromChildListActivity() {
+        Intent i = getIntent();
+        Child c = i.getParcelableExtra("child_key");
+
+        return Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
+                .withWord(c.getWord())
+                .build();
+    }
+
 }

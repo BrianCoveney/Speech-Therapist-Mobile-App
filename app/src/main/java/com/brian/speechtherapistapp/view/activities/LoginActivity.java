@@ -51,10 +51,10 @@ public class LoginActivity extends BaseActivity
     @BindView(R.id.btn_google_sign_in)
     SignInButton googleSignInButton;
 
-    @BindView(R.id.tv_name_caption)
+    @BindView(R.id.tv_first_name_caption)
     TextView nameCaptionTextView;
 
-    @BindView(R.id.tv_name)
+    @BindView(R.id.tv_first_name)
     TextView nameTextView;
 
     @BindView(R.id.tv_email)

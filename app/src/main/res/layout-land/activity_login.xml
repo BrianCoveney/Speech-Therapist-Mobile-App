@@ -28,7 +28,7 @@
         tools:layout_editor_absoluteY="64dp" />
 
     <EditText
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_first_name"
         android:hint="@string/email"
         android:layout_width="300dp"
         android:layout_height="67dp"
