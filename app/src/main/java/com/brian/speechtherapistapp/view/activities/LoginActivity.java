@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -65,14 +66,15 @@ public class LoginActivity extends BaseActivity
 
     public static final String EXTRA_MESSAGE = "therapist_name";
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_login;
-    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
+        ButterKnife.bind(this);
+
+//        getSupportActionBar().show();
 
         init();
         displayLoginType();

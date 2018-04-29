@@ -2,7 +2,6 @@ package com.brian.speechtherapistapp.view.activities;
 
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -71,15 +71,13 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
     private String result;
 
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_game_one;
-    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ((MainApplication)getApplication()).getPresenterComponent().inject(this);
+        getLayoutInflater().inflate(R.layout.activity_game_one, frameLayout);
+        ButterKnife.bind(this);
 
         populateListView();
 

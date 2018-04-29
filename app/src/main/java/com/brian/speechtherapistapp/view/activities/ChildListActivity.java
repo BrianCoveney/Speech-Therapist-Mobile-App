@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ChildListActivity extends BaseActivity {
 
@@ -31,15 +32,14 @@ public class ChildListActivity extends BaseActivity {
     @BindView(R.id.lv_child_list)
     ListView childListView;
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_childlist;
-    }
+
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
+        getLayoutInflater().inflate(R.layout.activity_childlist, frameLayout);
+        ButterKnife.bind(this);
 
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {

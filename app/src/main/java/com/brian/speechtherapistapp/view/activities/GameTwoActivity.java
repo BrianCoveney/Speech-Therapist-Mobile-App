@@ -2,7 +2,6 @@ package com.brian.speechtherapistapp.view.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -76,15 +76,15 @@ public class GameTwoActivity extends BaseActivity implements
     private static final String TEXT_SEARCH = "words";
 
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_game_two;
-    }
+
+
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
+        getLayoutInflater().inflate(R.layout.activity_game_two, frameLayout);
+        ButterKnife.bind(this);
 
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {

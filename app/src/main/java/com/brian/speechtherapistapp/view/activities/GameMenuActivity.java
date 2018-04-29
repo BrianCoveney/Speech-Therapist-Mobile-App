@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -29,14 +30,13 @@ public class GameMenuActivity extends BaseActivity implements RecognitionListene
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private SpeechRecognizer recognizer;
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_game_menu;
-    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getLayoutInflater().inflate(R.layout.activity_game_menu, frameLayout);
+
+        ButterKnife.bind(this);
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),

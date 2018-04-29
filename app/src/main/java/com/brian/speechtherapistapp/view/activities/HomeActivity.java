@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.brian.speechtherapistapp.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity {
@@ -18,14 +19,14 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.btn_login_child)
     Button childLoginButton;
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_home;
-    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
+
+        ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.btn_login_therapist, R.id.btn_login_child})

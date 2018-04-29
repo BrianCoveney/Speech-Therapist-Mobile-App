@@ -36,4 +36,29 @@
     <string name="word">Word:</string>
     <string name="textview">textview</string>
     <string name="child_details">Child Details</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_closed">Close navigation drawer</string>
+    <string name="action_add">action add</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="start_loc_updates">Start Location Updates</string>
+    <string name="stop_loc_updates">Stop Location Updates</string>
+    <string name="connection_failed">Connection failed. Is location enabled?</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyDIOyYj65QM_6ZjUbPZJkqSvmPYpV2R
+    </string>
+
+
+    <!-- Navigation Drawer Text and Icons -->
+    <string-array name="menu_items">
+        <item>Home</item>
+        <item>Settings</item>
+        <item>Google Map</item>
+        <item>Find Location</item>
+    </string-array>
+    <string-array name="menu_icons">
+        <item>@drawable/ic_home_24dp</item>
+        <item>@drawable/ic_settings_applications_24dp</item>
+        <item>@drawable/ic_map_48dp</item>
+        <item>@drawable/ic_add_24dp</item>
+    </string-array>
 </resources>

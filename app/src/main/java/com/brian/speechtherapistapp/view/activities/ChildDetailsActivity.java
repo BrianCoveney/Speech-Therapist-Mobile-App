@@ -8,6 +8,7 @@ import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ChildDetailsActivity extends BaseActivity{
 
@@ -23,15 +24,10 @@ public class ChildDetailsActivity extends BaseActivity{
     @BindView(R.id.tv_word)
     TextView wordTextView;
 
-
     @Override
-    protected int getContentView() {
-        return R.layout.activity_child_details;
-    }
-
-    @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
 
         Child child = getChildFromChildListActivity();
 

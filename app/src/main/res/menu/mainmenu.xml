@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!--To ensure Items are visible and not displayed as 3 dots on RHS of Actionbar
+    Change android:showAsAction="always" to app:showAsAction="always"-->
+    <item android:id="@+id/action_location"
+        android:icon="@drawable/ic_map_48dp"
+        android:title="@string/action_add"
+        app:showAsAction="always"
+        android:visible="true" />
+
+    <item android:id="@+id/action_googlemaps"
+        android:icon="@drawable/ic_satellite_48dp"
+        android:title="@string/action_add"
+        app:showAsAction="always"
+        android:visible="true"/>
+
+
+
+    <item android:id="@+id/action_login"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="@string/action_add"
+        app:showAsAction="always"
+        android:visible="true"/>
+
+</menu>

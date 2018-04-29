@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.brian.speechtherapistapp"
         minSdkVersion 21
@@ -29,10 +28,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-auth:12.0.1'
-    implementation 'com.google.firebase:firebase-core:12.0.1'
-    implementation 'com.google.firebase:firebase-messaging:12.0.1'
-    implementation 'com.google.android.gms:play-services-auth:12.0.1'
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-messaging:15.0.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.0'
 
 
     implementation 'com.google.dagger:dagger-android:2.11'
@@ -44,7 +43,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     testImplementation 'junit:junit:4.12'
@@ -52,15 +51,20 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     testImplementation 'org.exparity:hamcrest-date:2.0.4'
 
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:support-annotations:27.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
 
 //    implementation 'org.mongodb:mongo-java-driver:3.6.3'
      implementation files('libs/mongo-java-driver-3.2.0-SNAPSHOT.jar')
 
     implementation project(':pocketsphinx-android-5prealpha-release')
 
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.mikhaellopez:circularimageview:3.0.2'
+    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.0'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
 ant.importBuild 'assets.xml'

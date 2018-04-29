@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/

@@ -1,32 +1,160 @@
 package com.brian.speechtherapistapp.view.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
+import com.brian.speechtherapistapp.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected String[] mTaskItems;
+    protected DrawerLayout mDrawerLayout;
+    protected FrameLayout frameLayout;
+    protected ListView mDrawerList;
+    protected ImageView navImages;
+    protected ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
-        ButterKnife.bind(this);
-        onViewReady(savedInstanceState, getIntent());
-    }
 
-    @CallSuper
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        //This is to be used by child activities
+        setContentView(R.layout.activity_base);
+        mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
+        frameLayout = findViewById(R.id.content_frame);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        addDrawerItems();
+        setupDrawer();
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     protected void showToast(String toastMessage) {
         Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
     }
 
-    protected abstract int getContentView();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate the ActionBar
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_closed) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // when items in Actionbar are pressed (not the Hamburger menu)
+        switch (item.getItemId()) {
+            case R.id.action_location:
+                Intent intentLocation = new Intent(this, LocationActivity.class);
+                startActivity(intentLocation);
+                break;
+            case R.id.action_googlemaps:
+                Intent intentMap = new Intent(this, MapsActivity.class);
+                startActivity(intentMap);
+                break;
+            case R.id.action_login:
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+            default:
+                break;
+        }
+
+        // Activate the navigation drawer toggle (Hamburger menu)
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return true;
+    }
+
+
+    private void addDrawerItems(){
+        mTaskItems = getResources().getStringArray(R.array.menu_items);
+        mDrawerList = (ListView) findViewById(R.id.lv_nav_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navImages = (ImageView) findViewById(R.id.iv_nav_drawer_icons);
+
+        View headerView = View.inflate(this, R.layout.nav_header, null);
+        mDrawerList.addHeaderView(headerView);
+
+        CustomAdapter customAdapter = new CustomAdapter(this, mTaskItems);
+        mDrawerList.setAdapter(customAdapter);
+
+        // when items in Navigation Drawer are pressed
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position) {
+                    case 1:
+                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
+                        break;
+                    case 2:
+                        showToast("launch settings activity");;
+                        break;
+                    case 3:
+                        Intent intentMap = new Intent(getApplicationContext(), MapsActivity.class);
+                        startActivity(intentMap);
+                        break;
+                    case 4:
+                        Intent intentLocation = new Intent(getApplicationContext(), LocationActivity.class);
+                        startActivity(intentLocation);
+                    default:
+                }
+
+            }
+        });
+    }
 }

@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -71,15 +72,14 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
             "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_create_child;
-    }
+
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
+        getLayoutInflater().inflate(R.layout.activity_create_child, frameLayout);
+        ButterKnife.bind(this);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

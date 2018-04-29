@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.brian.speechtherapistapp.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -29,14 +30,12 @@ public class TherapistMenuActivity extends BaseActivity {
 
     private final String LOG_TAG = TherapistMenuActivity.class.getSimpleName();
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_therapist_menu;
-    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getLayoutInflater().inflate(R.layout.activity_therapist_menu, frameLayout);
+        ButterKnife.bind(this);
         getIntentFromCallingActivity();
     }
 
