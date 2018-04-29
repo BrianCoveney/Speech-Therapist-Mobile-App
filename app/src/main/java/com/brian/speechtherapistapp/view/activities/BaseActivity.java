@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
 
@@ -48,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(String toastMessage) {
-        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -97,8 +96,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         // when items in Actionbar are pressed (not the Hamburger menu)
         switch (item.getItemId()) {
             case R.id.action_location:
-                Intent intentLocation = new Intent(this, LocationActivity.class);
-                startActivity(intentLocation);
+//                Intent intentLocation = new Intent(this, LocationActivity.class);
+//                startActivity(intentLocation);
                 break;
             case R.id.action_googlemaps:
                 Intent intentMap = new Intent(this, MapsActivity.class);
@@ -149,8 +148,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                         startActivity(intentMap);
                         break;
                     case 4:
-                        Intent intentLocation = new Intent(getApplicationContext(), LocationActivity.class);
-                        startActivity(intentLocation);
+//                        Intent intentLocation = new Intent(getApplicationContext(), LocationActivity.class);
+//                        startActivity(intentLocation);
                     default:
                 }
 
