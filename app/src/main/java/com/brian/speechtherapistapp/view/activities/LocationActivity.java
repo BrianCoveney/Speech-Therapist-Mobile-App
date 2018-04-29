@@ -35,11 +35,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-
-
-/**
- * Created by briancoveney on 11/25/15.
- */
 public class LocationActivity extends BaseActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -101,7 +96,6 @@ public class LocationActivity extends BaseActivity implements
         // Update values using data stored in the Bundle.
         updateValuesFromBundle(savedInstanceState);
 
-
         locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -131,9 +125,7 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
-
     private void togglePeriodicLocUpdates() {
-
         try {
             if (!mRequestingLocationUpdates) {
                 locationSwitch.setText(R.string.stop_loc_updates);
@@ -147,9 +139,7 @@ public class LocationActivity extends BaseActivity implements
         } catch (SecurityException se) {
             se.getMessage();
         }
-
     }
-
 
     protected synchronized void buildGoogleApiClient() {
         //create an instance of GoogleApiClient
@@ -172,10 +162,11 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
-
-    // SettingsApi
-    // This API makes it easy for an app to ensure that the device's system settings are
-    // properly configured for the app's location needs.
+    /**
+     * SettingsApi
+     * This API makes it easy for an app to ensure that the device's system settings are
+     * properly configured for the app's location needs.
+     */
     public void isConnected() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequestHighAccuracy)
@@ -241,7 +232,6 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
-
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Connected to the GoogleAPIClient");
@@ -261,10 +251,8 @@ public class LocationActivity extends BaseActivity implements
             se.printStackTrace();
         }
 
-
-        // prevents null pointer exception
         if (mCurrentLocation != null) {
-            // save Lat Long for use in Maps Activity
+            // save Lat Long for use in MapsActivity
             Double mLat = mCurrentLocation.getLatitude();
             Double mLong = mCurrentLocation.getLongitude();
             SharedPreferences sharedPref = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
@@ -273,7 +261,6 @@ public class LocationActivity extends BaseActivity implements
             editor.putLong("longitude_key", Double.doubleToLongBits((mLong)));
             editor.apply();
         }
-
     }
 
     protected void createLocationRequest() {
@@ -301,7 +288,6 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
-
     // define the LocationListener's interface method to display the current Lat, Long and Timestamp
     @Override
     public void onLocationChanged(Location location) {
@@ -322,16 +308,13 @@ public class LocationActivity extends BaseActivity implements
             mLatitudeText.setText(R.string.connection_failed);
             mLongitudeText.setVisibility(View.INVISIBLE);
         }
-
     }
-
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(TAG, "Connection FAILED: ConnectionResult.getErrorCode() = "
                 + connectionResult.getErrorCode());
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -340,7 +323,6 @@ public class LocationActivity extends BaseActivity implements
         Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
-
 
     @Override
     protected void onStart() {
@@ -356,7 +338,6 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -367,7 +348,6 @@ public class LocationActivity extends BaseActivity implements
 
         bundle.putBoolean("SwitchState", locationSwitch.isChecked());
     }
-
 
     @Override
     public void onResume() {
@@ -384,7 +364,6 @@ public class LocationActivity extends BaseActivity implements
         }
         locationSwitch.setChecked(bundle.getBoolean("SwitchState", false));
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -431,25 +410,3 @@ public class LocationActivity extends BaseActivity implements
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
