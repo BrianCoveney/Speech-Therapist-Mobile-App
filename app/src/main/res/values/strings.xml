@@ -43,9 +43,7 @@
     <string name="start_loc_updates">Start Location Updates</string>
     <string name="stop_loc_updates">Stop Location Updates</string>
     <string name="connection_failed">Connection failed. Is location enabled?</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDIOyYj65QM_6ZjUbPZJkqSvmPYpV2R
-    </string>
+
 
 
     <!-- Navigation Drawer Text and Icons -->
