@@ -61,7 +61,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     }
 
 
-
     public class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.tv_item_number)
@@ -78,14 +77,14 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         }
 
         void bind(int listIndex) {
-            String wordClicked = Const.GLIDING_OF_LIQUIDS_VALID_LIST.get(listIndex);
+            String wordClicked = Const.LIST_OF_CORRECT_WORDS.get(listIndex);
             listItemNumberView.setText(wordClicked);
         }
 
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
-            String itemClicked = Const.GLIDING_OF_LIQUIDS_VALID_LIST.get(clickedPosition);
+            String itemClicked = Const.LIST_OF_CORRECT_WORDS.get(clickedPosition);
             mOnClickListener.onListItemClicked(itemClicked);
         }
     }

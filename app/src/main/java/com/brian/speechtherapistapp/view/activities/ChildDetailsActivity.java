@@ -7,27 +7,21 @@ import android.widget.TextView;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ChildDetailsActivity extends BaseActivity{
 
-    @BindView(R.id.tv_first_name)
     TextView firstNameTextView;
-
-    @BindView(R.id.tv_second_name)
     TextView secondNameTextView;
-
-    @BindView(R.id.tv_email)
     TextView emailTextView;
-
-    @BindView(R.id.tv_word)
     TextView wordTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+
+        firstNameTextView = findViewById(R.id.tv_first_name_child_details);
+        secondNameTextView = findViewById(R.id.tv_second_name_child_details);
+        emailTextView = findViewById(R.id.tv_email_child_details);
+        wordTextView = findViewById(R.id.tv_word_child_details);
 
         Child child = getChildFromChildListActivity();
 

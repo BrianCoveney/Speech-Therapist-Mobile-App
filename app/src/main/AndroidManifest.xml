@@ -25,7 +25,9 @@
         </activity>
         <activity android:name=".view.activities.HomeActivity"
             android:label="@string/home_activity"
-            android:parentActivityName=".view.activities.SplashActivity">
+            android:parentActivityName=".view.activities.SplashActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.SplashActivity"/>
@@ -34,7 +36,9 @@
             android:name=".view.activities.PreferenceActivity"
             android:theme="@style/Theme.AppCompat.Light"
             android:label="Preference Activity"
-            android:parentActivityName=".view.activities.HomeActivity">
+            android:parentActivityName=".view.activities.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.HomeActivity" />
@@ -47,21 +51,27 @@
         </activity>
         <activity android:name=".view.activities.LoginActivity"
             android:label="@string/login_activity"
-            android:parentActivityName=".view.activities.HomeActivity">
+            android:parentActivityName=".view.activities.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.HomeActivity"/>
         </activity>
         <activity android:name=".view.activities.GameMenuActivity"
             android:label="@string/game_menu"
-            android:parentActivityName=".view.activities.LoginActivity">
+            android:parentActivityName=".view.activities.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.LoginActivity"/>
         </activity>
         <activity android:name=".view.activities.SpeechActivity"
             android:label="@string/speech_activity"
-            android:parentActivityName=".view.activities.GameMenuActivity">
+            android:parentActivityName=".view.activities.GameMenuActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.GameMenuActivity"/>
@@ -75,14 +85,18 @@
         </activity>
         <activity android:name=".view.activities.GameTwoActivity"
             android:label="Game One Activity"
-            android:parentActivityName=".view.activities.GameMenuActivity">
+            android:parentActivityName=".view.activities.GameMenuActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.GameMenuActivity"/>
         </activity>
         <activity android:name=".view.activities.TherapistMenuActivity"
             android:label="@string/therapist_menu"
-            android:parentActivityName=".view.activities.LoginActivity">
+            android:parentActivityName=".view.activities.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.LoginActivity"/>
@@ -92,14 +106,18 @@
         </activity>
         <activity android:name=".view.activities.ChildListActivity"
             android:label="@string/child_list"
-            android:parentActivityName=".view.activities.TherapistMenuActivity">
+            android:parentActivityName=".view.activities.TherapistMenuActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.TherapistMenuActivity"/>
         </activity>
         <activity android:name=".view.activities.ChildDetailsActivity"
             android:label="@string/child_details"
-            android:parentActivityName=".view.activities.ChildListActivity">
+            android:parentActivityName=".view.activities.ChildListActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.ChildListActivity"/>

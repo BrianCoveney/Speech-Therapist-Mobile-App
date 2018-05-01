@@ -64,6 +64,41 @@ Const {
             )
     );
 
+    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
+    public static final List<String> LIST_OF_CORRECT_WORDS = Collections.unmodifiableList(
+            Arrays.asList(
+                    "red",
+                    "leg",
+                    "look",
+                    "rabbit",
+                    "run",
+                    "ladder",
+                    "play",
+                    "carry",
+                    "lucky",
+                    "rock",
+                    "friend",
+                    "truck",
+                    "slide",
+                    "brown",
+                    "spot",
+                    "school",
+                    "cold",
+                    "spider",
+                    "spoon",
+                    "skate",
+                    "dog",
+                    "soap",
+                    "pig",
+                    "cup",
+                    "home",
+                    "bat",
+                    "moon",
+                    "weight",
+                    "node"
+            )
+    );
+
     public static final class ParamsNames {
         public static final int CHILD_ID = 0;
         public static final String CHILD_GENDER = "male";

@@ -26,6 +26,7 @@ import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.repository.DBController;
+import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IGameView;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class GameTwoActivity extends BaseActivity implements
 
     private static final String LOG_TAG = GameTwoActivity.class.getSimpleName();
     private WordAdapter adapter;
-    private static final int NUM_LIST_ITEMS = 14;
+    private static final int NUM_LIST_ITEMS = Const.LIST_OF_CORRECT_WORDS.size();
     private static final String WORD_ID = "word_id";
     private String result;
     private String onItemClickResult;
@@ -176,7 +177,7 @@ public class GameTwoActivity extends BaseActivity implements
             recognizer.addListener(this);
 
             // Create grammar-based search for custom recognition
-            File testGrammar = new File(assetsDir, "words-gliding-of-liquids.gram");
+            File testGrammar = new File(assetsDir, "text.gram");
             recognizer.addGrammarSearch(TEXT_SEARCH, testGrammar);
         } catch (Exception e) {
             e.getMessage();

@@ -3,23 +3,35 @@
 grammar text;
 
 public <words> = (
-    telephone   | teffone   |
-    spider      | pider     |
-    bus         | bu        |
-    cat         | ca        |
-    dog         | dah       |
-    leg         | weg       |
-    yellow      | yeyo      |
-    elephant    | efant     |
-    beep        | eep       |
-    black       | bwack     |
-    bread       | bwed      |
-    glass       | gwas      |
-    green       | gween     |
-    leaf        | lif       |
-    play        | pway      |
-    rabbit      | wabbit    |
-    real        | weal      |
-    look        | wook      |
-    run         | wun
+    red     | wed       |
+    leg     | yeg       |
+    look    | wook      |
+    rabbit  | wabbit    |
+    run     | one       |
+    ladder  | wadder    |
+    play    | pway      |
+    carry   | cawy      |
+    lucky   | yucky     |
+    black   | bwack     |
+    friend  | fren      |
+    truck   | tuck      |
+    slide   | side      |
+    brown   | bown      |
+    spot    | spat      |
+    school  | sool      |
+    cold    | coal      |
+    spider  | pider     |
+    spoon   | poon      |
+    skate   | sate      |
+    dog     | daw       |
+    soap    | sop       |
+    pig     | pi        |
+    cup     | cuh       |
+    dog     | dah       |
+    home    | ho        |
+    bat     | ba        |
+    moon    | moo       |
+    weight  | weigh     |
+    noise   | no
+
 );
