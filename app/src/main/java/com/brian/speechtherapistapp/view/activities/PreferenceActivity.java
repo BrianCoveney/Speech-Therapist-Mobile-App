@@ -1,6 +1,6 @@
 package com.brian.speechtherapistapp.view.activities;
 
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +9,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -35,14 +38,12 @@ import java.text.DateFormat;
 import java.util.Date;
 
 
-public class LocationActivity extends BaseActivity implements
+public class PreferenceActivity extends Activity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private static Bundle bundle = new Bundle();
-    private Switch locationSwitch;
     private static String TAG = LocationActivity.class.getSimpleName();
     private GoogleApiClient mGoogleApiClient;
 
@@ -69,38 +70,24 @@ public class LocationActivity extends BaseActivity implements
     protected String mLastUpdateTime;
     private boolean mLocationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private Double latitude, longitude;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.MyPreferencesStyle);
         super.onCreate(savedInstanceState);
-
-        /* We will not use setContentView in this activty
-           Rather than we will use layout inflater to add view in FrameLayout of our base activity layout*/
-        getLayoutInflater().inflate(R.layout.activity_location, frameLayout);
+        getFragmentManager().beginTransaction().replace(
+                android.R.id.content, new MyPreferenceFragment()).commit();
 
         buildGoogleApiClient();
         createLocationRequest();
         getLocationPermission();
 
-
-        mLatitudeText = (TextView) findViewById(R.id.mLatitudeText);
-        mLongitudeText = (TextView) findViewById(R.id.mLongitudeText);
-        mTimeText = (TextView) findViewById(R.id.mLastUpdateTimeTextView);
-        locationSwitch = (Switch) findViewById(R.id.switch_location);
-
         mRequestingLocationUpdates = false;
-        mLastUpdateTime = "";
 
         // Update values using data stored in the Bundle.
         updateValuesFromBundle(savedInstanceState);
-
-        locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                togglePeriodicLocUpdates();
-            }
-        });
     }
 
 
@@ -127,11 +114,11 @@ public class LocationActivity extends BaseActivity implements
     private void togglePeriodicLocUpdates() {
         try {
             if (!mRequestingLocationUpdates) {
-                locationSwitch.setText(R.string.stop_loc_updates);
+                Toast.makeText(this, "Location Connected", Toast.LENGTH_SHORT).show();
                 mRequestingLocationUpdates = true;
                 startLocationUpdates();
             } else {
-                locationSwitch.setText(R.string.start_loc_updates);
+                Toast.makeText(this, "Location Disconnected", Toast.LENGTH_SHORT).show();
                 mRequestingLocationUpdates = false;
                 stopLocationUpdates();
             }
@@ -196,7 +183,7 @@ public class LocationActivity extends BaseActivity implements
                             // Show the dialog by calling startResolutionForResult(),
                             // and check the result in onActivityResult().
                             status.startResolutionForResult(
-                                    LocationActivity.this, REQUEST_CHECK_SETTINGS);
+                                    PreferenceActivity.this, REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
                             // Ignore the error.
                         }
@@ -252,13 +239,13 @@ public class LocationActivity extends BaseActivity implements
 
         if (mCurrentLocation != null) {
             // save Lat Long for use in MapsActivity
-//            Double mLat = mCurrentLocation.getLatitude();
-//            Double mLong = mCurrentLocation.getLongitude();
-//            SharedPreferences sharedPref = getSharedPreferences("your_prefs", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putLong("latitude_key", Double.doubleToLongBits((mLat)));
-//            editor.putLong("longitude_key", Double.doubleToLongBits((mLong)));
-//            editor.apply();
+            latitude = mCurrentLocation.getLatitude();
+            longitude = mCurrentLocation.getLongitude();
+            SharedPreferences sharedPref = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putLong("latitude_key", Double.doubleToLongBits((latitude)));
+            editor.putLong("longitude_key", Double.doubleToLongBits((longitude)));
+            editor.apply();
         }
     }
 
@@ -296,9 +283,7 @@ public class LocationActivity extends BaseActivity implements
     }
 
     private void updateUI() {
-
         if (mCurrentLocation != null) {
-
             Double mLat = mCurrentLocation.getLatitude();
             Double mLong = mCurrentLocation.getLongitude();
             SharedPreferences sharedPref = getSharedPreferences("your_prefs", Context.MODE_PRIVATE);
@@ -306,18 +291,9 @@ public class LocationActivity extends BaseActivity implements
             editor.putLong("latitude_key", Double.doubleToLongBits((mLat)));
             editor.putLong("longitude_key", Double.doubleToLongBits((mLong)));
             editor.apply();
-
             Log.i(TAG, "mLat = " + mLat);
-
-
-            mLatitudeText.setText(String.valueOf(mLat));
-            mLongitudeText.setText(String.valueOf(mLong));
-            mLongitudeText.setVisibility(View.VISIBLE);
-            mTimeText.setText(mLastUpdateTime);
-
         } else {
-            mLatitudeText.setText(R.string.connection_failed);
-            mLongitudeText.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -356,8 +332,6 @@ public class LocationActivity extends BaseActivity implements
         if (mGoogleApiClient.isConnected()) {
             stopLocationUpdates();
         }
-
-        bundle.putBoolean("SwitchState", locationSwitch.isChecked());
     }
 
     @Override
@@ -373,25 +347,20 @@ public class LocationActivity extends BaseActivity implements
         } catch (IllegalStateException i) {
             Log.i(TAG, "onResume GoogleApiClient is not Connected yet = " + i.getMessage());
         }
-        locationSwitch.setChecked(bundle.getBoolean("SwitchState", false));
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-
         savedInstanceState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY, mRequestingLocationUpdates);
         savedInstanceState.putParcelable(LOCATION_KEY, mCurrentLocation);
         savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
 
-        savedInstanceState.putBoolean("SwitchButtonState", locationSwitch.isChecked());
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        locationSwitch.setChecked(savedInstanceState.getBoolean("SwitchButtonState", false));
-
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
@@ -420,4 +389,74 @@ public class LocationActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PreferenceActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
+    }
+
+
+    // -----------------------------MyPreferenceFragment--------------------------------------------
+    //
+    // Removes requirement for a static inner class
+    @SuppressLint("ValidFragment")
+    public class MyPreferenceFragment extends PreferenceFragment
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+        private CheckBoxPreference locationPreference;
+
+        @Override
+        public void onCreate(final Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+            locationPreference = (CheckBoxPreference) findPreference("location_preference");
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+            locationPreference.setChecked(false);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        }
+
+
+        //Configure CheckboxPreferences to work like RadioButtons
+        @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+
+            String key = preference.getKey();
+
+            if(key.equals(null)){
+                String none = "not changed";
+                Toast.makeText(getActivity(), none, Toast.LENGTH_SHORT).show();
+                locationPreference.setChecked(false);
+            }
+
+            else if (key.equals("location_preference")) {
+                // Switch location on/off
+                togglePeriodicLocUpdates();
+
+            }
+
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+
+    }
 }

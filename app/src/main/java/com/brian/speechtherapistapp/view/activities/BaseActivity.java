@@ -141,7 +141,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                         startActivity(i);
                         break;
                     case 2:
-                        showToast("launch settings activity");;
+                        Intent intentSettings = new Intent(getApplicationContext(), PreferenceActivity.class);
+                        startActivity(intentSettings);
                         break;
                     case 3:
                         Intent intentMap = new Intent(getApplicationContext(), MapsActivity.class);

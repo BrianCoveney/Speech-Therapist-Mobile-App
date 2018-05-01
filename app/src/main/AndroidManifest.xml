@@ -20,7 +20,6 @@
         <activity android:name=".view.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,6 +29,21 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.SplashActivity"/>
+        </activity>
+        <activity
+            android:name=".view.activities.PreferenceActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:label="Preference Activity"
+            android:parentActivityName=".view.activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activities.HomeActivity" />
+
+            <intent-filter>
+                <action android:name=".PreferenceActivity" />
+                <!--<action android:theme="@style/MyPreferencesStyle"/>-->
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
         </activity>
         <activity android:name=".view.activities.LoginActivity"
             android:label="@string/login_activity"

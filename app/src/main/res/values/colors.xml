@@ -10,10 +10,7 @@
     <color name="gray_lightest">#EEEEEE</color>
     <color name="red">#DD2C00</color>
     <color name="green_dark">#00C853</color>
-
-
-
+    <color name="material_brown">#efebe9</color>
     <color name="button_pressed_text_color">@color/gray_lightest</color>
     <color name="background">@color/gray_lightest</color>
-
 </resources>

@@ -1,6 +1,6 @@
 package com.brian.speechtherapistapp.view.activities;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap googleMap;
     int PROXIMITY_RADIUS = 10000;
     double latitude,longitude;
+    private String LOG_TAG = MapsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Data retrieved from LocationActivity
+        SharedPreferences sharedPreferences = getApplicationContext().
+                getSharedPreferences("your_prefs", Context.MODE_PRIVATE);
+
+        //storing double values in SharedPreferences without losing precision
+        latitude = Double.longBitsToDouble(sharedPreferences.getLong("latitude_key", 0));
+        longitude = Double.longBitsToDouble(sharedPreferences.getLong("longitude_key", 0));
     }
 
 
@@ -44,13 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
 
-        //Data retrieved from LocationActivity
-        SharedPreferences sharedPreferences =
-                getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
-
-        //storing double values in SharedPreferences without losing precision
-        latitude = Double.longBitsToDouble(sharedPreferences.getLong("latitude_key", 0));
-        longitude = Double.longBitsToDouble(sharedPreferences.getLong("longitude_key", 0));
+        Log.i(LOG_TAG, "Latitude: " + latitude);
 
 
         // Add a marker in Current Location and move the camera

@@ -77,4 +77,14 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <!-- Preferences -->
+    <style name="MyPreferencesStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/material_brown</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/blue</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/green</item>
+        <item name="android:colorControlHighlight">#fffea50b</item>
+    </style>
+
 </resources>
