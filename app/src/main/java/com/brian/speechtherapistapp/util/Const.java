@@ -23,48 +23,51 @@ Const {
         public static final String EEP = "eep";
     }
 
-    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
-    public static final List<String> GLIDING_OF_LIQUIDS_INVALID_LIST = Collections.unmodifiableList(
+    public static final List<String> GLIDING_OF_LIQUIDS = Collections.unmodifiableList(
             Arrays.asList(
-                    "teffone",  // telephone
-                    "pider",        // spider
-                    "weg",          // leg
-                    "pway",         // play
-                    "wun",          // run
-                    "yeyo",         // yellow
-                    "lif",          // leaf
-                    "weal",         // real
-                    "wabit",        // rabbit
-                    "wook",         // look
-                    "bwed",         // bread
-                    "gween",        // green
-                    "bwack",        // black
-                    "gwas"          // glass
+                    "wed",     // red
+                    "yeg",     // leg
+                    "wook",    // look
+                    "wabbit",  // rabbit
+                    "one",     // run
+                    "wadder",  // ladder
+                    "pway",    // leaf
+                    "cawy",    // carry
+                    "yucky",   // lucky
+                    "wat"     // rock
             )
     );
 
-    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
-    public static final List<String> GLIDING_OF_LIQUIDS_VALID_LIST = Collections.unmodifiableList(
+    public static final List<String> CLUSTER_REDUCTION = Collections.unmodifiableList(
             Arrays.asList(
-                    "telephone",
-                    "spider",
-                    "leg",
-                    "play",
-                    "run",
-                    "yellow",
-                    "leaf",
-                    "real",
-                    "rabbit",
-                    "look",
-                    "bread",
-                    "green",
-                    "black",
-                    "glass",
-                    "menu"
+                    "fren",
+                    "tuck",
+                    "side",
+                    "bown",
+                    "spat",
+                    "sool",
+                    "coal",
+                    "pider",
+                    "poon",
+                    "sate"
             )
     );
 
-    // Liquid Gliding (LG) - When a child substitutes a glide sound (w, y) for a liquid sound (r, l)
+    public static final List<String> FINAL_CONSONANT_DELETION = Collections.unmodifiableList(
+            Arrays.asList(
+                    "daw",
+                    "sop",
+                    "pi",
+                    "cuh",
+                    "dah",
+                    "ho",
+                    "ba",
+                    "moo",
+                    "weigh",
+                    "no"
+            )
+    );
+
     public static final List<String> LIST_OF_CORRECT_WORDS = Collections.unmodifiableList(
             Arrays.asList(
                     "red",
@@ -95,7 +98,7 @@ Const {
                     "bat",
                     "moon",
                     "weight",
-                    "node"
+                    "nose"
             )
     );
 

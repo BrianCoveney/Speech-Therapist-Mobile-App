@@ -40,8 +40,8 @@ public class Word implements Serializable{
         frequency++;
     }
 
-    public boolean hasMatch(String word) {
-        for (String words : glidingLiquidsWords) {
+    public boolean hasMatch(String word, List<String> list) {
+        for (String words : list) {
             if (words.contains(word)) {
                 incrementFrequency();
                 return true;

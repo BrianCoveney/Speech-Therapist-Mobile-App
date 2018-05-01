@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
 
@@ -47,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(String toastMessage) {
-
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override

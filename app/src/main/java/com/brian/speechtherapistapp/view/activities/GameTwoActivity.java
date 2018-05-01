@@ -68,15 +68,11 @@ public class GameTwoActivity extends BaseActivity implements
     private static final int CHILD_ID = 0;
     private List<Child> childList;
 
-
-
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     private SpeechRecognizer recognizer;
     private static final String TEXT_SEARCH = "words";
-
-
 
 
 
@@ -204,12 +200,13 @@ public class GameTwoActivity extends BaseActivity implements
             String currentWord = child.getWord();
             if (currentWord != null) {
                 currentWord = child.getWord();
+                DBController.getInstance().setWord(child, currentWord, result);
+
+                Log.i(LOG_TAG, "Child's newWord: " + child.getWord());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
 
-                DBController.getInstance().setWord(child, currentWord, result);
-                Log.i(LOG_TAG, "Child's newWord: " + child.getWord());
-
                 showToast("Saved: " + result);
+
             } else {
                 showToast("You need to create a user account first!");
             }
