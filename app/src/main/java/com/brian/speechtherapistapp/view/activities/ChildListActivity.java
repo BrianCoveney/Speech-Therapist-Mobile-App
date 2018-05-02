@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,9 +77,12 @@ public class ChildListActivity extends BaseActivity {
             childAdapter = new ChildAdapter(getApplicationContext(), childList);
             childListView.setAdapter(childAdapter);
 
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            }, 500);
         }
 
         @Override
