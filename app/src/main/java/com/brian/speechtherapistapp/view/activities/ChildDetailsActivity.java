@@ -1,5 +1,6 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -9,6 +10,8 @@ import com.brian.speechtherapistapp.models.Child;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import receivers.EmailDialog;
 
 public class ChildDetailsActivity extends BaseActivity{
 
@@ -23,6 +26,8 @@ public class ChildDetailsActivity extends BaseActivity{
 
     @BindView(R.id.tv_word)
     TextView wordTextView;
+
+    private Child child;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +51,20 @@ public class ChildDetailsActivity extends BaseActivity{
 
     private Child getChildFromChildListActivity() {
         Intent i = getIntent();
-        Child c = i.getParcelableExtra("child_key");
+        child = i.getParcelableExtra("child_key");
 
-        return Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
-                .withWord(c.getWord())
+        return Child.builder(child.getId(), child.getFirstName(), child.getSecondName(), child.getEmail())
+                .withWord(child.getWord())
                 .build();
+    }
+
+    @OnClick(R.id.fab_email)
+    public void onClickEmailButton() {
+        DialogFragment dialogFragment = new EmailDialog();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("child_object", child);
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(getFragmentManager(), "email_key");
     }
 
 }

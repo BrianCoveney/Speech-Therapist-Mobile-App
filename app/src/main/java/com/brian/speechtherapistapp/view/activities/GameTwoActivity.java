@@ -60,7 +60,7 @@ public class GameTwoActivity extends BaseActivity implements
 
     private static final String LOG_TAG = GameTwoActivity.class.getSimpleName();
     private WordAdapter adapter;
-    private static final int NUM_LIST_ITEMS = Const.LIST_OF_CORRECT_WORDS.size();
+    private static final int NUM_LIST_ITEMS = Const.LIST_CORRECT_WORDS.size();
     private static final String WORD_ID = "word_id";
     private String result;
     private String onItemClickResult;

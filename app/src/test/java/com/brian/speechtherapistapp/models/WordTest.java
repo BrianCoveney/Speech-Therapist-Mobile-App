@@ -16,9 +16,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class WordTest {
 
     private Word word;
-    private List<String> wordList = Const.LIST_OF_CORRECT_WORDS;
+    private List<String> wordList = Const.LIST_CORRECT_WORDS;
     private String wordInDictionary = "run";
-    private String wordNotInDictionary = "apples";
+    private String wordNotInDictionary = "pider";
 
     @Before
     public void setUp() throws Exception {
@@ -31,10 +31,9 @@ public class WordTest {
         assertFalse(word.hasMatch(wordNotInDictionary, wordList));
         assertEquals(1, word.getFrequency());
 
+        // Add word again
         assertTrue(word.hasMatch(wordInDictionary, wordList));
+        // Then frequency should be incremented
         assertThat(word.getFrequency(), is(2));
     }
-
-
-
 }

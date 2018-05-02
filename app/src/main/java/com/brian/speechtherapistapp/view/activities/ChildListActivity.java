@@ -33,7 +33,6 @@ public class ChildListActivity extends BaseActivity {
     ListView childListView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

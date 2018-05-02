@@ -108,7 +108,7 @@ public class ChildTest {
         Child child = Child.builder(id, firstName, secondName, email).build();
         child.setWord("telephone");
 
-        StringBuilder sb =new StringBuilder("Child{");
+        StringBuilder sb = new StringBuilder("Child{");
         sb.append("id="+child.getId()+", ");
         sb.append("firstName='"+child.getFirstName()+"', ");
         sb.append("secondName='"+child.getSecondName()+"', ");

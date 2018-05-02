@@ -12,7 +12,7 @@ public class Word implements Serializable{
     private String id;
     private String word;
     private int frequency;
-    private List<String> glidingLiquidsWords = Const.LIST_OF_CORRECT_WORDS;
+    private List<String> glidingLiquidsWords = Const.LIST_CORRECT_WORDS;
 
     public Word() { }
 
@@ -42,7 +42,7 @@ public class Word implements Serializable{
 
     public boolean hasMatch(String word, List<String> list) {
         for (String words : list) {
-            if (words.contains(word)) {
+            if (words.equals(word)) {
                 incrementFrequency();
                 return true;
             }

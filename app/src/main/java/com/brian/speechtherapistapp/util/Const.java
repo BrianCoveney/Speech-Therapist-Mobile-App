@@ -23,7 +23,7 @@ Const {
         public static final String EEP = "eep";
     }
 
-    public static final List<String> GLIDING_OF_LIQUIDS = Collections.unmodifiableList(
+    public static final List<String> LIST_GLIDING_OF_LIQUIDS = Collections.unmodifiableList(
             Arrays.asList(
                     "wed",     // red
                     "yeg",     // leg
@@ -34,11 +34,11 @@ Const {
                     "pway",    // leaf
                     "cawy",    // carry
                     "yucky",   // lucky
-                    "wat"     // rock
+                    "wat"      // rock
             )
     );
 
-    public static final List<String> CLUSTER_REDUCTION = Collections.unmodifiableList(
+    public static final List<String> LIST_CLUSTER_REDUCTION = Collections.unmodifiableList(
             Arrays.asList(
                     "fren",
                     "tuck",
@@ -53,7 +53,7 @@ Const {
             )
     );
 
-    public static final List<String> FINAL_CONSONANT_DELETION = Collections.unmodifiableList(
+    public static final List<String> LIST_FINAL_CONSONANT_DELETION = Collections.unmodifiableList(
             Arrays.asList(
                     "daw",
                     "sop",
@@ -68,7 +68,7 @@ Const {
             )
     );
 
-    public static final List<String> LIST_OF_CORRECT_WORDS = Collections.unmodifiableList(
+    public static final List<String> LIST_CORRECT_WORDS = Collections.unmodifiableList(
             Arrays.asList(
                     "red",
                     "leg",
