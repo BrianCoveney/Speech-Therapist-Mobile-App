@@ -74,5 +74,6 @@ public class WordRepositoryImpl implements IWordRepository {
                 childCollection.insertOne(document);
             }
         });
+        // thread.start(); //TODO
     }
 }

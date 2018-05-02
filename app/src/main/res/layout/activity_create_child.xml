@@ -16,7 +16,7 @@
         android:id="@+id/et_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:hint="@string/first_name"
         android:imeOptions="actionNext"
         android:nextFocusForward="@+id/et_second_name"

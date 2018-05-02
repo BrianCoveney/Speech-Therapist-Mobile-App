@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +66,15 @@ public class LoginActivity extends BaseActivity
     @BindView(R.id.iv_app_image)
     ImageView appImage;
 
+    @BindView(R.id.et_email)
+    EditText editTextChildEmail;
+
+    @BindView(R.id.et_password)
+    EditText editTextChildPassword;
+
+    @BindView(R.id.btn_login)
+    Button buttonChildLogin;
+
     public static final String EXTRA_MESSAGE = "therapist_name";
 
 
@@ -74,15 +85,21 @@ public class LoginActivity extends BaseActivity
         getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
         ButterKnife.bind(this);
 
-//        getSupportActionBar().show();
-
         init();
         displayLoginType();
 
         if (isLoginTherapist == true) {
             appImage.setImageResource(R.drawable.therapist2);
+            googleSignInButton.setVisibility(View.VISIBLE);
+            editTextChildEmail.setVisibility(View.INVISIBLE);
+            editTextChildPassword.setVisibility(View.INVISIBLE);
+            buttonChildLogin.setVisibility(View.INVISIBLE);
         } else if (isLoginChild == true) {
             appImage.setImageResource(R.drawable.bubbles);
+            googleSignInButton.setVisibility(View.INVISIBLE);
+            editTextChildEmail.setVisibility(View.VISIBLE);
+            editTextChildPassword.setVisibility(View.VISIBLE);
+            buttonChildLogin.setVisibility(View.VISIBLE);
         }
     }
 
@@ -149,6 +166,12 @@ public class LoginActivity extends BaseActivity
                 }
                 break;
         }
+    }
+
+    @OnClick(R.id.btn_login)
+    public void onClickButtonLoginChild() {
+        Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
+        startActivity(intentGameMenuActivity);
     }
 
     @Override

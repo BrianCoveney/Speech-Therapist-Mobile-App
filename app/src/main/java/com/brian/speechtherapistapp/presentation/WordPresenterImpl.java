@@ -12,6 +12,7 @@ public class WordPresenterImpl implements IWordPresenter {
     private IGameView gameOneView;
     private Word word;
     private IWordRepository wordRepository;
+    private static final String LOG_TAG = WordPresenterImpl.class.getSimpleName();
 
     @Inject
     public WordPresenterImpl(IWordRepository wordRepository) {

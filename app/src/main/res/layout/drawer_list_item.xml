@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@color/green">
+    android:background="@drawable/nav_drawer_btn_styles" >
 
     <ImageView
         android:id="@+id/iv_nav_drawer_icons"

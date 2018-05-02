@@ -18,7 +18,7 @@
     <string name="create_child_screen">Create Child</string>
     <string name="speech_activity">Speech Activity</string>
     <string name="email">Email:</string>
-    <string name="password">Password</string>
+    <string name="password">Password:</string>
     <string name="play_game_two">Play Game Two</string>
     <string name="play_game_three">Play Game Three</string>
     <string name="play_game_one">Play Game One</string>
@@ -45,6 +45,7 @@
     <string name="connection_failed">Connection failed. Is location enabled?</string>
     <string name="share_message1">Here is the Child that you are emailing:</string>
     <string name="share_message2">Thanks for sharing!</string>
+    <string name="sign_in">Sign in</string>
 
     <string-array name="intent_email">
         <item>brian.coveney@mycit.ie</item>
@@ -57,12 +58,10 @@
         <item>Home</item>
         <item>Settings</item>
         <item>Google Map</item>
-        <item>Find Location</item>
     </string-array>
     <string-array name="menu_icons">
         <item>@drawable/ic_home_24dp</item>
         <item>@drawable/ic_settings_applications_24dp</item>
-        <item>@drawable/ic_map_48dp</item>
         <item>@drawable/ic_add_24dp</item>
     </string-array>
 </resources>

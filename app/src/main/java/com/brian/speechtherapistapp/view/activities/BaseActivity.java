@@ -96,17 +96,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // when items in Actionbar are pressed (not the Hamburger menu)
         switch (item.getItemId()) {
-            case R.id.action_location:
-//                Intent intentLocation = new Intent(this, LocationActivity.class);
-//                startActivity(intentLocation);
-                break;
             case R.id.action_googlemaps:
                 Intent intentMap = new Intent(this, MapsActivity.class);
                 startActivity(intentMap);
                 break;
             case R.id.action_login:
-                Intent i = new Intent(this, LoginActivity.class);
-                startActivity(i);
+                Intent intentHome = new Intent(this, HomeActivity.class);
+                startActivity(intentHome);
             default:
                 break;
         }
@@ -117,7 +113,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
     private void addDrawerItems(){
         mTaskItems = getResources().getStringArray(R.array.menu_items);
@@ -138,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 switch (position) {
                     case 1:
-                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(i);
                         break;
                     case 2:
@@ -149,12 +144,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         Intent intentMap = new Intent(getApplicationContext(), MapsActivity.class);
                         startActivity(intentMap);
                         break;
-                    case 4:
-//                        Intent intentLocation = new Intent(getApplicationContext(), LocationActivity.class);
-//                        startActivity(intentLocation);
-                    default:
                 }
-
             }
         });
     }

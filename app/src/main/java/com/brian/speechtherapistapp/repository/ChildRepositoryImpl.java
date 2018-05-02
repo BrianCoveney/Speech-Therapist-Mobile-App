@@ -96,7 +96,7 @@ public class ChildRepositoryImpl implements IChildRepository {
                 childCollection.insertOne(document);
             }
         });
-        thread.start();
+         thread.start();
     }
 
     @Override

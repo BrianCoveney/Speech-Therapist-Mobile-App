@@ -98,7 +98,7 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
                     if (passwordMatch) {
                         iChildPresenter.saveChild();
                         Intent intentTherapistActivity = new Intent(getApplicationContext(),
-                                TherapistMenuActivity.class);
+                                HomeActivity.class);
                         startActivity(intentTherapistActivity);
                     }
                 }

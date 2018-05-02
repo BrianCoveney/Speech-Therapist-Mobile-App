@@ -1,0 +1,7 @@
+<!-- Highlight Items in Nav Drawer on selection -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_pressed="true" android:drawable="@color/orange"/> <!--item selected state-->
+    <item android:state_enabled="true" android:state_focused="true" android:drawable="@color/orange"/> <!--item selected state-->
+    <item android:state_enabled="true" android:state_selected="true" android:drawable="@color/orange"/> <!--item selected state-->
+    <!--<item android:state_focused="false" android:state_pressed="false" android:drawable="@color/blue_grey_900"/> &lt;!&ndash;item NOT selected state&ndash;&gt;-->
+</selector>
