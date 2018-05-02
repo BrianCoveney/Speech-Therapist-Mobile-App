@@ -1,5 +1,6 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
@@ -32,6 +34,9 @@ public class ChildListActivity extends BaseActivity {
     @BindView(R.id.lv_child_list)
     ListView childListView;
 
+    @BindView(R.id.progress_bar_cyclic)
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,10 @@ public class ChildListActivity extends BaseActivity {
 
     private class PopulateListViewTask extends AsyncTask<Void, Void, List<Child>> {
 
-        @Override
+    private ProgressDialog progressDialog = new ProgressDialog(ChildListActivity.this);
+
+
+    @Override
         protected List<Child> doInBackground(Void... voids) {
             // Call to DB
             childList = iChildPresenter.getChildren();
@@ -67,6 +75,17 @@ public class ChildListActivity extends BaseActivity {
             // Create and populate our custom adapter
             childAdapter = new ChildAdapter(getApplicationContext(), childList);
             childListView.setAdapter(childAdapter);
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.progressDialog.setMessage("Please wait");
+            this.progressDialog.show();
         }
     }
 
