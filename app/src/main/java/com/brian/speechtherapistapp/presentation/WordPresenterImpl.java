@@ -27,7 +27,7 @@ public class WordPresenterImpl implements IWordPresenter {
 
     @Override
     public void saveWord() {
-        word.setWord(gameOneView.getRecognizerWordResult());
+        word.setName(gameOneView.getRecognizerWordResult());
         wordRepository.saveWord(word);
     }
 

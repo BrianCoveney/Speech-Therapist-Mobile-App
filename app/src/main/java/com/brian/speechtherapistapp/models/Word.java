@@ -7,12 +7,12 @@ import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
-public class Word implements Serializable{
+public class Word implements  Serializable{
     private static final long serialVersionUID = -8060210544600464481L;
     private String id;
-    private String word;
+    private String name;
     private int frequency;
-    private List<String> glidingLiquidsWords = Const.LIST_CORRECT_WORDS;
+    private List<String> glidingLiquidsWords = Const.CORRECT_WORDS_LIST;
 
     public Word() { }
 
@@ -24,12 +24,12 @@ public class Word implements Serializable{
         this.id = id;
     }
 
-    public String getWord() {
-        return word;
+    public String getName() {
+        return name;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getFrequency() {
@@ -52,7 +52,7 @@ public class Word implements Serializable{
 
     @Override
     public String toString() {
-        return word;
+        return name;
     }
 
 }

@@ -104,7 +104,7 @@ public class ChildRepositoryImpl implements IChildRepository {
         childCollection.updateOne(eq("word", currWord),
                 new Document("$set", new Document("word", newWord)));
 
-        child.setWord(newWord);
+//        child.setWordSaid(newWord);
     }
 
     @Override

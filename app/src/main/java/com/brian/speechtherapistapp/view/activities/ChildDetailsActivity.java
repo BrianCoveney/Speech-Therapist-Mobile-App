@@ -46,7 +46,7 @@ public class ChildDetailsActivity extends BaseActivity{
         firstNameTextView.setText(child.getFirstName());
         secondNameTextView.setText(child.getSecondName());
         emailTextView.setText(child.getEmail());
-        wordTextView.setText(child.getWord());
+        wordTextView.setText(child.getWordSaid());
     }
 
     private Child getChildFromChildListActivity() {
@@ -54,7 +54,7 @@ public class ChildDetailsActivity extends BaseActivity{
         child = i.getParcelableExtra("child_key");
 
         return Child.builder(child.getId(), child.getFirstName(), child.getSecondName(), child.getEmail())
-                .withWord(child.getWord())
+                .withWord(child.getWordSaid())
                 .build();
     }
 

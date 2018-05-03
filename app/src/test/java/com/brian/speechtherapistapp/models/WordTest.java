@@ -1,12 +1,16 @@
 package com.brian.speechtherapistapp.models;
 
-import com.brian.speechtherapistapp.util.Const;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
+import static com.brian.speechtherapistapp.util.Const.CLUSTER_REDUCTION_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.CORRECT_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.FINAL_CONSONANT_DELETION_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.GLIDING_OF_LIQUIDS_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.WORD_IN_CLUSTER_REDUCTION;
+import static com.brian.speechtherapistapp.util.Const.WORD_IN_CORRECT_WORDS;
+import static com.brian.speechtherapistapp.util.Const.WORD_IN_FINAL_CONSONANT_DELETION;
+import static com.brian.speechtherapistapp.util.Const.WORD_IN_GLIDING_OF_LIQUIDS;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -16,24 +20,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class WordTest {
 
     private Word word;
-    private List<String> wordList = Const.LIST_CORRECT_WORDS;
-    private String wordInDictionary = "run";
-    private String wordNotInDictionary = "pider";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         word = new Word();
     }
 
     @Test
-    public void hasMatch() throws Exception {
-        assertTrue(word.hasMatch(wordInDictionary, wordList));
-        assertFalse(word.hasMatch(wordNotInDictionary, wordList));
+    public void testHasMatch() {
+
+        // Test 'word' in correct word list
+        assertTrue(word.hasMatch(WORD_IN_CORRECT_WORDS, CORRECT_WORDS_LIST));
+        assertFalse(word.hasMatch(WORD_IN_CLUSTER_REDUCTION, CORRECT_WORDS_LIST));
         assertEquals(1, word.getFrequency());
 
-        // Add word again
-        assertTrue(word.hasMatch(wordInDictionary, wordList));
-        // Then frequency should be incremented
-        assertThat(word.getFrequency(), is(2));
+        // Test frequency has incremented
+        assertTrue(word.hasMatch(WORD_IN_CORRECT_WORDS, CORRECT_WORDS_LIST));
+        assertThat("Freq should increment when a word is added", word.getFrequency(), is(2));
+
+        // Test 'word' in gliding of liquids list
+        assertTrue(word.hasMatch(WORD_IN_GLIDING_OF_LIQUIDS, GLIDING_OF_LIQUIDS_WORDS_LIST));
+        assertFalse(word.hasMatch(WORD_IN_CORRECT_WORDS, GLIDING_OF_LIQUIDS_WORDS_LIST));
+
+        // Test 'word' in cluster reduction
+        assertTrue(word.hasMatch(WORD_IN_CLUSTER_REDUCTION, CLUSTER_REDUCTION_WORDS_LIST));
+        assertFalse(word.hasMatch(WORD_IN_CORRECT_WORDS, CLUSTER_REDUCTION_WORDS_LIST));
+
+        // Test 'word' in final consonant deletion
+        assertTrue(word.hasMatch(WORD_IN_FINAL_CONSONANT_DELETION, FINAL_CONSONANT_DELETION_WORDS_LIST));
+        assertFalse(word.hasMatch(WORD_IN_CORRECT_WORDS, CLUSTER_REDUCTION_WORDS_LIST));
+
     }
 }

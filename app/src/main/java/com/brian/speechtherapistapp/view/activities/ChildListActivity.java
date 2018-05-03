@@ -104,7 +104,7 @@ public class ChildListActivity extends BaseActivity {
                         childClicked.getFirstName(),
                         childClicked.getSecondName(),
                         childClicked.getEmail())
-                        .withWord(childClicked.getWord())
+                        .withWord(childClicked.getWordSaid())
                         .build();
 
                 Intent intent = new Intent(getApplicationContext(), ChildDetailsActivity.class);

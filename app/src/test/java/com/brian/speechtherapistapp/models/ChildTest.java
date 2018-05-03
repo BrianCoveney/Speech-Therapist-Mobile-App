@@ -98,15 +98,15 @@ public class ChildTest {
     public void testChildWithWord() {
         Child child = Child.builder(id, firstName, secondName, email).build();
         String expected = "telephone";
-        child.setWord("telephone");
+        child.setWordSaid("telephone");
 
-        assertEquals(expected, child.getWord());
+        assertEquals(expected, child.getWordSaid());
     }
 
     @Test
     public void testToString() {
         Child child = Child.builder(id, firstName, secondName, email).build();
-        child.setWord("telephone");
+        child.setWordSaid("telephone");
 
         StringBuilder sb = new StringBuilder("Child{");
         sb.append("id="+child.getId()+", ");
@@ -115,7 +115,7 @@ public class ChildTest {
         sb.append("email='"+child.getEmail()+"', ");
         sb.append("birthday='"+child.getBirthday()+"', ");
         sb.append("password='"+child.getPassword()+"', ");
-        sb.append("word="+child.getWord()+"}");
+        sb.append("word="+child.getWordSaid()+"}");
 
         assertEquals(sb.toString(), child.toString());
     }

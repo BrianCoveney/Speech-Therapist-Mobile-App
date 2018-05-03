@@ -60,7 +60,7 @@ public class GameTwoActivity extends BaseActivity implements
 
     private static final String LOG_TAG = GameTwoActivity.class.getSimpleName();
     private WordAdapter adapter;
-    private static final int NUM_LIST_ITEMS = Const.LIST_CORRECT_WORDS.size();
+    private static final int NUM_LIST_ITEMS = Const.CORRECT_WORDS_LIST.size();
     private static final String WORD_ID = "word_id";
     private String result;
     private String onItemClickResult;
@@ -197,12 +197,12 @@ public class GameTwoActivity extends BaseActivity implements
             String result = hypothesis.getHypstr();
 
             child = DBController.getInstance().getChildFromDB(CHILD_ID);
-            String currentWord = child.getWord();
+            String currentWord = child.getWordSaid();
             if (currentWord != null) {
-                currentWord = child.getWord();
+                currentWord = child.getWordSaid();
                 DBController.getInstance().setWord(child, currentWord, result);
 
-                Log.i(LOG_TAG, "Child's newWord: " + child.getWord());
+                Log.i(LOG_TAG, "Child's newWord: " + child.getWordSaid());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
 
                 showToast("Saved: " + result);

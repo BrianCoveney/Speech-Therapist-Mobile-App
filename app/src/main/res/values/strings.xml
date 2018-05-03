@@ -33,7 +33,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="child_list">Child List</string>
     <string name="Add">add</string>
-    <string name="word">Word:</string>
+    <string name="name">Word:</string>
     <string name="textview">textview</string>
     <string name="child_details">Child Details</string>
     <string name="drawer_open">Open navigation drawer</string>

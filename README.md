@@ -96,7 +96,7 @@ private void setupRecognizer(File assetsDir) throws IOException {
             .getRecognizer();
     recognizer.addListener(this);
 
-    // Create grammar-based search for custom word recognition
+    // Create grammar-based search for custom name recognition
     File testGrammar = new File(assetsDir, "test.gram");
     recognizer.addGrammarSearch(TEST_SEARCH, testGrammar);
 }

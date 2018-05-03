@@ -80,28 +80,32 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="276dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/email"
-        android:nextFocusForward="@id/et_password"
-        app:layout_constraintBottom_toTopOf="@+id/et_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="276dp"
         android:layout_height="45dp"
         android:layout_marginBottom="16dp"
+        android:hint="@string/email"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:nextFocusForward="@id/et_password"
+        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="276dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
         android:hint="@string/password"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintBottom_toTopOf="@+id/btn_google_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v7.widget.AppCompatButton

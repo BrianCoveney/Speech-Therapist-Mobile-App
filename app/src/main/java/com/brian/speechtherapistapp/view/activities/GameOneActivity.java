@@ -226,7 +226,7 @@ public class GameOneActivity extends BaseActivity implements IGameView, Recognit
 
     private void populateListView() {
         this.arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                Const.LIST_CORRECT_WORDS);
+                Const.CORRECT_WORDS_LIST);
         listView.setAdapter(arrayAdapter);
     }
 }

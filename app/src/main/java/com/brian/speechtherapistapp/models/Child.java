@@ -34,12 +34,12 @@ public class Child implements Parcelable{
         return new ChildBuilder(id, firstName, secondName, email);
     }
 
-    public String getWord() {
-        return word.getWord();
+    public String getWordSaid() {
+        return word.getName();
     }
 
-    public void setWord(String word) {
-        this.word.setWord(word);
+    public void setWordSaid(String word) {
+        this.word.setName(word);
     }
 
     public int getId() {
@@ -138,7 +138,7 @@ public class Child implements Parcelable{
         parcel.writeString(firstName);
         parcel.writeString(secondName);
         parcel.writeString(email);
-        parcel.writeString(word.getWord());
+        parcel.writeString(word.getName());
     }
 
     public static class ChildBuilder {
@@ -158,7 +158,7 @@ public class Child implements Parcelable{
 
         public ChildBuilder withWord(String word) {
             if (word != null) {
-                child.word.setWord(word);
+                child.word.setName(word);
             }
             return this;
         }
