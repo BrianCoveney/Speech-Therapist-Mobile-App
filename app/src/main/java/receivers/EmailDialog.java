@@ -52,7 +52,7 @@ public class EmailDialog extends DialogFragment {
                         sb.append("\n\nFirst Name:         " + child.getFirstName());
                         sb.append("\nSecond Name:   " + child.getSecondName());
                         sb.append("\nEmail Name:       " + child.getEmail());
-                        sb.append("\nWord:                   " + child.getWordSaid());
+                        sb.append("\nWord:                   " + child.getWordName());
                         sb.append("\n\n" + getString(R.string.share_message2));
                         String emailContent = sb.toString();
 

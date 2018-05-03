@@ -197,12 +197,13 @@ public class GameTwoActivity extends BaseActivity implements
             String result = hypothesis.getHypstr();
 
             child = DBController.getInstance().getChildFromDB(CHILD_ID);
-            String currentWord = child.getWordSaid();
+
+            String currentWord = child.getWordName();
             if (currentWord != null) {
-                currentWord = child.getWordSaid();
+                currentWord = child.getWordName();
                 DBController.getInstance().setWord(child, currentWord, result);
 
-                Log.i(LOG_TAG, "Child's newWord: " + child.getWordSaid());
+                Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
 
                 showToast("Saved: " + result);
@@ -210,7 +211,6 @@ public class GameTwoActivity extends BaseActivity implements
             } else {
                 showToast("You need to create a user account first!");
             }
-
         }
     }
 

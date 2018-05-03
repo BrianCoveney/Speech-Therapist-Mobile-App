@@ -16,6 +16,10 @@ public class Word implements  Serializable{
 
     public Word() { }
 
+    public Word(String name) {
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }

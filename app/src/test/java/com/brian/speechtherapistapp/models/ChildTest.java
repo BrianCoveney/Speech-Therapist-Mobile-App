@@ -1,7 +1,5 @@
 package com.brian.speechtherapistapp.models;
 
-import com.brian.speechtherapistapp.util.Const;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,7 +7,10 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.brian.speechtherapistapp.util.Const.CORRECT_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -32,8 +33,8 @@ public class ChildTest {
 
         print("success: default values for optional params");
 
-        assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
-        assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
+        assertThat(ParamsNames.CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
+        assertThat(ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
     }
 
     @Test
@@ -44,8 +45,8 @@ public class ChildTest {
 
         print("success: default values for optional params");
 
-        assertThat(Const.ParamsNames.CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
-        assertThat(Const.ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
+        assertThat(ParamsNames.CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
+        assertThat(ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -97,16 +98,19 @@ public class ChildTest {
     @Test
     public void testChildWithWord() {
         Child child = Child.builder(id, firstName, secondName, email).build();
-        String expected = "telephone";
-        child.setWordSaid("telephone");
+        String expected = "red";
+        child.setWordName("red");
+        assertEquals(expected, child.getWordName());
 
-        assertEquals(expected, child.getWordSaid());
+        Word word = new Word(child.getWordName());
+        assertTrue(word.hasMatch(word.getName(), CORRECT_WORDS_LIST));
+        assertEquals(1, word.getFrequency());
     }
 
     @Test
     public void testToString() {
         Child child = Child.builder(id, firstName, secondName, email).build();
-        child.setWordSaid("telephone");
+        child.setWordName("telephone");
 
         StringBuilder sb = new StringBuilder("Child{");
         sb.append("id="+child.getId()+", ");
@@ -115,7 +119,7 @@ public class ChildTest {
         sb.append("email='"+child.getEmail()+"', ");
         sb.append("birthday='"+child.getBirthday()+"', ");
         sb.append("password='"+child.getPassword()+"', ");
-        sb.append("word="+child.getWordSaid()+"}");
+        sb.append("word="+child.getWordName()+"}");
 
         assertEquals(sb.toString(), child.toString());
     }
