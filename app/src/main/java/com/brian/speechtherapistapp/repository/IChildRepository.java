@@ -13,7 +13,7 @@ public interface IChildRepository {
     Child getChild(int id);
     void saveChild(ChildList childList);
     List<Child> getChildListFromDB();
-    void updateWordSpoken(Child child, String currWord, String newWord);
+    Child updateWordSpoken(Child child, String currWord, String newWord);
     Child getChildWithEmailIdentifier(String email);
 
 }

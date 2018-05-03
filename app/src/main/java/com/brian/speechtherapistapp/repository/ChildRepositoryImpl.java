@@ -100,11 +100,14 @@ public class ChildRepositoryImpl implements IChildRepository {
     }
 
     @Override
-    public void updateWordSpoken(Child child, String currWord, String newWord) {
+    public Child updateWordSpoken(Child child, String currWord, String newWord) {
+
         childCollection.updateOne(eq("word", currWord),
                 new Document("$set", new Document("word", newWord)));
 
-//        child.setWordName(newWord);
+        child.setWordName(newWord);
+
+        return child;
     }
 
     @Override

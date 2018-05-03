@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.repository.DBController;
@@ -42,6 +43,8 @@ import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
+
+import static com.brian.speechtherapistapp.util.Const.CORRECT_WORDS_LIST;
 
 
 public class GameTwoActivity extends BaseActivity implements
@@ -201,10 +204,15 @@ public class GameTwoActivity extends BaseActivity implements
             String currentWord = child.getWordName();
             if (currentWord != null) {
                 currentWord = child.getWordName();
-                DBController.getInstance().setWord(child, currentWord, result);
+                Child newChild  = DBController.getInstance().setWord(child, currentWord, result);
+
+                Word word = new Word(newChild.getWordName());
+                boolean isWordMatch = word.hasMatch(word.getName(), CORRECT_WORDS_LIST);
 
                 Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
+                Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
+
 
                 showToast("Saved: " + result);
 

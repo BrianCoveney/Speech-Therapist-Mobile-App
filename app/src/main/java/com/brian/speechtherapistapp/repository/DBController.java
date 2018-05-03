@@ -23,8 +23,8 @@ public class DBController {
         return iChildRepository.getChild(id);
     }
 
-    public void setWord(Child child, String currWord, String newWord) {
-        iChildRepository.updateWordSpoken(child, currWord, newWord);
+    public Child setWord(Child child, String currWord, String newWord) {
+        return iChildRepository.updateWordSpoken(child, currWord, newWord);
     }
 
     public Child getChildFromList(String email) {
