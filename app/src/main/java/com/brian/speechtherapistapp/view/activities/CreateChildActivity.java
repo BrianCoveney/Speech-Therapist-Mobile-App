@@ -344,6 +344,4 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         passwordEditText.setText("");
         passwordConfirmEditText.setText("");
     }
-
-
 }

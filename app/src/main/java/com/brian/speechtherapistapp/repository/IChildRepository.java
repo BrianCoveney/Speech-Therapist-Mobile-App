@@ -5,15 +5,10 @@ import com.brian.speechtherapistapp.models.ChildList;
 
 import java.util.List;
 
-/**
- * Created by brian on 01/02/18.
- */
-
 public interface IChildRepository {
-    Child getChild(int id);
     void saveChild(ChildList childList);
     List<Child> getChildListFromDB();
     Child updateWordSpoken(Child child, String currWord, String newWord);
     Child getChildWithEmailIdentifier(String email);
-
+    Child getChildFromDB();
 }

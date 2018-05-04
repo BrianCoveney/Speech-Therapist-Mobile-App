@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 public class ChildPresenterImpl implements IChildPresenter {
 
+    private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
     private Child child;
     private IChildRepository childRepository;
     private IChildView childView;
@@ -32,8 +33,8 @@ public class ChildPresenterImpl implements IChildPresenter {
 
     @Override
     public void loadChildDetails() {
-        int childId = childView.getChildId();
-        child = childRepository.getChild(childId);
+        child = childRepository.getChildFromDB();
+
         if (child != null) {
             childView.displayFirstName(child.getFirstName());
             childView.displaySecondName(child.getSecondName());
@@ -67,7 +68,10 @@ public class ChildPresenterImpl implements IChildPresenter {
         return childRepository.updateWordSpoken(child, currWord, newWord);
     }
 
-    public Child getChildFromDB(int id) {
-        return childRepository.getChild(id);
+
+    @Override
+    public Child getChildWithEmail(String email) {
+        return childRepository.getChildWithEmailIdentifier(email);
     }
+
 }

@@ -1,7 +1,9 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.models.Child;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -47,6 +50,7 @@ public class LoginActivity extends BaseActivity
     ProgressDialog dialog;
     private boolean isLoginTherapist;
     private boolean isLoginChild;
+    private Child child;
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
@@ -58,10 +62,10 @@ public class LoginActivity extends BaseActivity
     TextView nameCaptionTextView;
 
     @BindView(R.id.tv_first_name)
-    TextView nameTextView;
+    TextView textViewName;
 
     @BindView(R.id.tv_email)
-    TextView emailTextView;
+    TextView testViewEmail;
 
     @BindView(R.id.iv_app_image)
     ImageView appImage;
@@ -158,8 +162,8 @@ public class LoginActivity extends BaseActivity
             case R.id.btn_google_sign_in:
                 if (boolean_google) {
                     signOut();
-                    nameTextView.setText("");
-                    emailTextView.setText("");
+                    textViewName.setText("");
+                    testViewEmail.setText("");
                     boolean_google = false;
                 } else {
                     signIn();
@@ -170,6 +174,16 @@ public class LoginActivity extends BaseActivity
 
     @OnClick(R.id.btn_login)
     public void onClickButtonLoginChild() {
+        String email = editTextChildEmail.getText().toString();
+//        Intent intent = new Intent(getApplicationContext(), GameTwoActivity.class);
+//        intent.putExtra("child_email_key", email);
+//        startActivity(intent);
+
+        SharedPreferences sharedPref = getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("email_key", email);
+        editor.apply();
+
         Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
         startActivity(intentGameMenuActivity);
     }
@@ -280,14 +294,14 @@ public class LoginActivity extends BaseActivity
         }
 
         if (user != null) {
-            emailTextView.setVisibility(View.VISIBLE);
-            nameTextView.setVisibility(View.VISIBLE);
+            testViewEmail.setVisibility(View.VISIBLE);
+            textViewName.setVisibility(View.VISIBLE);
             nameCaptionTextView.setVisibility(View.VISIBLE);
 
             String str_emailGoogle = user.getEmail();
             Log.e(LOG_TAG, "Email: " + str_emailGoogle);
-            emailTextView.setText(str_emailGoogle);
-            nameTextView.setText(user.getDisplayName());
+            testViewEmail.setText(str_emailGoogle);
+            textViewName.setText(user.getDisplayName());
             boolean_google = true;
 
             Log.e(LOG_TAG, "Profile: " + user.getPhotoUrl() + "");
@@ -316,8 +330,8 @@ public class LoginActivity extends BaseActivity
     }
 
     private void setTextViewsInvisible() {
-        emailTextView.setVisibility(View.INVISIBLE);
+        testViewEmail.setVisibility(View.INVISIBLE);
         nameCaptionTextView.setVisibility(View.INVISIBLE);
-        nameTextView.setVisibility(View.INVISIBLE);
+        textViewName.setVisibility(View.INVISIBLE);
     }
 }

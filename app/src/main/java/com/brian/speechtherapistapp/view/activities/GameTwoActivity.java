@@ -1,7 +1,9 @@
 package com.brian.speechtherapistapp.view.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -68,8 +70,10 @@ public class GameTwoActivity extends BaseActivity implements
     private String result;
     private String onItemClickResult;
     private Child child;
+    private Child c;
     private static final int CHILD_ID = 0;
     private List<Child> childList;
+    private String childEmail;
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
@@ -86,6 +90,12 @@ public class GameTwoActivity extends BaseActivity implements
         getLayoutInflater().inflate(R.layout.activity_game_two, frameLayout);
         ButterKnife.bind(this);
 
+        childEmail = getChildFromChildLoginActivity();
+        Log.i(LOG_TAG, "Child's email: " + childEmail);
+
+        child = iChildPresenter.getChildWithEmail(childEmail);
+
+
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy =
@@ -93,7 +103,6 @@ public class GameTwoActivity extends BaseActivity implements
             StrictMode.setThreadPolicy(policy);
         }
 
-        child = iChildPresenter.getChildFromDB(CHILD_ID);
 
         /* Recycler view */
 
@@ -199,7 +208,8 @@ public class GameTwoActivity extends BaseActivity implements
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
 
-            child = iChildPresenter.getChildFromDB(CHILD_ID);
+            Log.i(LOG_TAG, "Child's wordley: " + child.getWordName());
+            Log.i(LOG_TAG, "Child's wordley: " + child.getEmail());
 
             String currentWord = child.getWordName();
             if (currentWord != null) {
@@ -294,6 +304,14 @@ public class GameTwoActivity extends BaseActivity implements
     @Override
     public String getRecognizerWordResult() {
         return result;
+    }
+
+    private String getChildFromChildLoginActivity() {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+        String childEmail = sharedPreferences.getString("email_key", "default");
+
+        return childEmail;
     }
 
 

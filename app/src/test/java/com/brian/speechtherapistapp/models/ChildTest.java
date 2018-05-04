@@ -9,20 +9,19 @@ import java.util.List;
 
 import static com.brian.speechtherapistapp.util.Const.CORRECT_WORDS_LIST;
 import static com.brian.speechtherapistapp.util.Const.ParamsNames;
+import static com.brian.speechtherapistapp.util.Const.ParamsNames.CHILD_EMAIL;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by brian on 27/01/18.
- */
+
 public class ChildTest {
 
     private int id = 1;
     private String firstName = "brian";
     private String secondName = "Coveney";
-    private String email =  "brian@email.com";
+    private String email =  "name@email.com";
 
     @Test
     public void testBuilderWithDefaultValues() {
@@ -33,7 +32,7 @@ public class ChildTest {
 
         print("success: default values for optional params");
 
-        assertThat(ParamsNames.CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
+        assertThat(CHILD_EMAIL, is(childWithDefaultValues.getPassword()));
         assertThat(ParamsNames.CHILD_BIRTHDAY, is(childWithDefaultValues.getBirthday()));
     }
 
@@ -45,7 +44,7 @@ public class ChildTest {
 
         print("success: default values for optional params");
 
-        assertThat(ParamsNames.CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
+        assertThat(CHILD_EMAIL, is(childWithOptionalArguments.getPassword()));
         assertThat(ParamsNames.CHILD_BIRTHDAY, is(childWithOptionalArguments.getBirthday()));
     }
 
@@ -122,6 +121,16 @@ public class ChildTest {
         sb.append("word="+child.getWordName()+"}");
 
         assertEquals(sb.toString(), child.toString());
+    }
+
+    @Test
+    public void testBuilderWithEmailOnly() {
+        Child child = Child.builder(CHILD_EMAIL)
+                .build();
+
+        print("success: default values for optional params");
+
+        assertThat(CHILD_EMAIL, is(child.getEmail()));
     }
 
     @BeforeClass

@@ -84,7 +84,7 @@
                 android:value=".view.activities.GameMenuActivity"/>
         </activity>
         <activity android:name=".view.activities.GameTwoActivity"
-            android:label="Game One Activity"
+            android:label="Game Two Activity"
             android:parentActivityName=".view.activities.GameMenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">

@@ -15,5 +15,5 @@ public interface IChildPresenter {
     void loadChildDetails();
     List<Child> getChildren();
     Child setWord(Child child, String currWord, String newWord);
-    Child getChildFromDB(int id);
+    Child getChildWithEmail(String email);
 }

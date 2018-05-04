@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_app_image" />
 
     <EditText
-        android:id="@+id/tv_email"
+        android:id="@+id/tv_email_child_login"
         android:hint="@string/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

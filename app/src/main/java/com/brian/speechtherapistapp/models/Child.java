@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Child implements Parcelable{
+public class Child implements Parcelable {
 
     // Required fields
     private int id;
@@ -24,10 +24,15 @@ public class Child implements Parcelable{
     // Composition
     private Word word;
 
+    // Avoids direct instantiation
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
         this.word = new Word();
+    }
+
+    public static ChildBuilder builder(String email) {
+        return new ChildBuilder(email);
     }
 
     public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
@@ -62,9 +67,13 @@ public class Child implements Parcelable{
         return email;
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
-    public String getBirthday() { return birthday; }
+    public String getBirthday() {
+        return birthday;
+    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -86,10 +95,12 @@ public class Child implements Parcelable{
         this.secondName = secondName;
     }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     boolean isEmailValid(String eMail) {
-        if(eMail != null) {
+        if (eMail != null) {
             Pattern pattern = Pattern.compile(Const.VALID_EMAIL_REGEX);
             Matcher matcher = pattern.matcher(eMail);
             return matcher.matches();
@@ -148,6 +159,11 @@ public class Child implements Parcelable{
     public static class ChildBuilder {
         private Child child;
 
+        public ChildBuilder(String email) {
+            child = new Child();
+            child.email = email;
+        }
+
         public ChildBuilder(int id, String firstName, String secondName, String email) {
 
             validateRequiredFields(id, firstName, secondName, email);
@@ -160,14 +176,8 @@ public class Child implements Parcelable{
             child.firstName = firstName;
         }
 
-        public ChildBuilder withWordName(Word word) {
-            if (word != null) {
-                child.word = word;
-            }
-            return this;
-        }
 
-            public ChildBuilder withWord(String word) {
+        public ChildBuilder withWord(String word) {
             if (word != null) {
                 child.word.setName(word);
             }
@@ -187,8 +197,6 @@ public class Child implements Parcelable{
             }
             return this;
         }
-
-
 
         public Child build() {
             return child;
