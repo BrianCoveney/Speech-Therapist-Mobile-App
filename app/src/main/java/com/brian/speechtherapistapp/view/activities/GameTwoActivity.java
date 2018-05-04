@@ -93,8 +93,6 @@ public class GameTwoActivity extends BaseActivity implements
         childEmail = getChildFromChildLoginActivity();
         Log.i(LOG_TAG, "Child's email: " + childEmail);
 
-        child = iChildPresenter.getChildWithEmail(childEmail);
-
 
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -102,6 +100,9 @@ public class GameTwoActivity extends BaseActivity implements
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+        // Call to DB needs to be below the above ThreadPolicy Builder
+        child = iChildPresenter.getChildWithEmail(childEmail);
 
 
         /* Recycler view */
@@ -214,7 +215,7 @@ public class GameTwoActivity extends BaseActivity implements
             String currentWord = child.getWordName();
             if (currentWord != null) {
                 currentWord = child.getWordName();
-                Child c = iChildPresenter.setWord(child, currentWord, result);
+                Child c = iChildPresenter.setWord(currentWord, result, childEmail);
 
                 Word word = new Word(c.getWordName());
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);

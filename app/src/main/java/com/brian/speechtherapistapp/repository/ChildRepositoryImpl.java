@@ -61,7 +61,7 @@ public class ChildRepositoryImpl implements IChildRepository {
             document.put("email", child.getEmail());
             document.put("birthday", child.getBirthday());
             document.put("password", child.getPassword());
-            document.put("word", "");
+            document.put("word", "default_word");
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -73,11 +73,12 @@ public class ChildRepositoryImpl implements IChildRepository {
     }
 
     @Override
-    public Child updateWordSpoken(Child child, String currWord, String newWord) {
+    public Child updateWordSpoken(String currWord, String newWord, String email) {
 
         childCollection.updateOne(eq("word", currWord),
                 new Document("$set", new Document("word", newWord)));
 
+        Child child = getChildWithEmailIdentifier(email);
         child.setWordName(newWord);
 
         return child;

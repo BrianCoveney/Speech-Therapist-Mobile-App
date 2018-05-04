@@ -8,7 +8,7 @@ import java.util.List;
 public interface IChildRepository {
     void saveChild(ChildList childList);
     List<Child> getChildListFromDB();
-    Child updateWordSpoken(Child child, String currWord, String newWord);
+    Child updateWordSpoken(String currWord, String newWord, String email);
     Child getChildWithEmailIdentifier(String email);
     Child getChildFromDB();
 }
