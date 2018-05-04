@@ -26,13 +26,13 @@ import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
-import com.brian.speechtherapistapp.repository.DBController;
 import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IGameView;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
-import static com.brian.speechtherapistapp.util.Const.CORRECT_WORDS_LIST;
+import static com.brian.speechtherapistapp.util.Const.GLIDING_OF_LIQUIDS_WORDS_LIST;
 
 
 public class GameTwoActivity extends BaseActivity implements
@@ -93,7 +93,7 @@ public class GameTwoActivity extends BaseActivity implements
             StrictMode.setThreadPolicy(policy);
         }
 
-        child = DBController.getInstance().getChildFromDB(CHILD_ID);
+        child = iChildPresenter.getChildFromDB(CHILD_ID);
 
         /* Recycler view */
 
@@ -199,21 +199,30 @@ public class GameTwoActivity extends BaseActivity implements
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
 
-            child = DBController.getInstance().getChildFromDB(CHILD_ID);
+            child = iChildPresenter.getChildFromDB(CHILD_ID);
 
             String currentWord = child.getWordName();
             if (currentWord != null) {
                 currentWord = child.getWordName();
-                Child newChild  = DBController.getInstance().setWord(child, currentWord, result);
+                Child c = iChildPresenter.setWord(child, currentWord, result);
 
-                Word word = new Word(newChild.getWordName());
-                boolean isWordMatch = word.hasMatch(word.getName(), CORRECT_WORDS_LIST);
+                Word word = new Word(c.getWordName());
+                boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
+
+                int wordFreq = word.getFrequency();
+
+                List<String> glidingList = new ArrayList<>();
+
+                if (isWordMatch == true) {
+                    glidingList.add(word.getName());
+                }
 
                 Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
                 Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
-
-
+                Log.i(LOG_TAG, "Word freq count: " + wordFreq);
+                Log.i(LOG_TAG, "Word gliding list: " + glidingList.toString());
+                
                 showToast("Saved: " + result);
 
             } else {

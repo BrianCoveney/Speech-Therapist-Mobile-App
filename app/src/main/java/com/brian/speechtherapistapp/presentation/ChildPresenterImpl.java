@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-/**
- * Created by brian on 04/02/18.
- */
 
 public class ChildPresenterImpl implements IChildPresenter {
 
@@ -63,5 +60,14 @@ public class ChildPresenterImpl implements IChildPresenter {
         childRepository.saveChild(childList);
 
         childView.showChildSavedMessage();
+    }
+
+    @Override
+    public Child setWord(Child child, String currWord, String newWord) {
+        return childRepository.updateWordSpoken(child, currWord, newWord);
+    }
+
+    public Child getChildFromDB(int id) {
+        return childRepository.getChild(id);
     }
 }
