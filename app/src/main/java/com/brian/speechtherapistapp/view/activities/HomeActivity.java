@@ -26,7 +26,6 @@ public class HomeActivity extends BaseActivity {
         getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
 
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.btn_login_therapist, R.id.btn_login_child})

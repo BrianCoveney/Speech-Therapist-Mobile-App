@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.util.ColorUtils;
 import com.brian.speechtherapistapp.util.Const;
 
 import butterknife.BindView;
@@ -43,6 +44,10 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         WordViewHolder viewHolder = new WordViewHolder(view);
+
+        int backgroundColorForViewHolder = ColorUtils
+                .getViewHolderBackgroundColorFromInstance(context, viewHolderCount);
+        viewHolder.itemView.setBackgroundColor(backgroundColorForViewHolder);
 
         viewHolderCount++;
         Log.d(LOG_TAG, "onCreateViewHolder: number of ViewHolders created: " + viewHolderCount);

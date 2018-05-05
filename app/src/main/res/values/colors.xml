@@ -13,4 +13,23 @@
     <color name="material_brown">#efebe9</color>
     <color name="button_pressed_text_color">@color/gray_lightest</color>
     <color name="background">@color/gray_lightest</color>
+
+    <color name="green_medium">#758904</color>
+    <color name="cyan_dark">#108EEF</color>
+    <color name="magenta_pink">#D00F8A</color>
+    <color name="purple_dark">#4B2F5D</color>
+    <color name="orange_red">#ED4035</color>
+    <color name="orange_light">#F26444</color>
+    <color name="yellow_light">#FDBB30</color>
+    <color name="material400Green">#66BB6A</color>
+    <color name="material450Green">#59B55D</color>
+    <color name="material500Green">#4CAF50</color>
+    <color name="material550Green">#48A84C</color>
+    <color name="material600Green">#43A047</color>
+    <color name="material650Green">#3E9742</color>
+    <color name="material700Green">#388E3C</color>
+    <color name="material750Green">#338637</color>
+    <color name="material800Green">#2E7D32</color>
+    <color name="material850Green">#256E29</color>
+    <color name="material900Green">#1B5E20</color>
 </resources>

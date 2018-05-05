@@ -59,7 +59,7 @@ Const {
 
     public static final List<String> CORRECT_WORDS_LIST = Collections.unmodifiableList(
             Arrays.asList(
-                    "red",
+                    "moon",
                     "leg",
                     "look",
                     "rabbit",
@@ -85,7 +85,7 @@ Const {
                     "cup",
                     "home",
                     "bat",
-                    "moon",
+                    "red",
                     "weight",
                     "nose"
             )

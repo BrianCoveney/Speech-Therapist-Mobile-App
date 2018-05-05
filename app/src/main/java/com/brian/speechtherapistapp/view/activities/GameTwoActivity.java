@@ -10,10 +10,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -101,21 +102,21 @@ public class GameTwoActivity extends BaseActivity implements
             StrictMode.setThreadPolicy(policy);
         }
 
-        // Call to DB needs to be below the above ThreadPolicy Builder
-        child = iChildPresenter.getChildWithEmail(childEmail);
-
 
         /* Recycler view */
 
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecorator =
+                new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
         recyclerView.addItemDecoration(itemDecorator);
 
         recyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        snapHelper.attachToRecyclerView(recyclerView);
 
         adapter = new WordAdapter(NUM_LIST_ITEMS, this);
         recyclerView.setAdapter(adapter);
@@ -209,8 +210,8 @@ public class GameTwoActivity extends BaseActivity implements
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
 
-            Log.i(LOG_TAG, "Child's wordley: " + child.getWordName());
-            Log.i(LOG_TAG, "Child's wordley: " + child.getEmail());
+            // Call to DB needs to be below the above ThreadPolicy Builder
+            child = iChildPresenter.getChildWithEmail(childEmail);
 
             String currentWord = child.getWordName();
             if (currentWord != null) {
@@ -234,7 +235,7 @@ public class GameTwoActivity extends BaseActivity implements
                 Log.i(LOG_TAG, "Word freq count: " + wordFreq);
                 Log.i(LOG_TAG, "Word gliding list: " + glidingList.toString());
                 
-                showToast("Saved: " + result);
+//                showToast("Saved: " + result);
 
             } else {
                 showToast("You need to create a user account first!");
@@ -260,7 +261,7 @@ public class GameTwoActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
         return true;
     }
 
@@ -350,6 +351,7 @@ public class GameTwoActivity extends BaseActivity implements
             public void onClick(View view) {
 
                 wordPresenter.saveWord();
+                showToast("Saved: " + result);
 
                 if (recognizer != null) {
                     recognizer.stop();

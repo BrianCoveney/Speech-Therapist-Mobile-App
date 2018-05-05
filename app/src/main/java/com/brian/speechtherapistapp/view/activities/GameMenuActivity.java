@@ -38,6 +38,7 @@ public class GameMenuActivity extends BaseActivity implements RecognitionListene
 
         ButterKnife.bind(this);
 
+
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.RECORD_AUDIO);
