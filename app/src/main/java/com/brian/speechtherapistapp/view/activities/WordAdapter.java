@@ -6,30 +6,44 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.models.ItemData;
 import com.brian.speechtherapistapp.util.ColorUtils;
 import com.brian.speechtherapistapp.util.Const;
 
+import be.rijckaert.tim.animatedvector.FloatingMusicActionButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
+
+    @BindView(R.id.rv_item_icon)
+    ImageView imageView;
+
+    @BindView(R.id.rv_fab)
+    FloatingMusicActionButton fab;
+
 
     private static final String LOG_TAG = WordAdapter.class.getSimpleName();
     private WordAdapterClickListener mOnClickListener;
     private static int viewHolderCount;
     private int mNumberItems;
+    private ItemData[] itemsData;
 
 
     public interface WordAdapterClickListener {
         void onListItemClicked(String itemClicked);
+        void onFloatingActionButtonClicked();
     }
 
 
-    public WordAdapter(int numberOfItems, WordAdapterClickListener listener) {
+    public WordAdapter(ItemData[] itemsData,  int numberOfItems, WordAdapterClickListener listener) {
+        this.itemsData = itemsData;
         mOnClickListener = listener;
         mNumberItems = numberOfItems;
         viewHolderCount = 0;
@@ -57,6 +71,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     @Override
     public void onBindViewHolder(WordViewHolder holder, int position) {
         Log.d(LOG_TAG, "#" + position);
+        holder.imageView.setImageResource(itemsData[position].getImageUrl());
         holder.bind(position);
     }
 
@@ -74,6 +89,12 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         @BindView(R.id.tv_view_holder_instance)
         TextView viewHolderIndex;
 
+        @BindView(R.id.rv_item_icon)
+        ImageView imageView;
+
+        @BindView(R.id.rv_fab)
+        FloatingMusicActionButton fab;
+
 
         public WordViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +106,12 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             String wordClicked = Const.CORRECT_WORDS_LIST.get(listIndex);
             listItemNumberView.setText(wordClicked);
         }
+
+        @OnClick(R.id.rv_fab)
+        public void onClickFab() {
+            mOnClickListener.onFloatingActionButtonClicked();
+        }
+
 
         @Override
         public void onClick(View view) {

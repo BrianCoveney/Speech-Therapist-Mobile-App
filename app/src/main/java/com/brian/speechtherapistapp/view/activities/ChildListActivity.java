@@ -28,6 +28,7 @@ public class ChildListActivity extends BaseActivity {
 
     private ChildAdapter childAdapter;
     private List<Child> childList;
+    private static final int DELAY_IN_MILLS = 500;
 
     @Inject
     IChildPresenter iChildPresenter;
@@ -82,7 +83,7 @@ public class ChildListActivity extends BaseActivity {
                 public void run() {
                     progressDialog.dismiss();
                 }
-            }, 500);
+            }, DELAY_IN_MILLS);
         }
 
         @Override

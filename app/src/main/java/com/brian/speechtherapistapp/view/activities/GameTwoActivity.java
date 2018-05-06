@@ -18,7 +18,6 @@ import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.ItemData;
 import com.brian.speechtherapistapp.models.Word;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
@@ -40,6 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import be.rijckaert.tim.animatedvector.FloatingMusicActionButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.cmu.pocketsphinx.Assets;
@@ -64,6 +65,7 @@ public class GameTwoActivity extends BaseActivity implements
     @BindView(R.id.rv_words)
     RecyclerView recyclerView;
 
+    private FloatingMusicActionButton floatingMusicActionButton;
     private static final String LOG_TAG = GameTwoActivity.class.getSimpleName();
     private WordAdapter adapter;
     private static final int NUM_LIST_ITEMS = Const.CORRECT_WORDS_LIST.size();
@@ -75,13 +77,14 @@ public class GameTwoActivity extends BaseActivity implements
     private static final int CHILD_ID = 0;
     private List<Child> childList;
     private String childEmail;
+    boolean fabOn = true;
+    boolean fabOff = false;
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     private SpeechRecognizer recognizer;
     private static final String TEXT_SEARCH = "words";
-
 
 
     @Override
@@ -95,12 +98,20 @@ public class GameTwoActivity extends BaseActivity implements
         Log.i(LOG_TAG, "Child's email: " + childEmail);
 
 
+//        new FetchFromDatabaseTask().execute();
+
+
+
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy =
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
+        child = iChildPresenter.getChildWithEmail(childEmail);
+
 
 
         /* Recycler view */
@@ -112,14 +123,51 @@ public class GameTwoActivity extends BaseActivity implements
 
         recyclerView.setHasFixedSize(true);
 
+        ItemData itemsData[] = {
+                new ItemData("Moon",R.drawable.ic_moon),
+                new ItemData("Leg",R.drawable.ic_leg),
+                new ItemData("Look",R.drawable.ic_glasses),
+                new ItemData("Rabbit",R.drawable.ic_rabbit),
+                new ItemData("Run",R.drawable.ic_run_shoes),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Help",R.drawable.ic_email_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp),
+                new ItemData("Delete",R.drawable.ic_home_24dp)
+        };
+
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
         SnapHelper snapHelper = new PagerSnapHelper();
         recyclerView.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(recyclerView);
 
-        adapter = new WordAdapter(NUM_LIST_ITEMS, this);
+        adapter = new WordAdapter(itemsData, NUM_LIST_ITEMS, this);
         recyclerView.setAdapter(adapter);
+
+
+
+
 
 
         /* Speech Recognition */
@@ -138,6 +186,8 @@ public class GameTwoActivity extends BaseActivity implements
         new SetupTask(this).execute();
 
     }
+
+
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<GameTwoActivity> activityReference;
@@ -210,8 +260,7 @@ public class GameTwoActivity extends BaseActivity implements
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
 
-            // Call to DB needs to be below the above ThreadPolicy Builder
-            child = iChildPresenter.getChildWithEmail(childEmail);
+
 
             String currentWord = child.getWordName();
             if (currentWord != null) {
@@ -234,8 +283,7 @@ public class GameTwoActivity extends BaseActivity implements
                 Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
                 Log.i(LOG_TAG, "Word freq count: " + wordFreq);
                 Log.i(LOG_TAG, "Word gliding list: " + glidingList.toString());
-                
-//                showToast("Saved: " + result);
+
 
             } else {
                 showToast("You need to create a user account first!");
@@ -265,25 +313,38 @@ public class GameTwoActivity extends BaseActivity implements
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
 
-        switch (itemId) {
-            case R.id.action_refresh:
-                adapter = new WordAdapter(NUM_LIST_ITEMS, this);
-                recyclerView.setAdapter(adapter);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    // Listener method implementation of the WordAdapter interface
     @Override
     public void onListItemClicked(String itemClicked) {
         onItemClickResult = itemClicked;
         Log.i(LOG_TAG,"Clicked " + onItemClickResult);
         showCustomDialog();
+    }
+
+
+    @Override
+    public void onFloatingActionButtonClicked() {
+        floatingMusicActionButton = findViewById(R.id.rv_fab);
+        floatingMusicActionButton.playAnimation();
+
+        if (fabOn) {
+            showToast("On");
+            recognizer.startListening("words");
+            reset(TEXT_SEARCH);
+            fabOn = false;
+
+        } else if (!fabOn) {
+            wordPresenter.saveWord();
+            showToast("Saved: " + result);
+
+            if (recognizer != null) {
+                recognizer.stop();
+                recognizer.cancel();
+            }
+            fabOn = true;
+
+        }
     }
 
 
@@ -315,6 +376,38 @@ public class GameTwoActivity extends BaseActivity implements
 
         return childEmail;
     }
+
+//    private class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
+//
+//        private ProgressDialog progressDialog = new ProgressDialog(GameTwoActivity.this);
+//
+//
+//        @Override
+//        protected Child doInBackground(Void... voids) {
+//            // Call to DB needs to be below the above ThreadPolicy Builder~~~~~~~~~~~~~~~~~~##
+//            child = iChildPresenter.getChildWithEmail(childEmail);
+//            return child;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Child child) {
+//            super.onPostExecute(child);
+//
+//            Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                public void run() {
+//                    progressDialog.dismiss();
+//                }
+//            }, 500);
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            this.progressDialog.setMessage("Please wait");
+//            this.progressDialog.show();
+//        }
+//    }
 
 
     /*----------------------------------------------------------------------------------------------
