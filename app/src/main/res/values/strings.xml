@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Speech Remedy</string>
-    <string name="login_activity">Login Activity</string>
+    <string name="login_activity">Login</string>
     <string name="view_child_list">View Child List</string>
     <string name="create_new_child">Create New Child</string>
     <string name="therapist_menu">Therapist Menu</string>
@@ -16,7 +16,7 @@
     <string name="digits_caption">To try recognition of digits: say something like \"one two three four five\".</string>
     <string name="text_caption">To try recognition of words: \"say something like telephone\".</string>
     <string name="create_child_screen">Create Child</string>
-    <string name="speech_activity">Speech Activity</string>
+    <string name="speech_activity">Speech</string>
     <string name="email">Email:</string>
     <string name="password">Password:</string>
     <string name="play_game_two">Play Game Two</string>
@@ -29,7 +29,7 @@
     <string name="welcome">Welcome back</string>
     <string name="login_therapist">Login Therapist</string>
     <string name="login_child">Login Child</string>
-    <string name="home_activity">Home Activity</string>
+    <string name="home_activity">Home</string>
     <string name="confirm_password">Confirm password</string>
     <string name="child_list">Child List</string>
     <string name="Add">add</string>

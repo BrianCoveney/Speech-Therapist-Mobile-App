@@ -35,7 +35,7 @@
         <activity
             android:name=".view.activities.PreferenceActivity"
             android:theme="@style/Theme.AppCompat.Light"
-            android:label="Preference Activity"
+            android:label="Preferences"
             android:parentActivityName=".view.activities.HomeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -84,7 +84,7 @@
                 android:value=".view.activities.GameMenuActivity"/>
         </activity>
         <activity android:name=".view.activities.GameTwoActivity"
-            android:label="Game Two Activity"
+            android:label="Game"
             android:parentActivityName=".view.activities.GameMenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">

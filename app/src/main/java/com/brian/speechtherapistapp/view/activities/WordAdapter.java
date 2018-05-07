@@ -112,7 +112,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("pos_key", clickedPosition);
             editor.apply();
-
         }
     }
 }

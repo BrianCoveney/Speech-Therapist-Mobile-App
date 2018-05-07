@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -79,8 +78,12 @@ public class GameTwoActivity extends BaseActivity implements
     private static final int CHILD_ID = 0;
     private List<Child> childList;
     private String childEmail;
-    boolean fabOn = true;
-    boolean fabOff = false;
+    boolean isFloatingMusicActionButtonOn = true;
+    private List<String> glidingList = new ArrayList<>();
+    private int wordFreq;
+    private Word word = new Word();
+    private HashMap<String, Integer> glidingHashMap = new HashMap<>();
+
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
@@ -109,12 +112,6 @@ public class GameTwoActivity extends BaseActivity implements
 
 
         /* Recycler view */
-
-        DividerItemDecoration itemDecorator =
-                new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
-        recyclerView.addItemDecoration(itemDecorator);
-
         recyclerView.setHasFixedSize(true);
 
         ItemData itemsData[] = {
@@ -162,7 +159,6 @@ public class GameTwoActivity extends BaseActivity implements
         recyclerView.setAdapter(adapter);
 
         /* Speech Recognition */
-
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.RECORD_AUDIO);
@@ -172,14 +168,16 @@ public class GameTwoActivity extends BaseActivity implements
                     Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
             return;
         }
-        // Recognizer initialization is a time-consuming and it involves IO,
-        // so we execute it in async task
-        new SetupTask(this).execute();
 
+        // Perform heavy lifting on background thread
+        new SetupTask(this).execute();
         new FetchFromDatabaseTask().execute();
     }
 
 
+    /*----------------------------------------------------------------------------------------------
+      SetupTask class
+    */
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
         WeakReference<GameTwoActivity> activityReference;
 
@@ -207,7 +205,7 @@ public class GameTwoActivity extends BaseActivity implements
                 Toast.makeText(activityReference.get(), toastMessage, Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    } // end SetupTask class
 
 
     /*----------------------------------------------------------------------------------------------
@@ -238,9 +236,6 @@ public class GameTwoActivity extends BaseActivity implements
 
     }
 
-    /**
-     * This callback is called when we stop the recognizer.
-     */
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
@@ -252,15 +247,14 @@ public class GameTwoActivity extends BaseActivity implements
 
                 child = iChildPresenter.setWord(currentWord, result, childEmail);
 
-                Word word = new Word(child.getWordName());
+                word.setName(child.getWordName());
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
-
-                int wordFreq = word.getFrequency();
-
-                List<String> glidingList = new ArrayList<>();
+                String mWord = word.getName();
 
                 if (isWordMatch == true) {
+                    wordFreq  = word.getFrequency();
                     glidingList.add(word.getName());
+                    glidingHashMap.put(mWord, wordFreq);
                 }
 
                 Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
@@ -268,6 +262,7 @@ public class GameTwoActivity extends BaseActivity implements
                 Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
                 Log.i(LOG_TAG, "Word freq count: " + wordFreq);
                 Log.i(LOG_TAG, "Word gliding list: " + glidingList.toString());
+                Log.i(LOG_TAG, "Word gliding map: " + glidingHashMap.toString());
 
             } else {
                 showToast("You need to create a user account first!");
@@ -297,7 +292,6 @@ public class GameTwoActivity extends BaseActivity implements
         return true;
     }
 
-
     // Listener method implementation of the WordAdapter interface
     @Override
     public void onListItemClicked(String itemClicked) {
@@ -306,10 +300,10 @@ public class GameTwoActivity extends BaseActivity implements
         showCustomDialog();
     }
 
+
     /*----------------------------------------------------------------------------------------------
       MVP
     */
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -321,25 +315,18 @@ public class GameTwoActivity extends BaseActivity implements
         return WORD_ID;
     }
 
-
     @Override
     public String getRecognizerWordResult() {
         return result;
     }
 
-    private String getChildFromChildLoginActivity() {
-        SharedPreferences sharedPreferences =
-                getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
-        childEmail = sharedPreferences.getString("email_key", "default");
 
-        return childEmail;
-    }
-
-
+    /*----------------------------------------------------------------------------------------------
+      FetchFromDatabaseTask class
+    */
     private class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
 
         private ProgressDialog progressDialog = new ProgressDialog(GameTwoActivity.this);
-
 
         @Override
         protected Child doInBackground(Void... voids) {
@@ -367,14 +354,8 @@ public class GameTwoActivity extends BaseActivity implements
             this.progressDialog.setMessage("Please wait");
             this.progressDialog.show();
         }
-    }
+    } // end FetchFromDatabaseTask class
 
-    private int getRecyclerViewPosition() {
-        SharedPreferences sharedPreferences =
-                getSharedPreferences("pos_pref_key", Activity.MODE_PRIVATE);
-        int position = sharedPreferences.getInt("pos_key", 0);
-        return position;
-    }
 
 
     /*----------------------------------------------------------------------------------------------
@@ -389,7 +370,8 @@ public class GameTwoActivity extends BaseActivity implements
         builder.setView(dialogView);
 
         final AlertDialog alertDialog = builder.create();
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawableResource(R.color.yellow_light);
+        alertDialog.getWindow().getAttributes().verticalMargin = 0.3F;
         alertDialog.show();
 
 
@@ -406,10 +388,10 @@ public class GameTwoActivity extends BaseActivity implements
             public void onClick(View view) {
                 floatingMusicActionButton.playAnimation();
 
-                if (fabOn) {
+                if (isFloatingMusicActionButtonOn) {
                     textViewDialogPrompt.setVisibility(View.VISIBLE);
                     recognizer.startListening("words");
-                    fabOn = false;
+                    isFloatingMusicActionButtonOn = false;
                 } else {
                     textViewDialogPrompt.setVisibility(View.INVISIBLE);
                     wordPresenter.saveWord();
@@ -425,11 +407,28 @@ public class GameTwoActivity extends BaseActivity implements
                     recyclerView.scrollToPosition(position + 1);
 
                     alertDialog.dismiss();
-                    fabOn = true;
+                    isFloatingMusicActionButtonOn = true;
                 }
             }
         });
-
     }
 
+
+    /*----------------------------------------------------------------------------------------------
+      SharedPreferences
+    */
+    private String getChildFromChildLoginActivity() {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+        childEmail = sharedPreferences.getString("email_key", "default");
+
+        return childEmail;
+    }
+
+    private int getRecyclerViewPosition() {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("pos_pref_key", Activity.MODE_PRIVATE);
+        int position = sharedPreferences.getInt("pos_key", 0);
+        return position;
+    }
 }
