@@ -63,21 +63,5 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="ViewHolder instance: 7" />
 
-    <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
-        android:id="@+id/rv_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:onClick="onClickFAB"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_item_icon"
-        app:mode="playToPause" />
-
-
 
 </android.support.constraint.ConstraintLayout>

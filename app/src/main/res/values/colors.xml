@@ -13,6 +13,7 @@
     <color name="material_brown">#efebe9</color>
     <color name="button_pressed_text_color">@color/gray_lightest</color>
     <color name="background">@color/gray_lightest</color>
+    <color name="black">#000</color>
 
     <color name="green_medium">#758904</color>
     <color name="cyan_dark">#108EEF</color>

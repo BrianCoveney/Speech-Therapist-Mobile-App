@@ -1,6 +1,8 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +16,8 @@ import com.brian.speechtherapistapp.models.ItemData;
 import com.brian.speechtherapistapp.util.ColorUtils;
 import com.brian.speechtherapistapp.util.Const;
 
-import be.rijckaert.tim.animatedvector.FloatingMusicActionButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
@@ -25,28 +25,26 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     @BindView(R.id.rv_item_icon)
     ImageView imageView;
 
-    @BindView(R.id.rv_fab)
-    FloatingMusicActionButton fab;
-
-
     private static final String LOG_TAG = WordAdapter.class.getSimpleName();
     private WordAdapterClickListener mOnClickListener;
     private static int viewHolderCount;
     private int mNumberItems;
     private ItemData[] itemsData;
+    private Context context;
+
 
 
     public interface WordAdapterClickListener {
         void onListItemClicked(String itemClicked);
-        void onFloatingActionButtonClicked();
     }
 
 
-    public WordAdapter(ItemData[] itemsData,  int numberOfItems, WordAdapterClickListener listener) {
+    public WordAdapter(Context context, ItemData[] itemsData,  int numberOfItems, WordAdapterClickListener listener) {
         this.itemsData = itemsData;
         mOnClickListener = listener;
         mNumberItems = numberOfItems;
         viewHolderCount = 0;
+        this.context = context;
     }
 
     @Override
@@ -92,9 +90,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         @BindView(R.id.rv_item_icon)
         ImageView imageView;
 
-        @BindView(R.id.rv_fab)
-        FloatingMusicActionButton fab;
-
 
         public WordViewHolder(View itemView) {
             super(itemView);
@@ -107,17 +102,17 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             listItemNumberView.setText(wordClicked);
         }
 
-        @OnClick(R.id.rv_fab)
-        public void onClickFab() {
-            mOnClickListener.onFloatingActionButtonClicked();
-        }
-
-
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
             String itemClicked = Const.CORRECT_WORDS_LIST.get(clickedPosition);
             mOnClickListener.onListItemClicked(itemClicked);
+
+            SharedPreferences sharedPref = context.getSharedPreferences("pos_pref_key", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("pos_key", clickedPosition);
+            editor.apply();
+
         }
     }
 }
