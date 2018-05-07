@@ -14,6 +14,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +75,12 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public Child updateWordSpoken(String currWord, String newWord, String email) {
-
-        childCollection.updateOne(eq("word", currWord),
-                new Document("$set", new Document("word", newWord)));
+        Bson filter = new Document("email", email);
+        Bson newValue = new Document("word", newWord);
+        Bson updateOperationDocument = new Document("$set", newValue);
+        childCollection.updateOne(filter, updateOperationDocument);
 
         Child child = getChildWithEmailIdentifier(email);
-        child.setWordName(newWord);
 
         return child;
     }
@@ -118,6 +119,8 @@ public class ChildRepositoryImpl implements IChildRepository {
 
         FindIterable<Document> databaseRecords = childCollection.find(eq("email", email));
         MongoCursor<Document> cursor = databaseRecords.iterator();
+
+
         Document document;
         try {
             while (cursor.hasNext()) {
