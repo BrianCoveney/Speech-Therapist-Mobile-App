@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.brian.speechtherapistapp.util.Const;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +46,14 @@ public class Child implements Parcelable {
 
     public void setWordName(String word) {
         this.word.setName(word);
+    }
+
+    public Map<String, Integer> getWordGlidingLiquidsMap() {
+        return word.getGlidingLiquidsMap();
+    }
+
+    public void setWordGlidingLiquidsMap(Map<String, Integer> glidingMap) {
+        this.word.setGlidingLiquidsMap(glidingMap);
     }
 
     public int getWordFreq() {

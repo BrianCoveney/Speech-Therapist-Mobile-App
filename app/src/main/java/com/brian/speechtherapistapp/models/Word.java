@@ -1,10 +1,10 @@
 package com.brian.speechtherapistapp.models;
 
 
-import com.brian.speechtherapistapp.util.Const;
-
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
 public class Word implements  Serializable{
@@ -12,7 +12,7 @@ public class Word implements  Serializable{
     private String id;
     private String name;
     private int frequency;
-    private List<String> glidingLiquidsWords = Const.CORRECT_WORDS_LIST;
+    private Map<String, Integer> glidingLiquidsMap = new HashMap<>();
 
     public Word() { }
 
@@ -40,6 +40,14 @@ public class Word implements  Serializable{
         return frequency;
     }
 
+    public Map<String, Integer> getGlidingLiquidsMap() {
+        return glidingLiquidsMap;
+    }
+
+    public void setGlidingLiquidsMap(Map<String, Integer> glidingLiquidsMap) {
+        this.glidingLiquidsMap = glidingLiquidsMap;
+    }
+
     public void incrementFrequency() {
         frequency++;
     }
@@ -54,9 +62,11 @@ public class Word implements  Serializable{
         return false;
     }
 
+
     @Override
     public String toString() {
         return name;
     }
+
 
 }

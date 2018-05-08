@@ -6,6 +6,7 @@ import com.brian.speechtherapistapp.repository.IChildRepository;
 import com.brian.speechtherapistapp.view.IChildView;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -64,8 +65,13 @@ public class ChildPresenterImpl implements IChildPresenter {
     }
 
     @Override
-    public Child setWord(String currWord, String newWord, String email) {
-        return childRepository.updateWordSpoken(currWord, newWord, email);
+    public Child setWord(String newWord, String email) {
+        return childRepository.updateWordSpoken(newWord, email);
+    }
+
+    @Override
+    public void setGlidingWordsMap(Map<String, Integer> glidingLiquidsMap, String email) {
+        childRepository.updateGlidingOfLiquidsMap(glidingLiquidsMap, email);
     }
 
 

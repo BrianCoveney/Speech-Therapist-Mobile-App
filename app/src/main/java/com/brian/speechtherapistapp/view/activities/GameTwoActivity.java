@@ -85,12 +85,7 @@ public class GameTwoActivity extends BaseActivity implements
     private int wordFreq;
     private Word word = new Word();
     private HashMap<String, Integer> glidingHashMap = new HashMap<>();
-    private int freq = 0;
-
-
-    /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
-
     private SpeechRecognizer recognizer;
     private static final String TEXT_SEARCH = "words";
 
@@ -248,7 +243,8 @@ public class GameTwoActivity extends BaseActivity implements
             if (currentWord != null) {
                 currentWord = child.getWordName();
 
-                child = iChildPresenter.setWord(currentWord, result, childEmail);
+                /*** We set the child's word in the DB ***/
+                child = iChildPresenter.setWord(result, childEmail);
 
                 word.setName(child.getWordName());
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
@@ -256,15 +252,20 @@ public class GameTwoActivity extends BaseActivity implements
 
 
                 if (isWordMatch == true) {
-                    wordFreq  = word.getFrequency();
                     glidingList.add(mWord);
 
                     if (glidingHashMap.containsKey(mWord)) {
                         glidingHashMap.put(mWord, glidingHashMap.get(mWord) + 1);
                     } else {
                         glidingHashMap.put(mWord, 1);
-
                     }
+
+                    child.setWordGlidingLiquidsMap(glidingHashMap);
+
+                    /*** We update the Gliding of Liquids HashMap in the DB ***/
+                    iChildPresenter.setGlidingWordsMap(glidingHashMap, childEmail);
+
+                    Log.i(LOG_TAG, "CHILD HASHMAP: " + child.getWordGlidingLiquidsMap().toString());
                 }
 
                 Log.i(LOG_TAG, "Item clicked: " + onItemClickResult);

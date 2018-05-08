@@ -17,7 +17,9 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -50,6 +52,8 @@ public class ChildRepositoryImpl implements IChildRepository {
 
     @Override
     public void saveChild(ChildList childList) {
+        Map<String, Integer> wordGlidingMap = new HashMap<>();
+        wordGlidingMap.put("default_word", 0);
         final Document document = new Document();
         for (Child c : childList.getChildList()) {
             Child child = Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
@@ -62,7 +66,7 @@ public class ChildRepositoryImpl implements IChildRepository {
             document.put("email", child.getEmail());
             document.put("birthday", child.getBirthday());
             document.put("password", child.getPassword());
-            document.put("word", "default_word");
+            document.put("map_of_gliding_words", wordGlidingMap);
         }
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -74,15 +78,22 @@ public class ChildRepositoryImpl implements IChildRepository {
     }
 
     @Override
-    public Child updateWordSpoken(String currWord, String newWord, String email) {
+    public Child updateWordSpoken(String newWord, String email) {
         Bson filter = new Document("email", email);
         Bson newValue = new Document("word", newWord);
         Bson updateOperationDocument = new Document("$set", newValue);
         childCollection.updateOne(filter, updateOperationDocument);
 
         Child child = getChildWithEmailIdentifier(email);
-
         return child;
+    }
+
+    @Override
+    public void updateGlidingOfLiquidsMap(Map<String, Integer> glidingLiquidsMap, String email) {
+        Bson filter = new Document("email", email);
+        Bson newValue = new Document("map_of_gliding_words", glidingLiquidsMap);
+        Bson updateOperationDocument = new Document("$set", newValue);
+        childCollection.updateOne(filter, updateOperationDocument);
     }
 
     @Override
@@ -119,7 +130,6 @@ public class ChildRepositoryImpl implements IChildRepository {
 
         FindIterable<Document> databaseRecords = childCollection.find(eq("email", email));
         MongoCursor<Document> cursor = databaseRecords.iterator();
-
 
         Document document;
         try {
