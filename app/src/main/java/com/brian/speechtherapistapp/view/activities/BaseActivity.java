@@ -94,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // when items in Actionbar are pressed (not the Hamburger menu)
+        // Items in Actionbar are pressed (not the Hamburger menu)
         switch (item.getItemId()) {
             case R.id.action_googlemaps:
                 Intent intentMap = new Intent(this, MapsActivity.class);

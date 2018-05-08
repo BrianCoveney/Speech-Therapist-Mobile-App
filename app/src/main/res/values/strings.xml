@@ -17,8 +17,8 @@
     <string name="text_caption">To try recognition of words: \"say something like telephone\".</string>
     <string name="create_child_screen">Create Child</string>
     <string name="speech_activity">Speech</string>
-    <string name="email">Email:</string>
-    <string name="password">Password:</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="play_game_two">Play Game Two</string>
     <string name="play_game_three">Play Game Three</string>
     <string name="play_game_one">Play Game One</string>

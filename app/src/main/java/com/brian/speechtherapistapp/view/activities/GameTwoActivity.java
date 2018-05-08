@@ -39,6 +39,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -83,6 +85,7 @@ public class GameTwoActivity extends BaseActivity implements
     private int wordFreq;
     private Word word = new Word();
     private HashMap<String, Integer> glidingHashMap = new HashMap<>();
+    private int freq = 0;
 
 
     /* Used to handle permission request */
@@ -251,12 +254,20 @@ public class GameTwoActivity extends BaseActivity implements
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
                 String mWord = word.getName();
 
+
                 if (isWordMatch == true) {
                     wordFreq  = word.getFrequency();
-                    glidingList.add(word.getName());
-                    glidingHashMap.put(mWord, wordFreq);
+                    glidingList.add(mWord);
+
+                    if (glidingHashMap.containsKey(mWord)) {
+                        glidingHashMap.put(mWord, glidingHashMap.get(mWord) + 1);
+                    } else {
+                        glidingHashMap.put(mWord, 1);
+
+                    }
                 }
 
+                Log.i(LOG_TAG, "Item clicked: " + onItemClickResult);
                 Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
                 Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
                 Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
@@ -297,7 +308,7 @@ public class GameTwoActivity extends BaseActivity implements
     public void onListItemClicked(String itemClicked) {
         onItemClickResult = itemClicked;
         Log.i(LOG_TAG, "Clicked " + onItemClickResult);
-        showCustomDialog();
+        showCustomDialogVoiceRecorder();
     }
 
 
@@ -361,7 +372,7 @@ public class GameTwoActivity extends BaseActivity implements
     /*----------------------------------------------------------------------------------------------
       Custom Dialog - where we record and save the word
     */
-    public void showCustomDialog() {
+    public void showCustomDialogVoiceRecorder() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Voice recorder");
 
@@ -395,6 +406,7 @@ public class GameTwoActivity extends BaseActivity implements
                 } else {
                     textViewDialogPrompt.setVisibility(View.INVISIBLE);
                     wordPresenter.saveWord();
+                    floatingMusicActionButton.playAnimation();
                     showToast("Saved: " + result);
 
                     if (recognizer != null) {
@@ -403,16 +415,72 @@ public class GameTwoActivity extends BaseActivity implements
                     }
 
                     // Scroll to the next item
-                    int position = getRecyclerViewPosition();
-                    recyclerView.scrollToPosition(position + 1);
+//                    int position = getRecyclerViewPosition();
+//                    recyclerView.scrollToPosition(position + 1);
 
                     alertDialog.dismiss();
+
+                    Log.i(LOG_TAG, "Item: " + onItemClickResult);
+                    Log.i(LOG_TAG, "Result: " + result);
+
+                    if(result.matches(onItemClickResult)) {
+                        showCustomDialogTrophy();
+                    } else {
+                        showCustomDialogTryAgain();
+                    }
+
                     isFloatingMusicActionButtonOn = true;
                 }
             }
         });
     }
 
+
+    public void showCustomDialogTrophy() {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this,
+                        android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
+        builder.setCancelable(true);
+
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_trophy, null);
+        builder.setView(dialogView);
+
+        final AlertDialog closedialog= builder.create();
+
+        closedialog.show();
+
+        final Timer timer2 = new Timer();
+        timer2.schedule(new TimerTask() {
+            public void run() {
+                closedialog.dismiss();
+                timer2.cancel(); //this will cancel the timer of the system
+            }
+        }, 3000); // the timer will count 5 seconds....
+    }
+
+    public void showCustomDialogTryAgain() {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this,
+                        android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
+        builder.setCancelable(true);
+
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_try_again, null);
+        builder.setView(dialogView);
+
+        final AlertDialog closedialog= builder.create();
+
+        closedialog.show();
+
+        final Timer timer2 = new Timer();
+        timer2.schedule(new TimerTask() {
+            public void run() {
+                closedialog.dismiss();
+                timer2.cancel(); //this will cancel the timer of the system
+            }
+        }, 3000); // the timer will count 5 seconds....
+    }
 
     /*----------------------------------------------------------------------------------------------
       SharedPreferences
