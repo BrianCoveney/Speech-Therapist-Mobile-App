@@ -28,9 +28,11 @@
         android:id="@+id/tv_first_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="75dp"
         android:text="@string/textview"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,8 +50,10 @@
         android:id="@+id/tv_second_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/textview"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_second_name_caption"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -67,8 +71,10 @@
         android:id="@+id/tv_email"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/textview"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_email_caption"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -78,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="@string/name"
+        android:text="Last Word Said:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_email_caption" />
 
@@ -86,8 +92,10 @@
         android:id="@+id/tv_word"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/textview"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_word_caption"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -108,20 +116,23 @@
 
     <TextView
         android:id="@+id/tv_gliding_map"
-        android:layout_width="170dp"
-        android:layout_height="148dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gliding_caption" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_word" />
 
     <TextView
         android:id="@+id/tv_gliding_caption"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_width="133dp"
+        android:layout_height="63dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="@string/gliding_of_liquids"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_word_caption" />
 

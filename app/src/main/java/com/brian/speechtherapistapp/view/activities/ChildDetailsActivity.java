@@ -39,6 +39,11 @@ public class ChildDetailsActivity extends BaseActivity{
     @BindView(R.id.tv_gliding_map)
     TextView glidingTextView;
 
+
+    @BindView(R.id.tv_gliding_caption)
+    TextView glidingCaptionTextView;
+
+
     private Child child;
     private static final String LOG_TAG = ChildDetailsActivity.class.getSimpleName();
 
@@ -67,10 +72,12 @@ public class ChildDetailsActivity extends BaseActivity{
         Map<String, Integer> glidingMap = child.getWordGlidingLiquidsMap();
 
         for (String key : glidingMap.keySet()) {
-            glidingWords += key + " = " + glidingMap.get(key) + "\n";
+            glidingWords += key + " -> " + glidingMap.get(key) + "\n";
         }
 
         glidingTextView.setText(glidingWords);
+
+        glidingCaptionTextView.setText("Gliding of Liquids \nWord and Frequency:");
 
     }
 
