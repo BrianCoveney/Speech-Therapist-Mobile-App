@@ -63,9 +63,14 @@ public class ChildDetailsActivity extends BaseActivity{
         emailTextView.setText(child.getEmail());
         wordTextView.setText(child.getWordName());
 
+        String glidingWords = "";
+        Map<String, Integer> glidingMap = child.getWordGlidingLiquidsMap();
 
-        glidingTextView.setText(child.getWordGlidingLiquidsMap().toString());
+        for (String key : glidingMap.keySet()) {
+            glidingWords += key + " = " + glidingMap.get(key) + "\n";
+        }
 
+        glidingTextView.setText(glidingWords);
 
     }
 

@@ -46,6 +46,7 @@
     <string name="share_message1">Here is the Child that you are emailing:</string>
     <string name="share_message2">Thanks for sharing!</string>
     <string name="sign_in">Sign in</string>
+    <string name="gliding_of_liquids">Gliding of Liquids:</string>
 
     <string-array name="intent_email">
         <item>brian.coveney@mycit.ie</item>

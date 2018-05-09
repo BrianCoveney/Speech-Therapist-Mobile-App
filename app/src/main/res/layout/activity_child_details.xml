@@ -108,14 +108,21 @@
 
     <TextView
         android:id="@+id/tv_gliding_map"
-        android:layout_width="317dp"
-        android:layout_height="143dp"
+        android:layout_width="170dp"
+        android:layout_height="148dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gliding_caption" />
+
+    <TextView
+        android:id="@+id/tv_gliding_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/gliding_of_liquids"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_word" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_word_caption" />
 
 </android.support.constraint.ConstraintLayout>
