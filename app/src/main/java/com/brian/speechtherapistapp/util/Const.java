@@ -29,31 +29,31 @@ Const {
 
     public static final List<String> CLUSTER_REDUCTION_WORDS_LIST = Collections.unmodifiableList(
             Arrays.asList(
-                    "fren",
-                    "tuck",
-                    "side",
-                    "bown",
-                    "spat",
-                    "sool",
-                    "coal",
-                    "pider",
-                    "poon",
-                    "sate"
+                    "fren", // friend
+                    "tuck", // truck
+                    "side", // slide
+                    "bown", // brown
+                    "spat", // sat
+                    "sool", // stool
+                    "coal", // cold
+                    "pider",// spider
+                    "poon", // spoon
+                    "sate"  //
             )
     );
 
     public static final List<String> FINAL_CONSONANT_DELETION_WORDS_LIST = Collections.unmodifiableList(
             Arrays.asList(
-                    "daw",
-                    "sop",
-                    "pi",
-                    "cuh",
-                    "dah",
+                    "daw",   // dog
+                    "sop",   // soap
+                    "pi",    // pig
+                    "cuh",   // car
+                    "dah",   // dog
                     "ho",
-                    "ba",
-                    "moo",
-                    "weigh",
-                    "no"
+                    "ba",    // bat
+                    "moo",   // moon
+                    "weigh", // weight
+                    "no"     //nose
             )
     );
 

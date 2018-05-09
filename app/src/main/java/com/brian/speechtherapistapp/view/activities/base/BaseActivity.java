@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view.activities;
+package com.brian.speechtherapistapp.view.activities.base;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,6 +18,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.activities.HomeActivity;
+import com.brian.speechtherapistapp.view.activities.googlemaps.MapsActivity;
+import com.brian.speechtherapistapp.view.activities.PreferenceActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

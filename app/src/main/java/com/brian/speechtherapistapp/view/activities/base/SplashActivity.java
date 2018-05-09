@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view.activities;
+package com.brian.speechtherapistapp.view.activities.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.activities.HomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

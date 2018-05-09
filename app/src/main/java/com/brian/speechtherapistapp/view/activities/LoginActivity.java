@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -175,7 +176,7 @@ public class LoginActivity extends BaseActivity
     @OnClick(R.id.btn_login)
     public void onClickButtonLoginChild() {
         String email = editTextChildEmail.getText().toString();
-//        Intent intent = new Intent(getApplicationContext(), GameTwoActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 //        intent.putExtra("child_email_key", email);
 //        startActivity(intent);
 
@@ -293,7 +294,7 @@ public class LoginActivity extends BaseActivity
 
         }
 
-        if (user != null) {
+        if (user != null && isLoginTherapist) {
             testViewEmail.setVisibility(View.VISIBLE);
             textViewName.setVisibility(View.VISIBLE);
             nameCaptionTextView.setVisibility(View.VISIBLE);

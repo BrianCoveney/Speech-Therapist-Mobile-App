@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view.activities;
+package com.brian.speechtherapistapp.view.activities.base;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
 
-/**
- * Created by briancoveney on 2/16/16.
- */
+
 public class CustomAdapter extends ArrayAdapter<String> {
 
     private final Context context;

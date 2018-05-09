@@ -16,6 +16,7 @@ import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.view.ChildAdapter;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import java.util.List;
 

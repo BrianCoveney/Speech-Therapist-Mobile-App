@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

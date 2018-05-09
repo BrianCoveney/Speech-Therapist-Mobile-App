@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -4,8 +4,7 @@ package com.brian.speechtherapistapp;
 import com.brian.speechtherapistapp.view.activities.ChildDetailsActivity;
 import com.brian.speechtherapistapp.view.activities.ChildListActivity;
 import com.brian.speechtherapistapp.view.activities.CreateChildActivity;
-import com.brian.speechtherapistapp.view.activities.GameOneActivity;
-import com.brian.speechtherapistapp.view.activities.GameTwoActivity;
+import com.brian.speechtherapistapp.view.activities.GameActivity;
 
 import javax.inject.Singleton;
 
@@ -15,8 +14,7 @@ import dagger.Component;
 @Component(modules = { PresenterModule.class })
 public interface PresenterComponent {
     void inject(CreateChildActivity createChildActivity);
-    void inject(GameOneActivity gameOneActivity);
-    void inject(GameTwoActivity gameTwoActivity);
+    void inject(GameActivity gameOneActivity);
     void inject(ChildListActivity childListActivity);
     void inject(ChildDetailsActivity childDetailsActivity);
 }

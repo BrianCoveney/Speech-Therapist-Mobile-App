@@ -32,6 +32,7 @@ import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IGameView;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 import static com.brian.speechtherapistapp.util.Const.GLIDING_OF_LIQUIDS_WORDS_LIST;
 
 
-public class GameTwoActivity extends BaseActivity implements
+public class GameActivity extends BaseActivity implements
         WordAdapter.WordAdapterClickListener,
         IGameView,
         edu.cmu.pocketsphinx.RecognitionListener {
@@ -69,7 +70,7 @@ public class GameTwoActivity extends BaseActivity implements
     @BindView(R.id.rv_words)
     RecyclerView recyclerView;
 
-    private static final String LOG_TAG = GameTwoActivity.class.getSimpleName();
+    private static final String LOG_TAG = GameActivity.class.getSimpleName();
     private WordAdapter adapter;
     private static final int NUM_LIST_ITEMS = Const.CORRECT_WORDS_LIST.size();
     private static final String WORD_ID = "word_id";
@@ -177,9 +178,9 @@ public class GameTwoActivity extends BaseActivity implements
       SetupTask class
     */
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<GameTwoActivity> activityReference;
+        WeakReference<GameActivity> activityReference;
 
-        SetupTask(GameTwoActivity activity) {
+        SetupTask(GameActivity activity) {
             this.activityReference = new WeakReference<>(activity);
         }
 
@@ -338,7 +339,7 @@ public class GameTwoActivity extends BaseActivity implements
     */
     private class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
 
-        private ProgressDialog progressDialog = new ProgressDialog(GameTwoActivity.this);
+        private ProgressDialog progressDialog = new ProgressDialog(GameActivity.this);
 
         @Override
         protected Child doInBackground(Void... voids) {

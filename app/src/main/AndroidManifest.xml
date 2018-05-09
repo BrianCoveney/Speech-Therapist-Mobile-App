@@ -17,7 +17,7 @@
         android:roundIcon="@drawable/ic_microphone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.SplashActivity">
+        <activity android:name=".view.activities.base.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,12 +25,12 @@
         </activity>
         <activity android:name=".view.activities.HomeActivity"
             android:label="@string/home_activity"
-            android:parentActivityName=".view.activities.SplashActivity"
+            android:parentActivityName=".view.activities.base.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.SplashActivity"/>
+                android:value=".view.activities.base.SplashActivity"/>
         </activity>
         <activity
             android:name=".view.activities.PreferenceActivity"
@@ -67,23 +67,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activities.LoginActivity"/>
         </activity>
-        <activity android:name=".view.activities.SpeechActivity"
-            android:label="@string/speech_activity"
-            android:parentActivityName=".view.activities.GameMenuActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.GameMenuActivity"/>
-        </activity>
-        <activity android:name=".view.activities.GameOneActivity"
-            android:label="Game One Activity"
-            android:parentActivityName=".view.activities.GameMenuActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activities.GameMenuActivity"/>
-        </activity>
-        <activity android:name=".view.activities.GameTwoActivity"
+        <activity android:name=".view.activities.GameActivity"
             android:label="Game"
             android:parentActivityName=".view.activities.GameMenuActivity"
             android:configChanges="orientation"
@@ -144,7 +128,7 @@
 
 
         <activity
-            android:name=".view.activities.MapsActivity"
+            android:name=".view.activities.googlemaps.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
 
 

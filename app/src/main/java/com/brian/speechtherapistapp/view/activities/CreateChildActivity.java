@@ -20,6 +20,7 @@ import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IChildView;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -9,6 +9,7 @@ import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import receivers.EmailDialog;
 
-public class ChildDetailsActivity extends BaseActivity{
+public class ChildDetailsActivity extends BaseActivity {
 
     @Inject
     IChildPresenter iChildPresenter;

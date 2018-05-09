@@ -1,4 +1,4 @@
-package com.brian.speechtherapistapp.view.activities;
+package com.brian.speechtherapistapp.view.activities.googlemaps;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.view.activities.googlemaps.GetNearbyPlacesData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

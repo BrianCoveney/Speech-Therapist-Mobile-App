@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
+import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,20 +54,12 @@ public class GameMenuActivity extends BaseActivity implements RecognitionListene
         new SetupTask(this).execute();;
     }
 
-    @OnClick({R.id.game_one_button, R.id.game_two_button, R.id.game_three_button})
+    @OnClick({R.id.game_two_button})
     public void onButtonClicked(View view) {
         switch (view.getId()) {
-            case R.id.game_one_button:
-                Intent intentGameOneActivity = new Intent(this, GameOneActivity.class);
-                startActivity(intentGameOneActivity);
-                break;
             case R.id.game_two_button:
-                Intent intentGameTwoActivity = new Intent(this, GameTwoActivity.class);
+                Intent intentGameTwoActivity = new Intent(this, GameActivity.class);
                 startActivity(intentGameTwoActivity);
-                break;
-            case R.id.game_three_button:
-                Intent intentGameThree = new Intent(this, SpeechActivity.class);
-                startActivity(intentGameThree);
                 break;
         }
     }

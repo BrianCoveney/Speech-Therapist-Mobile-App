@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.brian.speechtherapistapp.view.activities.SplashActivity"
+    tools:context="com.brian.speechtherapistapp.view.activities.base.SplashActivity"
     android:id="@+id/main_constraint_layout">
 
 
