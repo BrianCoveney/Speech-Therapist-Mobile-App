@@ -14,7 +14,7 @@ Const {
 
     public static final List<String> GLIDING_OF_LIQUIDS_WORDS_LIST = Collections.unmodifiableList(
             Arrays.asList(
-                    "wed",     // red
+                    "moo",     // moon
                     "yeg",     // leg
                     "wook",    // look
                     "wabbit",  // rabbit
@@ -23,7 +23,8 @@ Const {
                     "pway",    // leaf
                     "cawy",    // carry
                     "yucky",   // lucky
-                    "wat"      // rock
+                    "wat",     // rock
+                    "wed"      // red
             )
     );
 
@@ -37,8 +38,8 @@ Const {
                     "sool", // stool
                     "coal", // cold
                     "pider",// spider
-                    "poon", // spoon
-                    "sate"  //
+                    "poon" // spoon
+
             )
     );
 
@@ -101,10 +102,10 @@ Const {
         public static final int CHILD_ID = 0;
         public static final String CHILD_GENDER = "male";
         public static final String CHILD_SCHOOL = "Scoil Barra Naofa";
-        public static final String CHILD_PASSWORD = "password";
+        public static final String CHILD_PASSWORD = "p";
         public static final String CHILD_EMAIL = "name@email.com";
-        public static final String CHILD_FIRST_NAME = "firstname";
-        public static final String CHILD_SECOND_NAME = "secondtname";
+        public static final String CHILD_FIRST_NAME = "fname";
+        public static final String CHILD_SECOND_NAME = "sname";
         public static final String CHILD_BIRTHDAY = setDefaultBirthday();
     }
 

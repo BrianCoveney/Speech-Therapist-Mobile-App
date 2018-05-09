@@ -8,7 +8,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
@@ -20,8 +19,7 @@ import butterknife.OnClick;
 
 public class TherapistMenuActivity extends BaseActivity {
 
-    @BindView(R.id.therapist_name_textview)
-    TextView therapistNameTextView;
+
 
     @BindView(R.id.create_child_button)
     Button createChildButton;
@@ -46,9 +44,9 @@ public class TherapistMenuActivity extends BaseActivity {
 
         SpannableStringBuilder nameBuilder = highlightWord(messageReceived);
 
-        if (messageReceived != null) {
-            therapistNameTextView.setText(nameBuilder, TextView.BufferType.SPANNABLE);
-        }
+//        if (messageReceived != null) {
+//            therapistNameTextView.setText(nameBuilder, TextView.BufferType.SPANNABLE);
+//        }
     }
 
     private SpannableStringBuilder highlightWord(String word) {

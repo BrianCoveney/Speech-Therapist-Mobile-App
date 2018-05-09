@@ -44,7 +44,7 @@
     <string name="stop_loc_updates">Stop Location Updates</string>
     <string name="connection_failed">Connection failed. Is location enabled?</string>
     <string name="share_message1">Here is the Child that you are emailing:</string>
-    <string name="share_message2">Thanks for sharing!</string>
+    <string name="share_message2">Regards,</string>
     <string name="sign_in">Sign in</string>
 
     <string-array name="intent_email">

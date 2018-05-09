@@ -409,7 +409,7 @@ public class GameActivity extends BaseActivity implements
                     textViewDialogPrompt.setVisibility(View.INVISIBLE);
                     wordPresenter.saveWord();
                     floatingMusicActionButton.playAnimation();
-                    showToast("Saved: " + result);
+                    showToast("You said: " + result);
 
                     if (recognizer != null) {
                         recognizer.stop();
