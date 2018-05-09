@@ -244,7 +244,7 @@ public class GameTwoActivity extends BaseActivity implements
                 currentWord = child.getWordName();
 
                 /*** We set the child's word in the DB ***/
-                child = iChildPresenter.setWord(result, childEmail);
+                child = iChildPresenter.setWord(currentWord, result, childEmail);
 
                 word.setName(child.getWordName());
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
@@ -260,7 +260,7 @@ public class GameTwoActivity extends BaseActivity implements
                         glidingHashMap.put(mWord, 1);
                     }
 
-                    child.setWordGlidingLiquidsMap(glidingHashMap);
+//                    child.setWordGlidingLiquidsMap(glidingHashMap);
 
                     /*** We update the Gliding of Liquids HashMap in the DB ***/
                     iChildPresenter.setGlidingWordsMap(glidingHashMap, childEmail);

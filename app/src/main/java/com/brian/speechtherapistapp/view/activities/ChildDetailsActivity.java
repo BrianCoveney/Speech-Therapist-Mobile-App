@@ -5,8 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.presentation.IChildPresenter;
+
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,6 +20,9 @@ import butterknife.OnClick;
 import receivers.EmailDialog;
 
 public class ChildDetailsActivity extends BaseActivity{
+
+    @Inject
+    IChildPresenter iChildPresenter;
 
     @BindView(R.id.tv_first_name)
     TextView firstNameTextView;
@@ -27,11 +36,17 @@ public class ChildDetailsActivity extends BaseActivity{
     @BindView(R.id.tv_word)
     TextView wordTextView;
 
+    @BindView(R.id.tv_gliding_map)
+    TextView glidingTextView;
+
     private Child child;
+    private static final String LOG_TAG = ChildDetailsActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainApplication) getApplication()).getPresenterComponent().inject(this);
 
         // This is where we get our content view
         getLayoutInflater().inflate(R.layout.activity_child_details, frameLayout);
@@ -47,14 +62,24 @@ public class ChildDetailsActivity extends BaseActivity{
         secondNameTextView.setText(child.getSecondName());
         emailTextView.setText(child.getEmail());
         wordTextView.setText(child.getWordName());
+
+
+        glidingTextView.setText(child.getWordGlidingLiquidsMap().toString());
+
+
     }
 
     private Child getChildFromChildListActivity() {
         Intent i = getIntent();
         child = i.getParcelableExtra("child_key");
 
+        // I had issues with getting HashMap of Words with Parcelable, so instead I'm querying the DB
+        Child c = iChildPresenter.getChildWithEmail(child.getEmail());
+        Map<String, Integer> wordGlidingMap = c.getWordGlidingLiquidsMap();
+
         return Child.builder(child.getId(), child.getFirstName(), child.getSecondName(), child.getEmail())
                 .withWord(child.getWordName())
+                .withGlidingWordMap(wordGlidingMap)
                 .build();
     }
 

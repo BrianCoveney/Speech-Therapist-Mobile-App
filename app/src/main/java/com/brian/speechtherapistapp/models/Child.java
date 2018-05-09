@@ -133,16 +133,16 @@ public class Child implements Parcelable {
 
     public static final Parcelable.Creator<Child> CREATOR = new Creator<Child>() {
         @Override
-        public Child createFromParcel(Parcel parcel) {
-            int id = parcel.readInt();
-            String firstName = parcel.readString();
-            String secondName = parcel.readString();
-            String email = parcel.readString();
-            String word = parcel.readString();
+        public Child createFromParcel(Parcel in) {
+            int id = in.readInt();
+            String firstName = in.readString();
+            String secondName = in.readString();
+            String email = in.readString();
+            String word = in.readString();
 
-            Child child = Child.builder(id, firstName, secondName, email).withWord(word)
+            return Child.builder(id, firstName, secondName, email)
+                    .withWord(word)
                     .build();
-            return child;
         }
 
         @Override
@@ -157,12 +157,23 @@ public class Child implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(firstName);
-        parcel.writeString(secondName);
-        parcel.writeString(email);
-        parcel.writeString(word.getName());
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeInt(id);
+        dest.writeString(firstName);
+        dest.writeString(secondName);
+        dest.writeString(email);
+        dest.writeString(word.getName());
+//        dest.writeMap(word.getGlidingLiquidsMap());
+
+//        Map<String, Integer> glidingMap = word.getGlidingLiquidsMap();
+//        final int N = glidingMap.size();
+//        if (N > 0) {
+//            for (Map.Entry<String, Integer> entry : glidingMap.entrySet()) {
+//                dest.writeString(entry.getKey());
+//                dest.writeInt(entry.getValue());
+//            }
+//        }
+
     }
 
     public static class ChildBuilder {
@@ -189,6 +200,13 @@ public class Child implements Parcelable {
         public ChildBuilder withWord(String word) {
             if (word != null) {
                 child.word.setName(word);
+            }
+            return this;
+        }
+
+        public ChildBuilder withGlidingWordMap(Map<String, Integer> glidingWords) {
+            if (glidingWords != null) {
+                child.word.setGlidingLiquidsMap(glidingWords);
             }
             return this;
         }

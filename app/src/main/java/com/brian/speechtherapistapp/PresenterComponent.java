@@ -1,6 +1,7 @@
 package com.brian.speechtherapistapp;
 
 
+import com.brian.speechtherapistapp.view.activities.ChildDetailsActivity;
 import com.brian.speechtherapistapp.view.activities.ChildListActivity;
 import com.brian.speechtherapistapp.view.activities.CreateChildActivity;
 import com.brian.speechtherapistapp.view.activities.GameOneActivity;
@@ -17,4 +18,5 @@ public interface PresenterComponent {
     void inject(GameOneActivity gameOneActivity);
     void inject(GameTwoActivity gameTwoActivity);
     void inject(ChildListActivity childListActivity);
+    void inject(ChildDetailsActivity childDetailsActivity);
 }

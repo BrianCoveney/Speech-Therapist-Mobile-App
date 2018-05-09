@@ -65,8 +65,8 @@ public class ChildPresenterImpl implements IChildPresenter {
     }
 
     @Override
-    public Child setWord(String newWord, String email) {
-        return childRepository.updateWordSpoken(newWord, email);
+    public Child setWord(String currWord, String newWord, String email) {
+        return childRepository.updateWordSpoken(currWord, newWord, email);
     }
 
     @Override

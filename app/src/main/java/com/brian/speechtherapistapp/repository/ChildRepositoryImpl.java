@@ -66,6 +66,7 @@ public class ChildRepositoryImpl implements IChildRepository {
             document.put("email", child.getEmail());
             document.put("birthday", child.getBirthday());
             document.put("password", child.getPassword());
+            document.put("word", "default_word");
             document.put("map_of_gliding_words", wordGlidingMap);
         }
         Thread thread = new Thread(new Runnable() {
@@ -78,7 +79,7 @@ public class ChildRepositoryImpl implements IChildRepository {
     }
 
     @Override
-    public Child updateWordSpoken(String newWord, String email) {
+    public Child updateWordSpoken(String currWord, String newWord, String email) {
         Bson filter = new Document("email", email);
         Bson newValue = new Document("word", newWord);
         Bson updateOperationDocument = new Document("$set", newValue);
@@ -93,6 +94,11 @@ public class ChildRepositoryImpl implements IChildRepository {
         Bson filter = new Document("email", email);
         Bson newValue = new Document("map_of_gliding_words", glidingLiquidsMap);
         Bson updateOperationDocument = new Document("$set", newValue);
+
+//        DBObject updateOperationDocument = new BasicDBObject();
+//        updateOperationDocument.put("$set", new BasicDBObject()
+//                .append("map_of_gliding_words", glidingLiquidsMap));
+
         childCollection.updateOne(filter, updateOperationDocument);
     }
 
@@ -127,7 +133,6 @@ public class ChildRepositoryImpl implements IChildRepository {
     @Override
     public Child getChildWithEmailIdentifier(String email) {
         Child child = null;
-
         FindIterable<Document> databaseRecords = childCollection.find(eq("email", email));
         MongoCursor<Document> cursor = databaseRecords.iterator();
 
@@ -139,8 +144,10 @@ public class ChildRepositoryImpl implements IChildRepository {
                 String secondName = document.getString("second_name");
                 String childEmail = document.getString("email");
                 String word = document.getString("word");
+                Map<String, Integer> wordGlidingMap = document.get("map_of_gliding_words", Map.class);
                 child = Child.builder(0, firstName, secondName, childEmail)
                         .withWord(word)
+                        .withGlidingWordMap(wordGlidingMap)
                         .build();
             }
         } finally {

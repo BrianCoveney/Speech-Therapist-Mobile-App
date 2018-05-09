@@ -116,11 +116,4 @@ public class ChildListActivity extends BaseActivity {
             }
         });
     }
-
-
-
-
-
-
-
 }
