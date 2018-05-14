@@ -8,7 +8,6 @@ import java.util.Map;
 
 public interface IChildRepository {
     void saveChild(ChildList childList);
-
     Child updateWordSpoken(String currWord, String newWord, String email);
     void updateGlidingOfLiquidsMap(Map<String, Integer> glidingLiquidsMap, String email);
     List<Child> getChildListFromDB();

@@ -173,18 +173,32 @@ public class LoginActivity extends BaseActivity
         }
     }
 
+
+    /**
+     * When the Child logs in we save their email to SharedPreferences.
+     * The email is accessed by the following class and method:
+     *
+     * @link GameMenuActivity#getChildFromChildLoginActivity()
+     */
     @OnClick(R.id.btn_login)
     public void onClickButtonLoginChild() {
-        String email = editTextChildEmail.getText().toString();
-//        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-//        intent.putExtra("child_email_key", email);
-//        startActivity(intent);
 
-        SharedPreferences sharedPref = getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+        // We retrieve the email address typed in the EditText email field
+        String email = editTextChildEmail.getText().toString();
+
+        // We create a SharedPreferences object so that we can save key-value data. Here, we are
+        // storing the object, with the key 'email_pref_key', so that we can share this object with
+        // the GameActivity class.
+        SharedPreferences sharedPref =
+                getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+
+        // We write to a SharedPreference file by passing the key: 'email_key' and value: 'email'
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("email_key", email);
         editor.apply();
 
+        // We start the GameMenuActivity by creating an intent, passing this activities context,
+        // and the target activity.
         Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
         startActivity(intentGameMenuActivity);
     }

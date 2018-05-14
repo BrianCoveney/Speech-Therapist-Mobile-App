@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.ChildList;
+import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.repository.persistors.MongoRemoteConnector;
+import com.brian.speechtherapistapp.view.activities.GameActivity;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
@@ -39,10 +41,7 @@ public class ChildRepositoryImpl implements IChildRepository {
     @Inject
     public ChildRepositoryImpl() {
         try {
-            // MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
-
             MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
-
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);
         } catch (MongoException e) {
@@ -78,6 +77,8 @@ public class ChildRepositoryImpl implements IChildRepository {
         thread.start();
     }
 
+
+
     @Override
     public Child updateWordSpoken(String currWord, String newWord, String email) {
         Bson filter = new Document("email", email);
@@ -93,13 +94,8 @@ public class ChildRepositoryImpl implements IChildRepository {
     public void updateGlidingOfLiquidsMap(Map<String, Integer> glidingLiquidsMap, String email) {
         Bson filter = new Document("email", email);
         Bson newValue = new Document("map_of_gliding_words", glidingLiquidsMap);
-        Bson updateOperationDocument = new Document("$set", newValue);
-
-//        DBObject updateOperationDocument = new BasicDBObject();
-//        updateOperationDocument.put("$set", new BasicDBObject()
-//                .append("map_of_gliding_words", glidingLiquidsMap));
-
-        childCollection.updateOne(filter, updateOperationDocument);
+        Bson updateResult = new Document("$set", newValue);
+        childCollection.updateOne(filter, updateResult);
     }
 
     @Override
@@ -130,12 +126,30 @@ public class ChildRepositoryImpl implements IChildRepository {
         return childList;
     }
 
+
+    /**
+     * Returns a child object, fetched from the database, based on the email address passed in
+     *
+     * @see IChildRepository#getChildWithEmailIdentifier(String)
+     * @see IChildPresenter#getChildWithEmail(String)
+     * @see GameActivity.FetchFromDatabaseTask
+     * @return Child
+     */
     @Override
     public Child getChildWithEmailIdentifier(String email) {
         Child child = null;
+
+        // We use mongo's iteration document to search our collection for the key values we are
+        // interested in. Here the key is the mongo 'email' field and the value is the 'email'
+        // String that has been passed into the method.
         FindIterable<Document> databaseRecords = childCollection.find(eq("email", email));
+
+        // We create a mongo cursor object to find the next item in the database
         MongoCursor<Document> cursor = databaseRecords.iterator();
 
+        // We create a bson document which we set equal to the cursor in the while loop.
+        // This is a key value document, again with mongo fields as the key, and the
+        // returned results as the values.
         Document document;
         try {
             while (cursor.hasNext()) {
@@ -144,7 +158,11 @@ public class ChildRepositoryImpl implements IChildRepository {
                 String secondName = document.getString("second_name");
                 String childEmail = document.getString("email");
                 String word = document.getString("word");
+
+                // We create a map for the gliding words, which will be inserted as a nested map
                 Map<String, Integer> wordGlidingMap = document.get("map_of_gliding_words", Map.class);
+
+                // We create a child object containing the results of the above values
                 child = Child.builder(0, firstName, secondName, childEmail)
                         .withWord(word)
                         .withGlidingWordMap(wordGlidingMap)

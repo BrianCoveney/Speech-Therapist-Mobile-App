@@ -131,6 +131,7 @@ public class Child implements Parcelable {
                 '}';
     }
 
+    // Parcelable
     public static final Parcelable.Creator<Child> CREATOR = new Creator<Child>() {
         @Override
         public Child createFromParcel(Parcel in) {
@@ -163,18 +164,10 @@ public class Child implements Parcelable {
         dest.writeString(secondName);
         dest.writeString(email);
         dest.writeString(word.getName());
-//        dest.writeMap(word.getGlidingLiquidsMap());
-
-//        Map<String, Integer> glidingMap = word.getGlidingLiquidsMap();
-//        final int N = glidingMap.size();
-//        if (N > 0) {
-//            for (Map.Entry<String, Integer> entry : glidingMap.entrySet()) {
-//                dest.writeString(entry.getKey());
-//                dest.writeInt(entry.getValue());
-//            }
-//        }
-
     }
+
+    // end Parcelable
+
 
     public static class ChildBuilder {
         private Child child;
@@ -185,17 +178,13 @@ public class Child implements Parcelable {
         }
 
         public ChildBuilder(int id, String firstName, String secondName, String email) {
-
             validateRequiredFields(id, firstName, secondName, email);
-
             child = new Child();
             child.id = id;
-
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;
         }
-
 
         public ChildBuilder withWord(String word) {
             if (word != null) {

@@ -17,8 +17,7 @@ import dagger.Provides;
 
 @Module
 public class PresenterModule {
-
-    private MainApplication mainApplication;
+    MainApplication mainApplication;
 
     public PresenterModule(MainApplication mainApplication) {
         this.mainApplication = mainApplication;
@@ -33,6 +32,11 @@ public class PresenterModule {
     public IChildPresenter providesChildPresenter(IChildRepository childRepository) {
         return new ChildPresenterImpl(childRepository);
     }
+
+
+
+
+
 
     @Provides @Singleton
     public IWordRepository providesWordRepository() { return new WordRepositoryImpl(); }

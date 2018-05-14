@@ -6,13 +6,10 @@ import com.brian.speechtherapistapp.view.IChildView;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by brian on 04/02/18.
- */
 
 public interface IChildPresenter {
-    void setView(IChildView childView);
     void saveChild();
+    void setView(IChildView childView);
     void loadChildDetails();
     List<Child> getChildren();
     Child setWord(String currWord, String newWord, String email);

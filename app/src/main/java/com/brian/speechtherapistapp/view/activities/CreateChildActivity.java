@@ -73,8 +73,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
             "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,15 +83,12 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean validFieldsSet = isRequiredFieldsSet();
                 boolean validStringInput = isInputString();
                 boolean validEmail = isEmailValid();
 
                 if (validFieldsSet && validStringInput && validEmail) {
-
                     passwordConfirmListener(saveButton);
-
                     boolean passwordMatch = isPasswordMatching();
 
                     if (passwordMatch) {

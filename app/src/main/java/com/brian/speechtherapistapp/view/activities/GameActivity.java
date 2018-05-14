@@ -101,14 +101,12 @@ public class GameActivity extends BaseActivity implements
         childEmail = getChildFromChildLoginActivity();
         Log.i(LOG_TAG, "Child's email from login: " + childEmail);
 
-
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy =
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
 
         /* Recycler view */
         recyclerView.setHasFixedSize(true);
@@ -148,13 +146,12 @@ public class GameActivity extends BaseActivity implements
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
+        // When the user swipes the screen, the recycler view snaps to the next full screen item.
         SnapHelper snapHelper = new PagerSnapHelper();
         recyclerView.setLayoutManager(layoutManager);
-
         snapHelper.attachToRecyclerView(recyclerView);
 
         adapter = new WordAdapter(this, itemsData, NUM_LIST_ITEMS, this);
-
         recyclerView.setAdapter(adapter);
 
         /* Speech Recognition */
@@ -168,8 +165,11 @@ public class GameActivity extends BaseActivity implements
             return;
         }
 
-        // Perform heavy lifting on background thread
+        // Setup speech recognition task
         new SetupTask(this).execute();
+
+
+        // Setup database query task
         new FetchFromDatabaseTask().execute();
     }
 
@@ -184,6 +184,7 @@ public class GameActivity extends BaseActivity implements
             this.activityReference = new WeakReference<>(activity);
         }
 
+        // Heavy lifting runs on background thread
         @Override
         protected Exception doInBackground(Void... params) {
             try {
@@ -194,9 +195,9 @@ public class GameActivity extends BaseActivity implements
                 return e;
             }
             return null;
-
         }
 
+        // Publish results on the UI Thread
         @Override
         protected void onPostExecute(Exception result) {
             if (result != null) {
@@ -232,51 +233,48 @@ public class GameActivity extends BaseActivity implements
         if (hypothesis == null)
             return;
         result = hypothesis.getHypstr();
-
     }
 
+    /**
+     * This onResult method is an implementation of the pocketsphinx.RecognitionListener interface.
+     * The 'hypothesis' passed in is a result from pocketsphinx.Hypothesis class.
+     *
+     * We check that hypothesis is not null, setting it equal to our string 'result' if not.
+     */
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
             String result = hypothesis.getHypstr();
 
+            // We get the current word from the child that has been fetched from the database
             String currentWord = child.getWordName();
             if (currentWord != null) {
-                currentWord = child.getWordName();
 
-                /*** We set the child's word in the DB ***/
+                // We pass the current word, result of the recording and the email identifier.
+                // This will update the child's current word to the new word, i.e result
                 child = iChildPresenter.setWord(currentWord, result, childEmail);
 
+                // We set our word object name equal to this child's new word
                 word.setName(child.getWordName());
+                // Our boolean is true if there's a match between the word and the gliding list
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
-                String mWord = word.getName();
 
+                String newWord = word.getName();
 
+                // Then newWord matches one of the gliding words list
                 if (isWordMatch == true) {
-                    glidingList.add(mWord);
 
-                    if (glidingHashMap.containsKey(mWord)) {
-                        glidingHashMap.put(mWord, glidingHashMap.get(mWord) + 1);
-                    } else {
-                        glidingHashMap.put(mWord, 1);
+                    // Our HashMap already contains the newWord, so the value (count) is incremented
+                    if (glidingHashMap.containsKey(newWord)) {
+                        glidingHashMap.put(newWord, glidingHashMap.get(newWord) + 1);
                     }
-
-//                    child.setWordGlidingLiquidsMap(glidingHashMap);
-
-                    /*** We update the Gliding of Liquids HashMap in the DB ***/
+                    // Our HashMap doesn't contain the newWord, so we add the word with a value of 1
+                    else {
+                        glidingHashMap.put(newWord, 1);
+                    }
+                    // We update the Gliding of Liquids HashMap in the DB
                     iChildPresenter.setGlidingWordsMap(glidingHashMap, childEmail);
-
-                    Log.i(LOG_TAG, "CHILD HASHMAP: " + child.getWordGlidingLiquidsMap().toString());
                 }
-
-                Log.i(LOG_TAG, "Item clicked: " + onItemClickResult);
-                Log.i(LOG_TAG, "Child's newWord: " + child.getWordName());
-                Log.i(LOG_TAG, "Child's currWord:: " + currentWord);
-                Log.i(LOG_TAG, "Word is a match in list: " + isWordMatch);
-                Log.i(LOG_TAG, "Word freq count: " + wordFreq);
-                Log.i(LOG_TAG, "Word gliding list: " + glidingList.toString());
-                Log.i(LOG_TAG, "Word gliding map: " + glidingHashMap.toString());
-
             } else {
                 showToast("You need to create a user account first!");
             }
@@ -336,23 +334,27 @@ public class GameActivity extends BaseActivity implements
 
     /*----------------------------------------------------------------------------------------------
       FetchFromDatabaseTask class
+      A database query can be a time consuming task and should not be run on the main thread
     */
     private class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
 
         private ProgressDialog progressDialog = new ProgressDialog(GameActivity.this);
 
+        // Heavy lifting runs on background thread
         @Override
         protected Child doInBackground(Void... voids) {
-
-            // Fetch the child from the db based on their email
+            // Fetch the child from the db based on their email address.
+            // This email was retrieved by getChildFromLoginActivity()
             child = iChildPresenter.getChildWithEmail(childEmail);
             return child;
         }
 
+        // Publish results on the UI Thread
         @Override
         protected void onPostExecute(Child child) {
             super.onPostExecute(child);
 
+            // Close the progressDialog once the database query has returned a result.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -364,6 +366,9 @@ public class GameActivity extends BaseActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            // We create a spinning progress dialog to let the user know that our app is still
+            // running, while information is retrieved from the database.
             this.progressDialog.setMessage("Please wait");
             this.progressDialog.show();
         }
@@ -487,13 +492,32 @@ public class GameActivity extends BaseActivity implements
     /*----------------------------------------------------------------------------------------------
       SharedPreferences
     */
+
+
+    /**
+     * When the activity has started, this method is called in the onCreate() method. We fetch the
+     * email entered in the LoginActivity using the SharedPreferences object, and pass it to our
+     * 'childEmail' instance variable.
+     *
+     * @link LocationActivity#onClickButtonLoginChild()
+     * @see GameActivity#onCreate(Bundle)
+     * @return String
+     */
     private String getChildFromChildLoginActivity() {
+
+        // We create a SharedPreferences object so that we can retrieve key-value data from the
+        // LoginActivity
         SharedPreferences sharedPreferences =
                 getSharedPreferences("email_pref_key", Activity.MODE_PRIVATE);
+
+        // We set the 'childEmail' instance variable equal to the returned value
         childEmail = sharedPreferences.getString("email_key", "default");
 
         return childEmail;
     }
+
+
+
 
     private int getRecyclerViewPosition() {
         SharedPreferences sharedPreferences =
