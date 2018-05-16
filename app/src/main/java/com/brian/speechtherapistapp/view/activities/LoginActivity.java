@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -51,7 +50,6 @@ public class LoginActivity extends BaseActivity
     ProgressDialog dialog;
     private boolean isLoginTherapist;
     private boolean isLoginChild;
-    private Child child;
 
     @BindView(R.id.login_constraint_layout)
     ConstraintLayout constraintLayout;
@@ -97,22 +95,13 @@ public class LoginActivity extends BaseActivity
         displayLoginType();
 
         if (isLoginTherapist == true) {
-            appImage.setImageResource(R.drawable.therapist2);
-            googleSignInButton.setVisibility(View.VISIBLE);
-            buttonContinue.setVisibility(View.INVISIBLE);
-            editTextChildEmail.setVisibility(View.INVISIBLE);
-            editTextChildPassword.setVisibility(View.INVISIBLE);
-            buttonChildLogin.setVisibility(View.INVISIBLE);
+            setTherapistView();
         }
         else if (isLoginChild == true) {
-            appImage.setImageResource(R.drawable.bubbles);
-            googleSignInButton.setVisibility(View.INVISIBLE);
-            buttonContinue.setVisibility(View.INVISIBLE);
-            editTextChildEmail.setVisibility(View.VISIBLE);
-            editTextChildPassword.setVisibility(View.VISIBLE);
-            buttonChildLogin.setVisibility(View.VISIBLE);
+            setChildView();
         }
     }
+
 
     private void displayLoginType() {
         Bundle extras = getIntent().getExtras();
@@ -131,9 +120,6 @@ public class LoginActivity extends BaseActivity
                 if (user != null) {
                     // User is signed in
                     setTextOfGoogleSignInButton("Sign Out");
-
-                    // Prompt user to Continue, or they can press GoogleSignInButton to sign out
-                    buttonContinue.setVisibility(View.VISIBLE);
 
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
@@ -178,7 +164,6 @@ public class LoginActivity extends BaseActivity
                 break;
         }
     }
-
 
     /**
      * When the Child logs in we save their email to SharedPreferences.
@@ -356,5 +341,24 @@ public class LoginActivity extends BaseActivity
         testViewEmail.setVisibility(View.INVISIBLE);
         nameCaptionTextView.setVisibility(View.INVISIBLE);
         textViewName.setVisibility(View.INVISIBLE);
+    }
+
+    private void setChildView() {
+        appImage.setImageResource(R.drawable.bubbles);
+        googleSignInButton.setVisibility(View.INVISIBLE);
+        buttonContinue.setVisibility(View.INVISIBLE);
+        editTextChildEmail.setVisibility(View.VISIBLE);
+        editTextChildPassword.setVisibility(View.VISIBLE);
+        buttonChildLogin.setVisibility(View.VISIBLE);
+        setTextViewsInvisible();
+    }
+
+    private void setTherapistView() {
+        appImage.setImageResource(R.drawable.therapist2);
+        googleSignInButton.setVisibility(View.VISIBLE);
+        buttonContinue.setVisibility(View.VISIBLE);
+        editTextChildEmail.setVisibility(View.INVISIBLE);
+        editTextChildPassword.setVisibility(View.INVISIBLE);
+        buttonChildLogin.setVisibility(View.INVISIBLE);
     }
 }
