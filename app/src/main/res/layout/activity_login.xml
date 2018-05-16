@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/tv_email"
-        android:layout_width="170dp"
-        android:layout_height="25dp"
+        android:layout_width="283dp"
+        android:layout_height="53dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:textColor="@color/orange"
@@ -59,12 +59,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_first_name" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_skip"
+        android:id="@+id/btn_continue"
         style="@style/AppTheme.GreenButton"
         android:layout_width="276dp"
         android:layout_height="40dp"
         android:layout_marginBottom="32dp"
-        android:text="@string/skip"
+        android:text="Continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,7 +75,7 @@
         android:layout_width="276dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_skip"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
@@ -115,7 +115,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
         android:text="@string/sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/btn_skip"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"

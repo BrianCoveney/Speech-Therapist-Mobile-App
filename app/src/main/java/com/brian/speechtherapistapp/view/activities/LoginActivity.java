@@ -80,6 +80,9 @@ public class LoginActivity extends BaseActivity
     @BindView(R.id.btn_login)
     Button buttonChildLogin;
 
+    @BindView(R.id.btn_continue)
+    Button buttonContinue;
+
     public static final String EXTRA_MESSAGE = "therapist_name";
 
 
@@ -96,12 +99,15 @@ public class LoginActivity extends BaseActivity
         if (isLoginTherapist == true) {
             appImage.setImageResource(R.drawable.therapist2);
             googleSignInButton.setVisibility(View.VISIBLE);
+            buttonContinue.setVisibility(View.INVISIBLE);
             editTextChildEmail.setVisibility(View.INVISIBLE);
             editTextChildPassword.setVisibility(View.INVISIBLE);
             buttonChildLogin.setVisibility(View.INVISIBLE);
-        } else if (isLoginChild == true) {
+        }
+        else if (isLoginChild == true) {
             appImage.setImageResource(R.drawable.bubbles);
             googleSignInButton.setVisibility(View.INVISIBLE);
+            buttonContinue.setVisibility(View.INVISIBLE);
             editTextChildEmail.setVisibility(View.VISIBLE);
             editTextChildPassword.setVisibility(View.VISIBLE);
             buttonChildLogin.setVisibility(View.VISIBLE);
@@ -125,6 +131,10 @@ public class LoginActivity extends BaseActivity
                 if (user != null) {
                     // User is signed in
                     setTextOfGoogleSignInButton("Sign Out");
+
+                    // Prompt user to Continue, or they can press GoogleSignInButton to sign out
+                    buttonContinue.setVisibility(View.VISIBLE);
+
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -147,15 +157,11 @@ public class LoginActivity extends BaseActivity
                 .build();
     }
 
-    @OnClick({R.id.btn_google_sign_in, R.id.btn_skip})
+    @OnClick({R.id.btn_google_sign_in, R.id.btn_continue})
     public void onButtonClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_skip:
-                if (isLoginChild == true) {
-                    Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
-                    startActivity(intentGameMenuActivity);
-                }
-                else if (isLoginTherapist == true) {
+            case R.id.btn_continue:
+                if (isLoginTherapist == true) {
                     Intent intentTherapistActivity = new Intent(this, TherapistMenuActivity.class);
                     startActivity(intentTherapistActivity);
                 }
@@ -199,7 +205,7 @@ public class LoginActivity extends BaseActivity
 
         // We start the GameMenuActivity by creating an intent, passing this activities context,
         // and the target activity.
-        Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
+        Intent intentGameMenuActivity = new Intent(this, GameActivity.class);
         startActivity(intentGameMenuActivity);
     }
 
@@ -294,6 +300,8 @@ public class LoginActivity extends BaseActivity
                             updateUI(null);
                         }
                     });
+
+            buttonContinue.setVisibility(View.INVISIBLE);
         } catch (Exception e) {
 
         }
@@ -315,7 +323,7 @@ public class LoginActivity extends BaseActivity
 
             String str_emailGoogle = user.getEmail();
             Log.e(LOG_TAG, "Email: " + str_emailGoogle);
-            testViewEmail.setText(str_emailGoogle);
+            testViewEmail.setText("Press Continue to Sign in with: " + str_emailGoogle);
             textViewName.setText(user.getDisplayName());
             boolean_google = true;
 
