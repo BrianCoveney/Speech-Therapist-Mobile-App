@@ -8,8 +8,6 @@ import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,7 +16,6 @@ import android.widget.EditText;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
-import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IChildView;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
@@ -60,10 +57,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
 
     @BindView(R.id.et_password_confirm)
     EditText passwordConfirmEditText;
-
-    private MenuItem clearFormMenuButton;
-    private MenuItem addFormMenuButton;
-
 
     private Calendar calendar = Calendar.getInstance();
     private static final int CHILD_ID = 0;
@@ -177,39 +170,6 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
             dateOfBirthEditText.setText(date);
         }
     });
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_child, menu);
-
-        addFormMenuButton = menu.findItem(R.id.action_add_default_child);
-        clearFormMenuButton = menu.findItem(R.id.action_clear_default_child);
-
-        if (firstNameEditText.getText() == null) {
-            clearFormMenuButton.setVisible(false);
-        } else {
-            addFormMenuButton.setVisible(false);
-        }
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_default_child:
-                autoFillForm();
-                clearFormMenuButton.setVisible(true);
-                addFormMenuButton.setVisible(false);
-                break;
-            case R.id.action_clear_default_child:
-                clearForm();
-                addFormMenuButton.setVisible(true);
-                clearFormMenuButton.setVisible(false);
-                break;
-        }
-        return true;
-    }
 
     @OnClick(R.id.et_date)
     public void dateOnClick(View view) {
@@ -325,19 +285,15 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         button.setBackground(backgroundGreen);
     }
 
-    private void autoFillForm() {
-        firstNameEditText.setText(Const.ParamsNames.CHILD_FIRST_NAME);
-        secondNameEditText.setText(Const.ParamsNames.CHILD_SECOND_NAME);
-        emailEditText.setText(Const.ParamsNames.CHILD_EMAIL);
-        passwordEditText.setText(Const.ParamsNames.CHILD_PASSWORD);
-        passwordConfirmEditText.setText(Const.ParamsNames.CHILD_PASSWORD);
-    }
-
-    private void clearForm() {
-        firstNameEditText.setText("");
-        secondNameEditText.setText("");
-        emailEditText.setText("");
-        passwordEditText.setText("");
-        passwordConfirmEditText.setText("");
+    @OnClick(R.id.btn_clear_form)
+    public void onButtonClearClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_clear_form:
+                firstNameEditText.setText("");
+                secondNameEditText.setText("");
+                emailEditText.setText("");
+                passwordEditText.setText("");
+                passwordConfirmEditText.setText("");
+        }
     }
 }

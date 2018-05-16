@@ -95,6 +95,20 @@
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_clear_form"
+        style="@style/AppTheme.GreenButton"
+        android:layout_width="276dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/clear"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" /> /
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_save"
         style="@style/AppTheme.RedButton"
         android:layout_width="276dp"
