@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
@@ -125,6 +126,7 @@ public class LoginActivity extends BaseActivity
                 } else {
                     // User is signed out
                     setTextViewsInvisible();
+                    buttonContinue.setVisibility(View.INVISIBLE);
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_out");
                 }
                 updateUI(user);
@@ -219,6 +221,14 @@ public class LoginActivity extends BaseActivity
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        buttonContinue.setVisibility(View.VISIBLE);
+                    }
+                }, 500);
+
 
                 if (isLoginChild == true) {
                     Intent intentGameMenuActivity = new Intent(this, GameMenuActivity.class);
@@ -356,7 +366,6 @@ public class LoginActivity extends BaseActivity
     private void setTherapistView() {
         appImage.setImageResource(R.drawable.therapist2);
         googleSignInButton.setVisibility(View.VISIBLE);
-        buttonContinue.setVisibility(View.VISIBLE);
         editTextChildEmail.setVisibility(View.INVISIBLE);
         editTextChildPassword.setVisibility(View.INVISIBLE);
         buttonChildLogin.setVisibility(View.INVISIBLE);
