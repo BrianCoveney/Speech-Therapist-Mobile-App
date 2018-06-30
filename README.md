@@ -23,7 +23,6 @@ This project uses Pocketsphinx, a speech recognition library, written by Carnegi
    "android.permission.WRITE_EXTERNAL_STORAGE" 
    "android.permission.RECORD_AUDIO" 
    ```
-1. Go to Pocketsphinx Android demo page on github and download file assets.xml from ‘models‘ directory, and put it in the app/ folder of your project.
 1. Go back to app/build.gradle in your project and add these lines to its absolute end:
    ``` 
    ant.importBuild 'assets.xml'
