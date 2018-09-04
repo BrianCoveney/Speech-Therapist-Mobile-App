@@ -203,4 +203,9 @@ public class ChildRepositoryImpl implements IChildRepository {
         return child;
     }
 
+    @Override
+    public void deleteChild(String email) {
+        childCollection.deleteOne(eq("email", email));
+    }
+
 }

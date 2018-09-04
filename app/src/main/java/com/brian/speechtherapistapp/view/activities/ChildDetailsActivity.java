@@ -3,6 +3,7 @@ package com.brian.speechtherapistapp.view.activities;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.MainApplication;
@@ -105,4 +106,22 @@ public class ChildDetailsActivity extends BaseActivity {
         dialogFragment.show(getFragmentManager(), "email_key");
     }
 
+    @OnClick(R.id.fab_delete)
+    public void onClickDelete() {
+        Intent i = getIntent();
+        Child child = i.getParcelableExtra("child_key");
+        if (child != null) {
+            iChildPresenter.deleteChildAccount(child.getEmail());
+            showToast("Deleted username: " + child.getEmail());
+        }
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(ChildDetailsActivity.this, ChildListActivity.class);
+                startActivity(intent);
+            }
+        }, 2000);
+    }
 }

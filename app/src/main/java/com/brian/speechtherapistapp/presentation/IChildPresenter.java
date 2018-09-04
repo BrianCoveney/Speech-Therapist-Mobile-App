@@ -15,4 +15,6 @@ public interface IChildPresenter {
     Child setWord(String currWord, String newWord, String email);
     void setGlidingWordsMap(Map<String, Integer> glidingLiquidsMap, String email);
     Child getChildWithEmail(String email);
+
+    void deleteChildAccount(String email);
 }

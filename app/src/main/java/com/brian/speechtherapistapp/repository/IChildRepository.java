@@ -13,4 +13,5 @@ public interface IChildRepository {
     List<Child> getChildListFromDB();
     Child getChildWithEmailIdentifier(String email);
     Child getChildFromDB();
+    void deleteChild(String email);
 }

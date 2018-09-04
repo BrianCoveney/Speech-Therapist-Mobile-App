@@ -16,6 +16,8 @@ public class ChildPresenterImpl implements IChildPresenter {
     private Child child;
     private IChildRepository iChildRepository;
     private IChildView iChildView;
+    private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
+
 
     // Constructor Injection.
     // This required annotation by Dagger 2 to preform its code generation and provide dependencies
@@ -91,7 +93,8 @@ public class ChildPresenterImpl implements IChildPresenter {
         return iChildRepository.getChildWithEmailIdentifier(email);
     }
 
-
-    private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
-
+    @Override
+    public void deleteChildAccount(String email) {
+        iChildRepository.deleteChild(email);
+    }
 }
