@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ import com.brian.speechtherapistapp.presentation.IWordPresenter;
 import com.brian.speechtherapistapp.util.Const;
 import com.brian.speechtherapistapp.view.IGameView;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
+import com.brian.speechtherapistapp.view.activities.base.SplashActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -247,8 +249,8 @@ public class GameActivity extends BaseActivity implements
             String result = hypothesis.getHypstr();
 
             // We get the current word from the child that has been fetched from the database
-            String currentWord = child.getWordName();
-            if (currentWord != null) {
+            if (child != null) {
+                String currentWord = child.getWordName();
 
                 // We pass the current word, result of the recording and the email identifier.
                 // This will update the child's current word to the new word, i.e result
@@ -276,7 +278,15 @@ public class GameActivity extends BaseActivity implements
                     iChildPresenter.setGlidingWordsMap(glidingHashMap, childEmail);
                 }
             } else {
-                showToast("You need to create a user account first!");
+                showLongToast("Please login or create an account");
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+
+                        Intent intent = new Intent(GameActivity.this, SplashActivity.class);
+                        startActivity(intent);
+                    }
+                }, 2000);
             }
         }
     }
@@ -430,10 +440,12 @@ public class GameActivity extends BaseActivity implements
                     Log.i(LOG_TAG, "Item: " + onItemClickResult);
                     Log.i(LOG_TAG, "Result: " + result);
 
-                    if(result.matches(onItemClickResult)) {
-                        showCustomDialogTrophy();
-                    } else {
-                        showCustomDialogTryAgain();
+                    if (child != null) {
+                        if (result.matches(onItemClickResult)) {
+                            showCustomDialogTrophy();
+                        } else {
+                            showCustomDialogTryAgain();
+                        }
                     }
 
                     isFloatingMusicActionButtonOn = true;

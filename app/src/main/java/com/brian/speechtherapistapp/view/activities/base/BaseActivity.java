@@ -54,6 +54,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
     }
 
+    protected void showLongToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the ActionBar
