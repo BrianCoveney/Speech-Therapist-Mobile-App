@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.Word;
-import com.brian.speechtherapistapp.repository.persistors.MongoRemoteConnector;
+import com.brian.speechtherapistapp.repository.persistors.MongoDockerConnection;
 import com.brian.speechtherapistapp.view.IGameView;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
@@ -31,7 +31,7 @@ public class WordRepositoryImpl implements IWordRepository {
 
 //            MongoClient mongoClientConnection = MongoLocalConnection.databaseConnectionLocal();
 
-            MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
+            MongoClient mongoClientConnection = MongoDockerConnection.databaseDockerConnection();
 
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);

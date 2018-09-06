@@ -6,7 +6,7 @@ import android.util.Log;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.ChildList;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
-import com.brian.speechtherapistapp.repository.persistors.MongoRemoteConnector;
+import com.brian.speechtherapistapp.repository.persistors.MongoDockerConnection;
 import com.brian.speechtherapistapp.view.activities.GameActivity;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
@@ -41,7 +41,7 @@ public class ChildRepositoryImpl implements IChildRepository {
     @Inject
     public ChildRepositoryImpl() {
         try {
-            MongoClient mongoClientConnection = MongoRemoteConnector.databaseConnectionRemote();
+            MongoClient mongoClientConnection = MongoDockerConnection.databaseDockerConnection();
             database = mongoClientConnection.getDatabase(DB_NAME);
             childCollection = database.getCollection(DB_COLLECTION);
         } catch (MongoException e) {
