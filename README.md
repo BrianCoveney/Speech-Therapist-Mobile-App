@@ -1,6 +1,6 @@
 # Speech Therapist Mobile App
 
- [![Build Status](http://jenkins.briancoveney.com:8080/job/Speech%20Therapist%20Mobile%20App/badge/icon)](http://jenkins.briancoveney.com:8080/job/Speech%20Therapist%20Mobile%20App/)
+ [![Build Status](http://speech.briancoveney.com:8080/job/Speech%20Therapist%20Mobile%20App/badge/icon)](http://speech.briancoveney.com:8080/job/Speech%20Therapist%20Mobile%20App/)
 
 ## About 
 
