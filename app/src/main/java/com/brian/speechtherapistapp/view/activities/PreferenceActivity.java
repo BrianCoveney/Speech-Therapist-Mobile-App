@@ -1,6 +1,5 @@
 package com.brian.speechtherapistapp.view.activities;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -38,7 +32,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 
-public class PreferenceActivity extends Activity implements
+public class PreferenceActivity extends Activity implements MyPreferenceFragment.Toggle,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -111,7 +105,7 @@ public class PreferenceActivity extends Activity implements
         }
     }
 
-    private void togglePeriodicLocUpdates() {
+    public void togglePeriodicLocUpdates() {
         try {
             if (!mRequestingLocationUpdates) {
                 Toast.makeText(this, "Location Connected", Toast.LENGTH_SHORT).show();
@@ -395,68 +389,5 @@ public class PreferenceActivity extends Activity implements
         startActivity(intent);
         finish();
         super.onBackPressed();
-    }
-
-
-    // -----------------------------MyPreferenceFragment--------------------------------------------
-    //
-    // Removes requirement for a static inner class
-    @SuppressLint("ValidFragment")
-    public class MyPreferenceFragment extends PreferenceFragment
-            implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-        private CheckBoxPreference locationPreference;
-
-        @Override
-        public void onCreate(final Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-            locationPreference = (CheckBoxPreference) findPreference("location_preference");
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-            locationPreference.setChecked(false);
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        }
-
-
-        //Configure CheckboxPreferences to work like RadioButtons
-        @Override
-        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
-            String key = preference.getKey();
-
-            if(key.equals(null)){
-                String none = "not changed";
-                Toast.makeText(getActivity(), none, Toast.LENGTH_SHORT).show();
-                locationPreference.setChecked(false);
-            }
-
-            else if (key.equals("location_preference")) {
-                // Switch location on/off
-                togglePeriodicLocUpdates();
-
-            }
-
-            return super.onPreferenceTreeClick(preferenceScreen, preference);
-        }
-
     }
 }
