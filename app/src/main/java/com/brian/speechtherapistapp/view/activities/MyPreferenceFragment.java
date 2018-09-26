@@ -1,5 +1,6 @@
 package com.brian.speechtherapistapp.view.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,11 +16,11 @@ import com.brian.speechtherapistapp.R;
 public class MyPreferenceFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private CheckBoxPreference locationPreference;
+    private CheckBoxPreference locationPreference, darkThemePreference, lightThemePreference;
 
-    private Toggle toggle;
+    private CustomListener customListener;
 
-    public interface Toggle {
+    public interface CustomListener {
         void togglePeriodicLocUpdates();
     }
 
@@ -28,6 +29,8 @@ public class MyPreferenceFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         locationPreference = (CheckBoxPreference) findPreference("location_preference");
+        darkThemePreference = (CheckBoxPreference) findPreference("dark_preference");
+        lightThemePreference = (CheckBoxPreference) findPreference("light_preference");
     }
 
     @Override
@@ -55,7 +58,7 @@ public class MyPreferenceFragment extends PreferenceFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        toggle = (PreferenceActivity) context;
+        customListener = (PreferenceActivity) context;
     }
 
     //Configure CheckboxPreferences to work like RadioButtons
@@ -65,15 +68,38 @@ public class MyPreferenceFragment extends PreferenceFragment
         String key = preference.getKey();
 
         if(key.equals(null)){
-            String none = "not changed";
-            Toast.makeText(getActivity(), none, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "not changed", Toast.LENGTH_SHORT).show();
             locationPreference.setChecked(false);
         }
 
         else if (key.equals("location_preference")) {
             // Switch location on/off
-            toggle.togglePeriodicLocUpdates();
+            customListener.togglePeriodicLocUpdates();
 
+        }
+        else if (key.equals("dark_preference")) {
+            SharedPreferences sharedPref = this.getActivity()
+                    .getSharedPreferences("dark_pref_key", Activity.MODE_PRIVATE);
+
+            // We write to a SharedPreference file by passing the key: 'email_key' and value: 'email'
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("dark_pref_key", true);
+            editor.apply();
+
+            Toast.makeText(getActivity(), "dark theme", Toast.LENGTH_SHORT).show();
+            lightThemePreference.setChecked(false);
+        }
+        else if (key.equals("light_preference")) {
+            SharedPreferences sharedPref = this.getActivity()
+                    .getSharedPreferences("light_pref_key", Activity.MODE_PRIVATE);
+
+            // We write to a SharedPreference file by passing the key: 'email_key' and value: 'email'
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("light_pref_key", true);
+            editor.apply();
+
+            Toast.makeText(getActivity(), "light theme", Toast.LENGTH_SHORT).show();
+            darkThemePreference.setChecked(false);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

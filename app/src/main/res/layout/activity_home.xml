@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.brian.speechtherapistapp.view.activities.base.SplashActivity"
     tools:layout_editor_absoluteY="81dp"
-    android:background="@color/background"
     android:id="@+id/home_constraint_layout">
 
     <ImageView

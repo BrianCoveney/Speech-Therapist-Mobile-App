@@ -11,6 +11,18 @@
             android:summary="Turn location on"
             android:defaultValue="false"/>
 
+        <CheckBoxPreference
+            android:key="dark_preference"
+            android:title="Dark Theme"
+            android:summary="Switch to dark theme"
+            android:defaultValue="false"/>
+
+        <CheckBoxPreference
+            android:key="light_preference"
+            android:title="Light Theme"
+            android:summary="Switch to light theme"
+            android:defaultValue="false"/>
+
     </PreferenceCategory>
 
 

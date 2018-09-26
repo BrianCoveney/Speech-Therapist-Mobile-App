@@ -110,7 +110,6 @@
             android:name=".view.activities.LocationActivity"
             android:label="Location Activity"
             >
-
         </activity>
 
 
@@ -129,7 +128,7 @@
 
         <activity
             android:name=".view.activities.googlemaps.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps"/>
 
 
     </application>

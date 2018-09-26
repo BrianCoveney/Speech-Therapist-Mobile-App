@@ -32,7 +32,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 
-public class PreferenceActivity extends Activity implements MyPreferenceFragment.Toggle,
+public class PreferenceActivity extends Activity implements MyPreferenceFragment.CustomListener,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,

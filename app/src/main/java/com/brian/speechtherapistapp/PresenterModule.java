@@ -33,11 +33,6 @@ public class PresenterModule {
         return new ChildPresenterImpl(childRepository);
     }
 
-
-
-
-
-
     @Provides @Singleton
     public IWordRepository providesWordRepository() { return new WordRepositoryImpl(); }
 

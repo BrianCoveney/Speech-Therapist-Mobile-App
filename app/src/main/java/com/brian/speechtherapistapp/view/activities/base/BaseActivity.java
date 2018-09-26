@@ -1,6 +1,8 @@
 package com.brian.speechtherapistapp.view.activities.base;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,8 +21,8 @@ import android.widget.Toast;
 
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.view.activities.HomeActivity;
-import com.brian.speechtherapistapp.view.activities.googlemaps.MapsActivity;
 import com.brian.speechtherapistapp.view.activities.PreferenceActivity;
+import com.brian.speechtherapistapp.view.activities.googlemaps.MapsActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -30,6 +32,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ListView mDrawerList;
     protected ImageView navImages;
     protected ActionBarDrawerToggle mDrawerToggle;
+    private boolean isDarkTheme = false;
+    private boolean isLightTheme = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     protected void showToast(String toastMessage) {
@@ -154,5 +160,33 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDarkThemeFromPreference();
+    }
+
+    private void getDarkThemeFromPreference() {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("dark_pref_key", Activity.MODE_PRIVATE);
+
+        boolean darkOn = sharedPreferences.getBoolean("dark_pref_key", false);
+
+        SharedPreferences sp =
+                getSharedPreferences("light_pref_key", Activity.MODE_PRIVATE);
+
+        boolean lightOn = sp.getBoolean("light_pref_key", false);
+
+
+        if (darkOn) {
+        } else if (lightOn) {
+        }
+
+
+//        frameLayout.setBackgroundColor(getResources().getColor(R.color.red));
+
+
     }
 }
