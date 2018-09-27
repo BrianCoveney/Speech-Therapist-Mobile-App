@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.RetroChild;
 import com.brian.speechtherapistapp.network.IWebAPIService;
 import com.brian.speechtherapistapp.network.RetrofitClientInstance;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
@@ -64,13 +65,13 @@ public class ChildListActivity extends BaseActivity {
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Child childClicked = (Child) adapterView.getItemAtPosition(i);
+                RetroChild childClicked = (RetroChild) adapterView.getItemAtPosition(i);
                 Child child = Child.builder(
                         childClicked.getId(),
                         childClicked.getFirstName(),
                         childClicked.getSecondName(),
                         childClicked.getEmail())
-                        .withWord(childClicked.getWordName())
+                        .withWord(childClicked.getWord())
                         .build();
 
                 Intent intent = new Intent(getApplicationContext(), ChildDetailsActivity.class);
@@ -86,23 +87,23 @@ public class ChildListActivity extends BaseActivity {
         IWebAPIService service = RetrofitClientInstance.getRetrofitInstance()
                 .create(IWebAPIService.class);
 
-        Call<List<Child>> call = service.getAllChildren();
-        call.enqueue(new Callback<List<Child>>() {
+        Call<List<RetroChild>> call = service.getAllChildren();
+        call.enqueue(new Callback<List<RetroChild>>() {
             @Override
-            public void onResponse(Call<List<Child>> call, Response<List<Child>> response) {
+            public void onResponse(Call<List<RetroChild>> call, Response<List<RetroChild>> response) {
                 Log.i(LOG_TAG, "FOUND: " + response.body().toString());
                 generateDataList(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Child>> call, Throwable t) {
+            public void onFailure(Call<List<RetroChild>> call, Throwable t) {
                 Log.e(LOG_TAG,"ERROR: " +  t.toString());
             }
         });
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Child> children) {
+    private void generateDataList(List<RetroChild> children) {
         childAdapter = new ChildAdapter(this, children);
         childListView.setAdapter(childAdapter);
     }

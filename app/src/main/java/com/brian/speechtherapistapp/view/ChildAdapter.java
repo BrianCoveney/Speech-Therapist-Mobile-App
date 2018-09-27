@@ -10,16 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.RetroChild;
 
 import java.util.List;
 
-public class ChildAdapter extends ArrayAdapter<Child> {
+public class ChildAdapter extends ArrayAdapter<RetroChild> {
 
     private Context mContext;
-    private List<Child> childList;
+    private List<RetroChild> childList;
 
-    public ChildAdapter(@NonNull Context context, List<Child> list) {
+    public ChildAdapter(@NonNull Context context, List<RetroChild> list) {
         super(context, 0, list);
         mContext = context;
         childList = list;
@@ -32,7 +32,7 @@ public class ChildAdapter extends ArrayAdapter<Child> {
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent,false);
 
-        Child currentChild = childList.get(position);
+        RetroChild currentChild = childList.get(position);
 
         TextView nameTextView = listItem.findViewById(R.id.tv_first_name);
         nameTextView.setText(currentChild.getFirstName());

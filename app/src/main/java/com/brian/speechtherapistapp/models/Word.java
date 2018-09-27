@@ -8,9 +8,11 @@ import java.util.Map;
 
 @SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
 public class Word implements  Serializable{
+
     private static final long serialVersionUID = -8060210544600464481L;
     private String id;
     private String name;
+
     private int frequency;
     private Map<String, Integer> glidingLiquidsMap = new HashMap<>();
 

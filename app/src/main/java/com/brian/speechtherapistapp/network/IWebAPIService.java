@@ -1,6 +1,6 @@
 package com.brian.speechtherapistapp.network;
 
-import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.RetroChild;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface IWebAPIService {
     @GET("/children")
-    Call<List<Child>> getAllChildren();
+    Call<List<RetroChild>> getAllChildren();
 }

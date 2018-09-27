@@ -14,26 +14,23 @@ import java.util.regex.Pattern;
 public class Child implements Parcelable {
 
     // Required fields
-    @SerializedName("first_name")
-    private String firstName;
-    @SerializedName("second_name")
-    private String secondName;
-    @SerializedName("email")
-    private String email;
     private int id;
+    private String firstName;
+    private String secondName;
+    private String email;
+    private Word word;
 
     // Optional fields
     private String birthday;
     private String password;
 
     // Composition
-    private Word wd;
 
     // Avoids direct instantiation
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
-        this.wd = new Word();
+        this.word = new Word();
     }
 
     public static ChildBuilder builder(String email) {
@@ -45,23 +42,23 @@ public class Child implements Parcelable {
     }
 
     public String getWordName() {
-        return wd.getName();
+        return word.getName();
     }
 
     public void setWordName(String word) {
-        this.wd.setName(word);
+        this.word.setName(word);
     }
 
     public Map<String, Integer> getWordGlidingLiquidsMap() {
-        return wd.getGlidingLiquidsMap();
+        return word.getGlidingLiquidsMap();
     }
 
     public void setWordGlidingLiquidsMap(Map<String, Integer> glidingMap) {
-        this.wd.setGlidingLiquidsMap(glidingMap);
+        this.word.setGlidingLiquidsMap(glidingMap);
     }
 
     public int getWordFreq() {
-        return wd.getFrequency();
+        return word.getFrequency();
     }
 
     public int getId() {
@@ -131,7 +128,7 @@ public class Child implements Parcelable {
                 ", email='" + email + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", password='" + password + '\'' +
-                ", wd=" + wd +
+                ", word=" + word +
                 '}';
     }
 
@@ -167,9 +164,8 @@ public class Child implements Parcelable {
         dest.writeString(firstName);
         dest.writeString(secondName);
         dest.writeString(email);
-        dest.writeString(wd.getName());
+        dest.writeString(word.getName());
     }
-
     // end Parcelable
 
 
@@ -190,16 +186,17 @@ public class Child implements Parcelable {
             child.firstName = firstName;
         }
 
+        @SerializedName("word")
         public ChildBuilder withWord(String word) {
             if (word != null) {
-                child.wd.setName(word);
+                child.word.setName(word);
             }
             return this;
         }
 
         public ChildBuilder withGlidingWordMap(Map<String, Integer> glidingWords) {
             if (glidingWords != null) {
-                child.wd.setGlidingLiquidsMap(glidingWords);
+                child.word.setGlidingLiquidsMap(glidingWords);
             }
             return this;
         }

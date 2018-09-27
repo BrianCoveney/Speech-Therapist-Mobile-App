@@ -96,6 +96,7 @@ Const {
     public static final String WORD_IN_GLIDING_OF_LIQUIDS = "wabbit";
     public static final String WORD_IN_CLUSTER_REDUCTION = "tuck";
     public static final String WORD_IN_FINAL_CONSONANT_DELETION = "dah";
+    public static final String DEFAULT_WORD ="default_word";
 
 
     public static final class ParamsNames {
