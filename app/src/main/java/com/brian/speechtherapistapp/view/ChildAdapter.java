@@ -14,10 +14,17 @@ import com.brian.speechtherapistapp.models.RetroChild;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChildAdapter extends ArrayAdapter<RetroChild> {
 
     private Context mContext;
     private List<RetroChild> childList;
+
+    @BindView(R.id.tv_first_name)
+    TextView nameTextView;
+
 
     public ChildAdapter(@NonNull Context context, List<RetroChild> list) {
         super(context, 0, list);
@@ -29,12 +36,14 @@ public class ChildAdapter extends ArrayAdapter<RetroChild> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
+
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent,false);
 
+        ButterKnife.bind(this, listItem);
+
         RetroChild currentChild = childList.get(position);
 
-        TextView nameTextView = listItem.findViewById(R.id.tv_first_name);
         nameTextView.setText(currentChild.getFirstName());
 
         return listItem;
