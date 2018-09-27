@@ -1,11 +1,9 @@
 package com.brian.speechtherapistapp.view.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +12,8 @@ import android.widget.ProgressBar;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.network.IWebAPIService;
+import com.brian.speechtherapistapp.network.RetrofitClientInstance;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.view.ChildAdapter;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
@@ -24,19 +24,19 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChildListActivity extends BaseActivity {
 
     private ChildAdapter childAdapter;
-    private List<Child> childList;
-    private static final int DELAY_IN_MILLS = 500;
+    private static final String LOG_TAG = ChildListActivity.class.getSimpleName();
 
     @Inject
     IChildPresenter iChildPresenter;
-
     @BindView(R.id.lv_child_list)
     ListView childListView;
-
     @BindView(R.id.progress_bar_cyclic)
     ProgressBar progressBar;
 
@@ -55,46 +55,10 @@ public class ChildListActivity extends BaseActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        new PopulateListViewTask().execute();
+        connectAndGetApiData();
 
         onListItemClicked();
     }
-
-    private class PopulateListViewTask extends AsyncTask<Void, Void, List<Child>> {
-
-    private ProgressDialog progressDialog = new ProgressDialog(ChildListActivity.this);
-
-
-    @Override
-        protected List<Child> doInBackground(Void... voids) {
-            // Call to DB
-            childList = iChildPresenter.getChildren();
-            return childList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Child> children) {
-            super.onPostExecute(children);
-            // Create and populate our custom adapter
-            childAdapter = new ChildAdapter(getApplicationContext(), childList);
-            childListView.setAdapter(childAdapter);
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    progressDialog.dismiss();
-                }
-            }, DELAY_IN_MILLS);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            this.progressDialog.setMessage("Please wait");
-            this.progressDialog.show();
-        }
-    }
-
 
     private void onListItemClicked() {
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,5 +80,30 @@ public class ChildListActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void connectAndGetApiData() {
+        IWebAPIService service = RetrofitClientInstance.getRetrofitInstance()
+                .create(IWebAPIService.class);
+
+        Call<List<Child>> call = service.getAllChildren();
+        call.enqueue(new Callback<List<Child>>() {
+            @Override
+            public void onResponse(Call<List<Child>> call, Response<List<Child>> response) {
+                Log.i(LOG_TAG, "FOUND: " + response.body().toString());
+                generateDataList(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Child>> call, Throwable t) {
+                Log.e(LOG_TAG,"ERROR: " +  t.toString());
+            }
+        });
+    }
+
+    /*Method to generate List of data using RecyclerView with custom adapter*/
+    private void generateDataList(List<Child> children) {
+        childAdapter = new ChildAdapter(this, children);
+        childListView.setAdapter(childAdapter);
     }
 }

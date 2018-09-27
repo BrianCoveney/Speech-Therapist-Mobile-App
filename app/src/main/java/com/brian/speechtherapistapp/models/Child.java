@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.brian.speechtherapistapp.util.Const;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 import java.util.Objects;
@@ -13,23 +14,26 @@ import java.util.regex.Pattern;
 public class Child implements Parcelable {
 
     // Required fields
-    private int id;
+    @SerializedName("first_name")
     private String firstName;
+    @SerializedName("second_name")
     private String secondName;
+    @SerializedName("email")
     private String email;
+    private int id;
 
     // Optional fields
     private String birthday;
     private String password;
 
     // Composition
-    private Word word;
+    private Word wd;
 
     // Avoids direct instantiation
     private Child() {
         birthday = Const.ParamsNames.CHILD_BIRTHDAY;
         password = Const.ParamsNames.CHILD_EMAIL;
-        this.word = new Word();
+        this.wd = new Word();
     }
 
     public static ChildBuilder builder(String email) {
@@ -41,23 +45,23 @@ public class Child implements Parcelable {
     }
 
     public String getWordName() {
-        return word.getName();
+        return wd.getName();
     }
 
     public void setWordName(String word) {
-        this.word.setName(word);
+        this.wd.setName(word);
     }
 
     public Map<String, Integer> getWordGlidingLiquidsMap() {
-        return word.getGlidingLiquidsMap();
+        return wd.getGlidingLiquidsMap();
     }
 
     public void setWordGlidingLiquidsMap(Map<String, Integer> glidingMap) {
-        this.word.setGlidingLiquidsMap(glidingMap);
+        this.wd.setGlidingLiquidsMap(glidingMap);
     }
 
     public int getWordFreq() {
-        return word.getFrequency();
+        return wd.getFrequency();
     }
 
     public int getId() {
@@ -127,7 +131,7 @@ public class Child implements Parcelable {
                 ", email='" + email + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", password='" + password + '\'' +
-                ", word=" + word +
+                ", wd=" + wd +
                 '}';
     }
 
@@ -163,7 +167,7 @@ public class Child implements Parcelable {
         dest.writeString(firstName);
         dest.writeString(secondName);
         dest.writeString(email);
-        dest.writeString(word.getName());
+        dest.writeString(wd.getName());
     }
 
     // end Parcelable
@@ -188,14 +192,14 @@ public class Child implements Parcelable {
 
         public ChildBuilder withWord(String word) {
             if (word != null) {
-                child.word.setName(word);
+                child.wd.setName(word);
             }
             return this;
         }
 
         public ChildBuilder withGlidingWordMap(Map<String, Integer> glidingWords) {
             if (glidingWords != null) {
-                child.word.setGlidingLiquidsMap(glidingWords);
+                child.wd.setGlidingLiquidsMap(glidingWords);
             }
             return this;
         }
