@@ -91,7 +91,7 @@ public class ChildDetailsActivity extends BaseActivity {
         Child c = iChildPresenter.getChildWithEmail(child.getEmail());
         Map<String, Integer> wordGlidingMap = c.getWordGlidingLiquidsMap();
 
-        return Child.builder(child.getId(), child.getFirstName(), child.getSecondName(), child.getEmail())
+        return Child.builder(child.getFirstName(), child.getSecondName(), child.getEmail())
                 .withWord(child.getWordName())
                 .withGlidingWordMap(wordGlidingMap)
                 .build();

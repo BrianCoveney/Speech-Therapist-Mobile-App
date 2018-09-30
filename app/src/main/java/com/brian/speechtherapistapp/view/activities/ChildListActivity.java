@@ -66,12 +66,13 @@ public class ChildListActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 RetroChild childClicked = (RetroChild) adapterView.getItemAtPosition(i);
-                Child child = Child.builder(
-                        childClicked.getId(),
-                        childClicked.getFirstName(),
-                        childClicked.getSecondName(),
-                        childClicked.getEmail())
-                        .withWord(childClicked.getWord())
+                String firstName = childClicked.getFirstName();
+                String seconfName = childClicked.getSecondName();
+                String email = childClicked.getEmail();
+                String word = childClicked.getWord();
+
+                Child child = Child.builder(firstName, seconfName, email)
+                        .withWord(word)
                         .build();
 
                 Intent intent = new Intent(getApplicationContext(), ChildDetailsActivity.class);

@@ -18,7 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ChildTest {
 
-    private int id = 1;
     private String firstName = "brian";
     private String secondName = "Coveney";
     private String email =  "name@email.com";
@@ -28,7 +27,7 @@ public class ChildTest {
 
         print("valid child");
 
-        Child childWithDefaultValues = Child.builder(id, firstName, secondName, email).build();
+        Child childWithDefaultValues = Child.builder(firstName, secondName, email).build();
 
         print("success: default values for optional params");
 
@@ -38,7 +37,7 @@ public class ChildTest {
 
     @Test
     public void testBuilderWithOptionalArguments() {
-        Child childWithOptionalArguments = Child.builder(id, firstName, secondName, email)
+        Child childWithOptionalArguments = Child.builder(firstName, secondName, email)
                 .withBirthday(null)
                 .build();
 
@@ -52,7 +51,7 @@ public class ChildTest {
     public void testBuilderWithNullFirstName() {
         print("failure: firstName cannot be null)");
 
-        Child.builder(id,  null, secondName, email)
+        Child.builder(null, secondName, email)
                 .build();
     }
 
@@ -60,7 +59,7 @@ public class ChildTest {
     public void testBuilderWithNullSecondName() {
         print("failure: secondName cannot be null");
 
-        Child.builder(id, firstName, null, email)
+        Child.builder(firstName, null, email)
                 .build();
     }
 
@@ -68,13 +67,13 @@ public class ChildTest {
     public void testBuilderWithNullEmail() {
         print("failure: email cannot be null");
 
-        Child.builder(id, firstName, secondName, null)
+        Child.builder(firstName, secondName, null)
                 .build();
     }
 
     @Test
     public void testIsEmailValid() {
-        Child child = Child.builder(id, firstName, secondName, email).build();
+        Child child = Child.builder(firstName, secondName, email).build();
 
         print("success: valid email");
 
@@ -96,7 +95,7 @@ public class ChildTest {
 
     @Test
     public void testChildWithWord() {
-        Child child = Child.builder(id, firstName, secondName, email).build();
+        Child child = Child.builder(firstName, secondName, email).build();
         String expected = "red";
         child.setWordName("red");
         assertEquals(expected, child.getWordName());
@@ -108,7 +107,7 @@ public class ChildTest {
 
     @Test
     public void testToString() {
-        Child child = Child.builder(id, firstName, secondName, email).build();
+        Child child = Child.builder(firstName, secondName, email).build();
         child.setWordName("telephone");
 
         StringBuilder sb = new StringBuilder("Child{");

@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.brian.speechtherapistapp.util.Const;
 import com.google.gson.annotations.SerializedName;
 
+import org.bson.types.ObjectId;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -13,18 +15,18 @@ import java.util.regex.Pattern;
 
 public class Child implements Parcelable {
 
+
+    private ObjectId id;
+
     // Required fields
-    private int id;
     private String firstName;
     private String secondName;
     private String email;
-    private Word word;
 
     // Optional fields
     private String birthday;
     private String password;
-
-    // Composition
+    private Word word;
 
     // Avoids direct instantiation
     private Child() {
@@ -37,8 +39,16 @@ public class Child implements Parcelable {
         return new ChildBuilder(email);
     }
 
-    public static ChildBuilder builder(int id, String firstName, String secondName, String email) {
-        return new ChildBuilder(id, firstName, secondName, email);
+    public static ChildBuilder builder(String firstName, String secondName, String email) {
+        return new ChildBuilder(firstName, secondName, email);
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getWordName() {
@@ -59,10 +69,6 @@ public class Child implements Parcelable {
 
     public int getWordFreq() {
         return word.getFrequency();
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -105,10 +111,6 @@ public class Child implements Parcelable {
         this.secondName = secondName;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     boolean isEmailValid(String eMail) {
         if (eMail != null) {
             Pattern pattern = Pattern.compile(Const.VALID_EMAIL_REGEX);
@@ -136,13 +138,12 @@ public class Child implements Parcelable {
     public static final Parcelable.Creator<Child> CREATOR = new Creator<Child>() {
         @Override
         public Child createFromParcel(Parcel in) {
-            int id = in.readInt();
             String firstName = in.readString();
             String secondName = in.readString();
             String email = in.readString();
             String word = in.readString();
 
-            return Child.builder(id, firstName, secondName, email)
+            return Child.builder(firstName, secondName, email)
                     .withWord(word)
                     .build();
         }
@@ -160,11 +161,11 @@ public class Child implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
-        dest.writeInt(id);
+        String theWord = word.getName();
         dest.writeString(firstName);
         dest.writeString(secondName);
         dest.writeString(email);
-        dest.writeString(word.getName());
+        dest.writeString(theWord);
     }
     // end Parcelable
 
@@ -177,10 +178,9 @@ public class Child implements Parcelable {
             child.email = email;
         }
 
-        public ChildBuilder(int id, String firstName, String secondName, String email) {
-            validateRequiredFields(id, firstName, secondName, email);
+        public ChildBuilder(String firstName, String secondName, String email) {
+            validateRequiredFields(firstName, secondName, email);
             child = new Child();
-            child.id = id;
             child.email = email;
             child.secondName = secondName;
             child.firstName = firstName;

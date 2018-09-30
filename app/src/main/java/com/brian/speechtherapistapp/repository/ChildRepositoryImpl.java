@@ -55,11 +55,10 @@ public class ChildRepositoryImpl implements IChildRepository {
         wordGlidingMap.put("default_word", 0);
         final Document document = new Document();
         for (Child c : childList.getChildList()) {
-            Child child = Child.builder(c.getId(), c.getFirstName(), c.getSecondName(), c.getEmail())
+            Child child = Child.builder(c.getFirstName(), c.getSecondName(), c.getEmail())
                     .withBirthday(c.getBirthday())
                     .withPassword(c.getPassword())
                     .build();
-            document.put("child_id", child.getId()+1);
             document.put("first_name", child.getFirstName());
             document.put("second_name", child.getSecondName());
             document.put("email", child.getEmail());
@@ -114,7 +113,7 @@ public class ChildRepositoryImpl implements IChildRepository {
                 String word = document.getString("word");
 
                 // create child with values set from DB
-                Child child = Child.builder(0, firstName, secondName, email)
+                Child child = Child.builder(firstName, secondName, email)
                         .withWord(word)
                         .build();
 
@@ -163,7 +162,7 @@ public class ChildRepositoryImpl implements IChildRepository {
                 Map<String, Integer> wordGlidingMap = document.get("map_of_gliding_words", Map.class);
 
                 // We create a child object containing the results of the above values
-                child = Child.builder(0, firstName, secondName, childEmail)
+                child = Child.builder(firstName, secondName, childEmail)
                         .withWord(word)
                         .withGlidingWordMap(wordGlidingMap)
                         .build();
@@ -179,7 +178,7 @@ public class ChildRepositoryImpl implements IChildRepository {
     public Child getChildFromDB() {
 
         if (child == null) {
-            child = Child.builder(0, CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL).build();
+            child = Child.builder(CHILD_FIRST_NAME, CHILD_SECOND_NAME, CHILD_EMAIL).build();
         } else {
 
             FindIterable<Document> databaseRecords = database.getCollection("children").find();
@@ -192,7 +191,7 @@ public class ChildRepositoryImpl implements IChildRepository {
                     String secondName = document.getString("second_name");
                     String childEmail = document.getString("email");
                     String word = document.getString("word");
-                    child = Child.builder(0, firstName, secondName, childEmail)
+                    child = Child.builder(firstName, secondName, childEmail)
                             .withWord(word)
                             .build();
                 }

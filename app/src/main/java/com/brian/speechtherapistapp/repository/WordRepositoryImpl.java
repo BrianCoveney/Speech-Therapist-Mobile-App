@@ -56,7 +56,7 @@ public class WordRepositoryImpl implements IWordRepository {
         this.word.setId(w.getId());
         this.word.setName(w.getName());
 
-        Child child = Child.builder(2, "fname", "lname", "email")
+        Child child = Child.builder("fname", "lname", "email")
                 .build();
 
         final Document document = new Document();
