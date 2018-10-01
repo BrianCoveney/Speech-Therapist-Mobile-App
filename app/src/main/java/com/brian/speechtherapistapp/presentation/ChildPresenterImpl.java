@@ -1,8 +1,13 @@
 package com.brian.speechtherapistapp.presentation;
 
+import android.util.Log;
+
 import com.brian.speechtherapistapp.PresenterModule;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.ChildList;
+import com.brian.speechtherapistapp.models.RetroChild;
+import com.brian.speechtherapistapp.network.IWebAPIService;
+import com.brian.speechtherapistapp.network.RetrofitClientInstance;
 import com.brian.speechtherapistapp.repository.IChildRepository;
 import com.brian.speechtherapistapp.view.IChildView;
 
@@ -10,6 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ChildPresenterImpl implements IChildPresenter {
@@ -46,11 +55,43 @@ public class ChildPresenterImpl implements IChildPresenter {
         ChildList childList = new ChildList();
         childList.add(child);
 
-        // Calling the iChildRepository interface to save the childList
-        iChildRepository.saveChild(childList);
+        /* Instead of calling the MongoDB driver, we will connect to our REST Api to save the user*/
+        //iChildRepository.saveChild(childList);
 
-        // Calling the iChildRepository to display a confirmation message in the CreateChildActivity
-        iChildView.showChildSavedMessage();
+        //iChildView.showChildSavedMessage();
+
+        connectAndPostApiData();
+    }
+
+    // Using Retrofit to Connect to our REST Api and Post a new user
+    private void connectAndPostApiData() {
+        IWebAPIService service = RetrofitClientInstance.getRetrofitInstance()
+                .create(IWebAPIService.class);
+
+        String firstName = iChildView.getFirstName();
+        String secondName = iChildView.getSecondName();
+        String email = iChildView.getEmail();
+
+        RetroChild retroChild = new RetroChild(firstName, secondName, email);
+
+        Call<RetroChild> call = service.createChildWithField(retroChild.getFirstName(),
+                                                             retroChild.getSecondName(),
+                                                             retroChild.getEmail());
+        call.enqueue(new Callback<RetroChild>() {
+            @Override
+            public void onResponse(Call<RetroChild> call, Response<RetroChild> response) {
+                RetroChild rChild = response.body();
+                Log.i(LOG_TAG, "CREATED: " + rChild.getFirstName() + " "
+                        + rChild.getSecondName() + " " + rChild.getEmail() + " "
+                        + rChild.getWord() + " " + rChild.getGlidingLiquidsMap() + " ");
+                iChildView.showChildSavedMessage();
+            }
+
+            @Override
+            public void onFailure(Call<RetroChild> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

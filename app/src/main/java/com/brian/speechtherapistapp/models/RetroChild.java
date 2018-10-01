@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class RetroChild {
 
-    @SerializedName("id")
+    @SerializedName("_id")
     private String id;
 
     @SerializedName("first_name")
@@ -25,7 +25,14 @@ public class RetroChild {
     @SerializedName("map_of_gliding_words")
     private Map<String, Integer> glidingLiquidsMap = new HashMap<>();
 
-    public RetroChild(String firstName, String secondName, String email, String word, Map<String, Integer> glidingLiquidsMap) {
+    public RetroChild(String firstName, String secondName, String email) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.email = email;
+    }
+
+    public RetroChild(String firstName, String secondName, String email, String word,
+                      Map<String, Integer> glidingLiquidsMap) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;

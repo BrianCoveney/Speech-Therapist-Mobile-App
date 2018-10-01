@@ -215,6 +215,13 @@ public class Child implements Parcelable {
             return this;
         }
 
+        public ChildBuilder withId(ObjectId id) {
+            if (id != null) {
+                child.id = id;
+            }
+            return this;
+        }
+
         public Child build() {
             return child;
         }
