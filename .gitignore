@@ -33,3 +33,17 @@ ehthumbs.db
 Thumbs.db
 
 .idea/
+
+android.os.Parcel
+android.os.Parcelable
+com.brian.speechtherapistapp.util.Const
+com.google.gson.annotations.SerializedName
+..gitignore.swp
+java.util.regex.Pattern
+local.properties
+org.bson.types.ObjectId
+Speech-Therapist-Mobile-App.iml
+gradle/
+gradle.properties*
+gradlew*
+gradlew.bat*
