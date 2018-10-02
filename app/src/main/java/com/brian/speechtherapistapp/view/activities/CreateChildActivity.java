@@ -86,7 +86,7 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
 
                     if (passwordMatch) {
 
-                        // MongoDB driver call
+                        // MongoDB Driver call
                         // iChildPresenter.saveChild();
 
                         // REST Api call

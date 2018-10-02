@@ -111,8 +111,14 @@ public class ChildDetailsActivity extends BaseActivity {
         Intent i = getIntent();
         Child child = i.getParcelableExtra("child_key");
         if (child != null) {
-            iChildPresenter.deleteChildAccount(child.getEmail());
-            showToast("Deleted username: " + child.getEmail());
+
+            // MongoDB Driver call
+            // iChildPresenter.deleteChildAccount(child.getEmail());
+
+            // REST Api call
+            iChildPresenter.deleteUser(child.getEmail());
+
+            showToast("Deleted username: " + child.getFirstName());
         }
 
         new Handler().postDelayed(new Runnable(){

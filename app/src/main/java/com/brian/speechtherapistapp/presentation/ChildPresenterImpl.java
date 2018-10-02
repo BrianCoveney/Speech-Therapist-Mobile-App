@@ -98,11 +98,6 @@ public class ChildPresenterImpl implements IChildPresenter {
     }
 
     @Override
-    public void deleteUser(String email) {
-        // TODO
-    }
-
-    @Override
     public List<Child> getChildren() {
         return this.iChildRepository.getChildListFromDB();
     }
@@ -142,8 +137,31 @@ public class ChildPresenterImpl implements IChildPresenter {
         return iChildRepository.getChildWithEmailIdentifier(email);
     }
 
+
+    /**
+     * Instead of calling the MongoDB driver using this deleteChildAccount() method, we are using  the
+     * deleteUser() method below to consume our REST API.
+     */
     @Override
     public void deleteChildAccount(String email) {
         iChildRepository.deleteChild(email);
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        Call<RetroChild> call = apiService.deleteChildWithField(email);
+        call.enqueue(new Callback<RetroChild>() {
+            @Override
+            public void onResponse(Call<RetroChild> call, Response<RetroChild> response) {
+                RetroChild rChild = response.body();
+                Log.i(LOG_TAG, "Deleted user: " + rChild.getFirstName());
+            }
+
+            @Override
+            public void onFailure(Call<RetroChild> call, Throwable t) {
+                Log.e("DELETE ERROR: ", t.getMessage());
+            }
+        });
+
     }
 }

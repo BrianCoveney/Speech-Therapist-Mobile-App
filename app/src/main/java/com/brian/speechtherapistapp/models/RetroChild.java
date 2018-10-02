@@ -25,6 +25,9 @@ public class RetroChild {
     @SerializedName("map_of_gliding_words")
     private Map<String, Integer> glidingLiquidsMap = new HashMap<>();
 
+    public RetroChild() {
+    }
+
     public RetroChild(String firstName, String secondName, String email) {
         this.firstName = firstName;
         this.secondName = secondName;
