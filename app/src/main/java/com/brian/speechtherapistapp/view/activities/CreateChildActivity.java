@@ -85,7 +85,13 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
                     boolean passwordMatch = isPasswordMatching();
 
                     if (passwordMatch) {
-                        iChildPresenter.saveChild();
+
+                        // MongoDB driver call
+                        // iChildPresenter.saveChild();
+
+                        // REST Api call
+                        iChildPresenter.createUser();
+
                         Intent intentTherapistActivity = new Intent(getApplicationContext(),
                                 HomeActivity.class);
                         startActivity(intentTherapistActivity);

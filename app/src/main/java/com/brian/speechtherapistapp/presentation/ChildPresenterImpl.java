@@ -27,6 +27,7 @@ public class ChildPresenterImpl implements IChildPresenter {
     private IChildView iChildView;
     private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
 
+    IWebAPIService apiService;
 
     // Constructor Injection.
     // This required annotation by Dagger 2 to preform its code generation and provide dependencies
@@ -39,8 +40,16 @@ public class ChildPresenterImpl implements IChildPresenter {
      */
     public ChildPresenterImpl(IChildRepository iChildRepository) {
         this.iChildRepository = iChildRepository;
+
+        apiService = RetrofitClientInstance.getRetrofitInstance()
+                .create(IWebAPIService.class);
     }
 
+
+    /**
+     * Instead of calling the MongoDB driver using this saveChild() method, we are using  the
+     * createUser() method below to consume our REST API.
+     */
     @Override
     public void saveChild() {
         // Set our 'Child' Object attributes equal to the returned results from the View, i.e
@@ -55,26 +64,21 @@ public class ChildPresenterImpl implements IChildPresenter {
         ChildList childList = new ChildList();
         childList.add(child);
 
-        /* Instead of calling the MongoDB driver, we will connect to our REST Api to save the user*/
-        //iChildRepository.saveChild(childList);
+        iChildRepository.saveChild(childList);
 
-        //iChildView.showChildSavedMessage();
-
-        connectAndPostApiData();
+        iChildView.showChildSavedMessage();
     }
 
     // Using Retrofit to Connect to our REST Api and Post a new user
-    private void connectAndPostApiData() {
-        IWebAPIService service = RetrofitClientInstance.getRetrofitInstance()
-                .create(IWebAPIService.class);
-
+    @Override
+    public void createUser() {
         String firstName = iChildView.getFirstName();
         String secondName = iChildView.getSecondName();
         String email = iChildView.getEmail();
 
         RetroChild retroChild = new RetroChild(firstName, secondName, email);
 
-        Call<RetroChild> call = service.createChildWithField(retroChild.getFirstName(),
+        Call<RetroChild> call = apiService.createChildWithField(retroChild.getFirstName(),
                                                              retroChild.getSecondName(),
                                                              retroChild.getEmail());
         call.enqueue(new Callback<RetroChild>() {
@@ -82,16 +86,20 @@ public class ChildPresenterImpl implements IChildPresenter {
             public void onResponse(Call<RetroChild> call, Response<RetroChild> response) {
                 RetroChild rChild = response.body();
                 Log.i(LOG_TAG, "CREATED: " + rChild.getFirstName() + " "
-                        + rChild.getSecondName() + " " + rChild.getEmail() + " "
-                        + rChild.getWord() + " " + rChild.getGlidingLiquidsMap() + " ");
+                        + rChild.getSecondName() + " " + rChild.getEmail());
                 iChildView.showChildSavedMessage();
             }
 
             @Override
             public void onFailure(Call<RetroChild> call, Throwable t) {
-
+                Log.e("ERROR: ", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        // TODO
     }
 
     @Override

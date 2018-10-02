@@ -67,11 +67,11 @@ public class ChildListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 RetroChild childClicked = (RetroChild) adapterView.getItemAtPosition(i);
                 String firstName = childClicked.getFirstName();
-                String seconfName = childClicked.getSecondName();
+                String secondName = childClicked.getSecondName();
                 String email = childClicked.getEmail();
                 String word = childClicked.getWord();
 
-                Child child = Child.builder(firstName, seconfName, email)
+                Child child = Child.builder(firstName, secondName, email)
                         .withWord(word)
                         .build();
 
