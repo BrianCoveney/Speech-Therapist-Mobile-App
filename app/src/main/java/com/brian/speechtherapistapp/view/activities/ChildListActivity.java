@@ -12,13 +12,14 @@ import android.widget.ProgressBar;
 import com.brian.speechtherapistapp.MainApplication;
 import com.brian.speechtherapistapp.R;
 import com.brian.speechtherapistapp.models.Child;
-import com.brian.speechtherapistapp.models.RetroChild;
+import com.brian.speechtherapistapp.models.ChildResponse;
 import com.brian.speechtherapistapp.network.IWebAPIService;
 import com.brian.speechtherapistapp.network.RetrofitClientInstance;
 import com.brian.speechtherapistapp.presentation.IChildPresenter;
 import com.brian.speechtherapistapp.view.ChildAdapter;
 import com.brian.speechtherapistapp.view.activities.base.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,6 +34,11 @@ public class ChildListActivity extends BaseActivity {
 
     private ChildAdapter childAdapter;
     private static final String LOG_TAG = ChildListActivity.class.getSimpleName();
+    private List<ChildResponse> children = new ArrayList<>();
+    IWebAPIService apiService;
+
+    Callback<List<ChildResponse>> responseCallBack;
+
 
     @Inject
     IChildPresenter iChildPresenter;
@@ -56,7 +62,11 @@ public class ChildListActivity extends BaseActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        connectAndGetApiData();
+        apiService = RetrofitClientInstance.getRetrofitInstance()
+                .create(IWebAPIService.class);
+
+
+        getAllChildren();
 
         onListItemClicked();
     }
@@ -65,7 +75,7 @@ public class ChildListActivity extends BaseActivity {
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RetroChild childClicked = (RetroChild) adapterView.getItemAtPosition(i);
+                ChildResponse childClicked = (ChildResponse) adapterView.getItemAtPosition(i);
                 String firstName = childClicked.getFirstName();
                 String secondName = childClicked.getSecondName();
                 String email = childClicked.getEmail();
@@ -84,28 +94,25 @@ public class ChildListActivity extends BaseActivity {
         });
     }
 
-    private void connectAndGetApiData() {
-        IWebAPIService service = RetrofitClientInstance.getRetrofitInstance()
-                .create(IWebAPIService.class);
-
-        Call<List<RetroChild>> call = service.getAllChildren();
-        call.enqueue(new Callback<List<RetroChild>>() {
+    public void getAllChildren() {
+        Callback<List<ChildResponse>> responseCallback = new Callback<List<ChildResponse>>() {
             @Override
-            public void onResponse(Call<List<RetroChild>> call, Response<List<RetroChild>> response) {
-                Log.i(LOG_TAG, "FOUND: " + response.body().toString());
+            public void onResponse(Call<List<ChildResponse>> call, Response<List<ChildResponse>> response) {
                 generateDataList(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<RetroChild>> call, Throwable t) {
+            public void onFailure(Call<List<ChildResponse>> call, Throwable t) {
                 Log.e(LOG_TAG,"ERROR: " +  t.toString());
             }
-        });
+        };
+        iChildPresenter.getData(responseCallback);
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<RetroChild> children) {
+    private void generateDataList(List<ChildResponse> children) {
         childAdapter = new ChildAdapter(this, children);
         childListView.setAdapter(childAdapter);
     }
+
 }

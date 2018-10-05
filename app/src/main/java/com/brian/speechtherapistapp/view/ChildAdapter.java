@@ -10,23 +10,23 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.brian.speechtherapistapp.R;
-import com.brian.speechtherapistapp.models.RetroChild;
+import com.brian.speechtherapistapp.models.ChildResponse;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChildAdapter extends ArrayAdapter<RetroChild> {
+public class ChildAdapter extends ArrayAdapter<ChildResponse> {
 
     private Context mContext;
-    private List<RetroChild> childList;
+    private List<ChildResponse> childList;
 
     @BindView(R.id.tv_first_name)
     TextView nameTextView;
 
 
-    public ChildAdapter(@NonNull Context context, List<RetroChild> list) {
+    public ChildAdapter(@NonNull Context context, List<ChildResponse> list) {
         super(context, 0, list);
         mContext = context;
         childList = list;
@@ -42,7 +42,7 @@ public class ChildAdapter extends ArrayAdapter<RetroChild> {
 
         ButterKnife.bind(this, listItem);
 
-        RetroChild currentChild = childList.get(position);
+        ChildResponse currentChild = childList.get(position);
 
         nameTextView.setText(currentChild.getFirstName());
 

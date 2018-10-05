@@ -5,7 +5,7 @@ import android.util.Log;
 import com.brian.speechtherapistapp.PresenterModule;
 import com.brian.speechtherapistapp.models.Child;
 import com.brian.speechtherapistapp.models.ChildList;
-import com.brian.speechtherapistapp.models.RetroChild;
+import com.brian.speechtherapistapp.models.ChildResponse;
 import com.brian.speechtherapistapp.network.IWebAPIService;
 import com.brian.speechtherapistapp.network.RetrofitClientInstance;
 import com.brian.speechtherapistapp.repository.IChildRepository;
@@ -26,13 +26,17 @@ public class ChildPresenterImpl implements IChildPresenter {
     private IChildRepository iChildRepository;
     private IChildView iChildView;
     private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
+    private List<ChildResponse> childResponses;
+    private ChildPresenterImpl childPresenter;
 
     IWebAPIService apiService;
+    Callback<List<ChildResponse>> responseCallback;
 
     // Constructor Injection.
     // This required annotation by Dagger 2 to preform its code generation and provide dependencies
     @Inject
-    public ChildPresenterImpl() { }
+    public ChildPresenterImpl() {
+    }
 
     /**
      * Constructor Injection for Dagger 2.
@@ -40,6 +44,8 @@ public class ChildPresenterImpl implements IChildPresenter {
      */
     public ChildPresenterImpl(IChildRepository iChildRepository) {
         this.iChildRepository = iChildRepository;
+
+        childPresenter = new ChildPresenterImpl();
 
         apiService = RetrofitClientInstance.getRetrofitInstance()
                 .create(IWebAPIService.class);
@@ -76,22 +82,22 @@ public class ChildPresenterImpl implements IChildPresenter {
         String secondName = iChildView.getSecondName();
         String email = iChildView.getEmail();
 
-        RetroChild retroChild = new RetroChild(firstName, secondName, email);
+        ChildResponse childResponse = new ChildResponse(firstName, secondName, email);
 
-        Call<RetroChild> call = apiService.createChildWithField(retroChild.getFirstName(),
-                                                             retroChild.getSecondName(),
-                                                             retroChild.getEmail());
-        call.enqueue(new Callback<RetroChild>() {
+        Call<ChildResponse> call = apiService.createChildWithField(childResponse.getFirstName(),
+                                                             childResponse.getSecondName(),
+                                                             childResponse.getEmail());
+        call.enqueue(new Callback<ChildResponse>() {
             @Override
-            public void onResponse(Call<RetroChild> call, Response<RetroChild> response) {
-                RetroChild rChild = response.body();
+            public void onResponse(Call<ChildResponse> call, Response<ChildResponse> response) {
+                ChildResponse rChild = response.body();
                 Log.i(LOG_TAG, "CREATED: " + rChild.getFirstName() + " "
                         + rChild.getSecondName() + " " + rChild.getEmail());
                 iChildView.showChildSavedMessage();
             }
 
             @Override
-            public void onFailure(Call<RetroChild> call, Throwable t) {
+            public void onFailure(Call<ChildResponse> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
@@ -149,19 +155,24 @@ public class ChildPresenterImpl implements IChildPresenter {
 
     @Override
     public void deleteUser(String email) {
-        Call<RetroChild> call = apiService.deleteChildWithField(email);
-        call.enqueue(new Callback<RetroChild>() {
+        Call<ChildResponse> call = apiService.deleteChildWithField(email);
+        call.enqueue(new Callback<ChildResponse>() {
             @Override
-            public void onResponse(Call<RetroChild> call, Response<RetroChild> response) {
-                RetroChild rChild = response.body();
+            public void onResponse(Call<ChildResponse> call, Response<ChildResponse> response) {
+                ChildResponse rChild = response.body();
                 Log.i(LOG_TAG, "Deleted user: " + rChild.getFirstName());
             }
 
             @Override
-            public void onFailure(Call<RetroChild> call, Throwable t) {
+            public void onFailure(Call<ChildResponse> call, Throwable t) {
                 Log.e("DELETE ERROR: ", t.getMessage());
             }
         });
-
     }
+
+    @Override
+    public void getData(Callback<List<ChildResponse>> callback) {
+        apiService.getAllChildren().enqueue(callback);
+    }
+
 }

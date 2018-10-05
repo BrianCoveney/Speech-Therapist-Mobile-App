@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RetroChild {
+public class ChildResponse {
 
     @SerializedName("_id")
     private String id;
@@ -25,17 +25,17 @@ public class RetroChild {
     @SerializedName("map_of_gliding_words")
     private Map<String, Integer> glidingLiquidsMap = new HashMap<>();
 
-    public RetroChild() {
+    public ChildResponse() {
     }
 
-    public RetroChild(String firstName, String secondName, String email) {
+    public ChildResponse(String firstName, String secondName, String email) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
     }
 
-    public RetroChild(String firstName, String secondName, String email, String word,
-                      Map<String, Integer> glidingLiquidsMap) {
+    public ChildResponse(String firstName, String secondName, String email, String word,
+                         Map<String, Integer> glidingLiquidsMap) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;

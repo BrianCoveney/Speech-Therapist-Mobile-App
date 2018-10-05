@@ -153,6 +153,8 @@ public class CreateChildActivity extends BaseActivity implements IChildView {
         firstNameEditText.setText(firstName);
     }
 
+
+
     @Override
     public void displaySecondName(String secondName) {
         secondNameEditText.setText(secondName);

@@ -1,10 +1,13 @@
 package com.brian.speechtherapistapp.presentation;
 
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.ChildResponse;
 import com.brian.speechtherapistapp.view.IChildView;
 
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Callback;
 
 
 public interface IChildPresenter {
@@ -20,4 +23,6 @@ public interface IChildPresenter {
     // Retrofit
     void createUser();
     void deleteUser(String email);
+
+    void getData(Callback<List<ChildResponse>> callback);
 }

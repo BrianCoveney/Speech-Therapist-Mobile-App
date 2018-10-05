@@ -1,6 +1,6 @@
 package com.brian.speechtherapistapp.network;
 
-import com.brian.speechtherapistapp.models.RetroChild;
+import com.brian.speechtherapistapp.models.ChildResponse;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import retrofit2.http.Path;
 public interface IWebAPIService {
 
     @GET("/children")
-    Call<List<RetroChild>> getAllChildren();
+    Call<List<ChildResponse>> getAllChildren();
 
     @POST("/child/{first_name}/{second_name}/{email}")
-    Call <RetroChild> createChildWithField(@Path("first_name") String firstName,
-                                          @Path("second_name") String secondName,
-                                          @Path("email") String email);
+    Call <ChildResponse> createChildWithField(@Path("first_name") String firstName,
+                                              @Path("second_name") String secondName,
+                                              @Path("email") String email);
 
     @DELETE("{email}")
-    Call<RetroChild> deleteChildWithField(@Path("email") String email);
+    Call<ChildResponse> deleteChildWithField(@Path("email") String email);
 }
