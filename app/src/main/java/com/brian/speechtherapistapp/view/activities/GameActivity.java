@@ -42,6 +42,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -87,7 +88,7 @@ public class GameActivity extends BaseActivity implements
     private List<String> glidingList = new ArrayList<>();
     private int wordFreq;
     private Word word = new Word();
-    private HashMap<String, Integer> glidingHashMap = new HashMap<>();
+    private Map<String, Integer> glidingHashMap = new HashMap<>();
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private SpeechRecognizer recognizer;
     private static final String TEXT_SEARCH = "words";
@@ -240,46 +241,39 @@ public class GameActivity extends BaseActivity implements
     /**
      * This onResult method is an implementation of the pocketsphinx.RecognitionListener interface.
      * The 'hypothesis' passed in is a result from pocketsphinx.Hypothesis class.
-     *
+     * <p>
      * We check that hypothesis is not null, setting it equal to our string 'result' if not.
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
-            String result = hypothesis.getHypstr();
+            String wordSpoken = hypothesis.getHypstr();
 
             // We get the current word from the child that has been fetched from the database
             if (child != null) {
                 String currentWord = child.getWordName();
 
-                // We pass the current word, result of the recording and the email identifier.
-                // This will update the child's current word to the new word, i.e result
-                child = iChildPresenter.setWord(currentWord, result, childEmail);
+                // We pass the current word, wordSpoken of the recording and the email identifier.
+                // This will update the child's current word to the new word, i.e wordSpoken
+                child = iChildPresenter.setWord(currentWord, wordSpoken, childEmail);
 
                 // We set our word object name equal to this child's new word
                 word.setName(child.getWordName());
+
                 // Our boolean is true if there's a match between the word and the gliding list
                 boolean isWordMatch = word.hasMatch(word.getName(), GLIDING_OF_LIQUIDS_WORDS_LIST);
-
-                String newWord = word.getName();
 
                 // Then newWord matches one of the gliding words list
                 if (isWordMatch == true) {
 
-                    // Our HashMap already contains the newWord, so the value (count) is incremented
-                    if (glidingHashMap.containsKey(newWord)) {
-                        glidingHashMap.put(newWord, glidingHashMap.get(newWord) + 1);
-                    }
-                    // Our HashMap doesn't contain the newWord, so we add the word with a value of 1
-                    else {
-                        glidingHashMap.put(newWord, 1);
-                    }
+                    glidingHashMap = word.updateMap(word.getName());
+
                     // We update the Gliding of Liquids HashMap in the DB
                     iChildPresenter.setGlidingWordsMap(glidingHashMap, childEmail);
                 }
             } else {
                 showLongToast("Please login or create an account");
-                new Handler().postDelayed(new Runnable(){
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
@@ -385,7 +379,6 @@ public class GameActivity extends BaseActivity implements
     } // end FetchFromDatabaseTask class
 
 
-
     /*----------------------------------------------------------------------------------------------
       Custom Dialog - where we record and save the word
     */
@@ -465,7 +458,7 @@ public class GameActivity extends BaseActivity implements
         final View dialogView = inflater.inflate(R.layout.dialog_trophy, null);
         builder.setView(dialogView);
 
-        final AlertDialog closedialog= builder.create();
+        final AlertDialog closedialog = builder.create();
 
         closedialog.show();
 
@@ -488,7 +481,7 @@ public class GameActivity extends BaseActivity implements
         final View dialogView = inflater.inflate(R.layout.dialog_try_again, null);
         builder.setView(dialogView);
 
-        final AlertDialog closedialog= builder.create();
+        final AlertDialog closedialog = builder.create();
 
         closedialog.show();
 
@@ -511,9 +504,9 @@ public class GameActivity extends BaseActivity implements
      * email entered in the LoginActivity using the SharedPreferences object, and pass it to our
      * 'childEmail' instance variable.
      *
+     * @return String
      * @link LocationActivity#onClickButtonLoginChild()
      * @see GameActivity#onCreate(Bundle)
-     * @return String
      */
     private String getChildFromChildLoginActivity() {
 
@@ -527,8 +520,6 @@ public class GameActivity extends BaseActivity implements
 
         return childEmail;
     }
-
-
 
 
     private int getRecyclerViewPosition() {

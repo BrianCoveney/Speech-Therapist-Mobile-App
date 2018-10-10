@@ -54,14 +54,23 @@ public class Word implements  Serializable{
         frequency++;
     }
 
-    public boolean hasMatch(String word, List<String> list) {
-        for (String words : list) {
-            if (words.equals(word)) {
+    public boolean hasMatch(String wordSpoken, List<String> wordList) {
+        for (String words : wordList) {
+            if (words.equals(wordSpoken)) {
                 incrementFrequency();
                 return true;
             }
         }
         return false;
+    }
+
+    public Map<String, Integer> updateMap(String wordSpoken) {
+        if (glidingLiquidsMap.containsKey(wordSpoken)) {
+            glidingLiquidsMap.put(wordSpoken, glidingLiquidsMap.get(wordSpoken) + 1);
+        } else {
+            glidingLiquidsMap.put(wordSpoken, 1);
+        }
+        return glidingLiquidsMap;
     }
 
 
