@@ -79,11 +79,9 @@ public class GameActivity extends BaseActivity implements
     private static final String WORD_ID = "word_id";
     private String result;
     private String onItemClickResult;
-    private Child child;
     private Child c;
     private static final int CHILD_ID = 0;
     private List<Child> childList;
-    private String childEmail;
     boolean isFloatingMusicActionButtonOn = true;
     private List<String> glidingList = new ArrayList<>();
     private int wordFreq;
@@ -93,6 +91,10 @@ public class GameActivity extends BaseActivity implements
     private SpeechRecognizer recognizer;
     private static final String TEXT_SEARCH = "words";
 
+    // These will be set by our FetchFromDatabaseTask async task
+    private Child child;
+    private String childEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +102,6 @@ public class GameActivity extends BaseActivity implements
         ((MainApplication) getApplication()).getPresenterComponent().inject(this);
         getLayoutInflater().inflate(R.layout.activity_game_two, frameLayout);
         ButterKnife.bind(this);
-
-        childEmail = getChildFromChildLoginActivity();
-        Log.i(LOG_TAG, "Child's email from login: " + childEmail);
 
         // Resolves 'com.mongodb.MongoException: android.os.NetworkOnMainThreadException'
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -173,7 +172,7 @@ public class GameActivity extends BaseActivity implements
 
 
         // Setup database query task
-        new FetchFromDatabaseTask().execute();
+        new FetchFromDatabaseTask(this).execute();
     }
 
 
@@ -335,50 +334,6 @@ public class GameActivity extends BaseActivity implements
         return result;
     }
 
-
-    /*----------------------------------------------------------------------------------------------
-      FetchFromDatabaseTask class
-      A database query can be a time consuming task and should not be run on the main thread
-    */
-    private class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
-
-        private ProgressDialog progressDialog = new ProgressDialog(GameActivity.this);
-
-        // Heavy lifting runs on background thread
-        @Override
-        protected Child doInBackground(Void... voids) {
-            // Fetch the child from the db based on their email address.
-            // This email was retrieved by getChildFromLoginActivity()
-            child = iChildPresenter.getChildWithEmail(childEmail);
-            return child;
-        }
-
-        // Publish results on the UI Thread
-        @Override
-        protected void onPostExecute(Child child) {
-            super.onPostExecute(child);
-
-            // Close the progressDialog once the database query has returned a result.
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    progressDialog.dismiss();
-                }
-            }, 500);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            // We create a spinning progress dialog to let the user know that our app is still
-            // running, while information is retrieved from the database.
-            this.progressDialog.setMessage("Please wait");
-            this.progressDialog.show();
-        }
-    } // end FetchFromDatabaseTask class
-
-
     /*----------------------------------------------------------------------------------------------
       Custom Dialog - where we record and save the word
     */
@@ -423,10 +378,6 @@ public class GameActivity extends BaseActivity implements
                         recognizer.stop();
                         recognizer.cancel();
                     }
-
-                    // Scroll to the next item
-//                    int position = getRecyclerViewPosition();
-//                    recyclerView.scrollToPosition(position + 1);
 
                     alertDialog.dismiss();
 
@@ -498,7 +449,6 @@ public class GameActivity extends BaseActivity implements
       SharedPreferences
     */
 
-
     /**
      * When the activity has started, this method is called in the onCreate() method. We fetch the
      * email entered in the LoginActivity using the SharedPreferences object, and pass it to our
@@ -508,7 +458,7 @@ public class GameActivity extends BaseActivity implements
      * @link LocationActivity#onClickButtonLoginChild()
      * @see GameActivity#onCreate(Bundle)
      */
-    private String getChildFromChildLoginActivity() {
+    protected String getChildFromChildLoginActivity() {
 
         // We create a SharedPreferences object so that we can retrieve key-value data from the
         // LoginActivity
@@ -522,10 +472,62 @@ public class GameActivity extends BaseActivity implements
     }
 
 
-    private int getRecyclerViewPosition() {
-        SharedPreferences sharedPreferences =
-                getSharedPreferences("pos_pref_key", Activity.MODE_PRIVATE);
-        int position = sharedPreferences.getInt("pos_key", 0);
-        return position;
-    }
+    /*----------------------------------------------------------------------------------------------
+      FetchFromDatabaseTask class
+       - A database query can be a time consuming task and should not be run on the main thread.
+       - We make the inner class static to decouple it from the activity
+       - We refer to the activities instance variables though a week object reference
+    */
+    public static class FetchFromDatabaseTask extends AsyncTask<Void, Void, Child> {
+
+        ProgressDialog progressDialog;
+
+        WeakReference<GameActivity> activityReference;
+
+        FetchFromDatabaseTask(GameActivity activity) {
+            activityReference = new WeakReference<>(activity);
+            progressDialog = new ProgressDialog(activityReference.get());
+        }
+
+        // Heavy lifting runs on background thread
+        @Override
+        protected Child doInBackground(Void... voids) {
+
+            // We set the 'childEmail' instance variable equal to the returned value
+            String childEmail = activityReference.get().getChildFromChildLoginActivity();
+            activityReference.get().childEmail = childEmail;
+
+            // Fetch the child from the db based on their email address.
+            // This email was retrieved by getChildFromLoginActivity()
+            Child child = activityReference.get().iChildPresenter.getChildWithEmail(childEmail);
+
+            activityReference.get().child = child;
+
+            return child;
+        }
+
+        // Publish results on the UI Thread
+        @Override
+        protected void onPostExecute(Child child) {
+            super.onPostExecute(child);
+
+            // Close the progressDialog once the database query has returned a result.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            }, 500);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // We create a spinning progress dialog to let the user know that our app is still
+            // running, while information is retrieved from the database.
+            this.progressDialog.setMessage("Please wait");
+            this.progressDialog.show();
+        }
+    } // end FetchFromDatabaseTask class
 }
