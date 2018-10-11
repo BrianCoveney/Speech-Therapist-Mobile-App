@@ -22,7 +22,6 @@ import retrofit2.Response;
 
 
 public class ChildPresenterImpl implements IChildPresenter {
-    private Child child;
     private IChildRepository iChildRepository;
     private IChildView iChildView;
     private static final String LOG_TAG = ChildPresenterImpl.class.getSimpleName();
@@ -60,11 +59,16 @@ public class ChildPresenterImpl implements IChildPresenter {
     public void saveChild() {
         // Set our 'Child' Object attributes equal to the returned results from the View, i.e
         // the TextViews in CreateChildActivity.
-        child.setFirstName(iChildView.getFirstName());
-        child.setSecondName(iChildView.getSecondName());
-        child.setEmail(iChildView.getEmail());
-        child.setBirthday(iChildView.getDateOfBirth());
-        child.setPassword(iChildView.getPassword());
+        String firstName = iChildView.getFirstName();
+        String secondName = iChildView.getSecondName();
+        String email = iChildView.getEmail();
+        String birthday = iChildView.getDateOfBirth();
+        String password = iChildView.getPassword();
+
+        Child child = Child.builder(firstName, secondName, email)
+                .withBirthday(birthday)
+                .withPassword(password)
+                .build();
 
         // Add this 'Child' object to our instantiated ChildList class
         ChildList childList = new ChildList();
@@ -117,7 +121,7 @@ public class ChildPresenterImpl implements IChildPresenter {
 
     @Override
     public void loadChildDetails() {
-        child = iChildRepository.getChildFromDB();
+        Child child = iChildRepository.getChildFromDB();
 
         if (child != null) {
             iChildView.displayFirstName(child.getFirstName());

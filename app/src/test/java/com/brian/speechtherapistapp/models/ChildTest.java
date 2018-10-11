@@ -95,10 +95,10 @@ public class ChildTest {
 
     @Test
     public void testChildWithWord() {
-        Child child = Child.builder(firstName, secondName, email).build();
-        String expected = "red";
-        child.setWordName("red");
-        assertEquals(expected, child.getWordName());
+        Child child = Child.builder(firstName, secondName, email)
+                .withWord("red")
+                .build();
+        assertEquals("red", child.getWordName());
 
         Word word = new Word(child.getWordName());
         assertTrue(word.hasMatch(word.getName(), CORRECT_WORDS_LIST));
@@ -107,8 +107,9 @@ public class ChildTest {
 
     @Test
     public void testToString() {
-        Child child = Child.builder(firstName, secondName, email).build();
-        child.setWordName("telephone");
+        Child child = Child.builder(firstName, secondName, email)
+                .withWord("telephone")
+                .build();
 
         StringBuilder sb = new StringBuilder("Child{");
         sb.append("id="+child.getId()+", ");

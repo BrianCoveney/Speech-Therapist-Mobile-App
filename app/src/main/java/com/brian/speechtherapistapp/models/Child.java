@@ -47,24 +47,12 @@ public class Child implements Parcelable {
         return id;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
     public String getWordName() {
         return word.getName();
     }
 
-    public void setWordName(String word) {
-        this.word.setName(word);
-    }
-
     public Map<String, Integer> getWordGlidingLiquidsMap() {
         return word.getGlidingLiquidsMap();
-    }
-
-    public void setWordGlidingLiquidsMap(Map<String, Integer> glidingMap) {
-        this.word.setGlidingLiquidsMap(glidingMap);
     }
 
     public int getWordFreq() {
@@ -89,26 +77,6 @@ public class Child implements Parcelable {
 
     public String getBirthday() {
         return birthday;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
     }
 
     boolean isEmailValid(String eMail) {
