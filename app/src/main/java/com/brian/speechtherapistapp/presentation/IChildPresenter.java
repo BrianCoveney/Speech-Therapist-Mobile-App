@@ -1,6 +1,7 @@
 package com.brian.speechtherapistapp.presentation;
 
 import com.brian.speechtherapistapp.models.Child;
+import com.brian.speechtherapistapp.models.ChildList;
 import com.brian.speechtherapistapp.models.ChildResponse;
 import com.brian.speechtherapistapp.view.IChildView;
 
@@ -14,7 +15,7 @@ public interface IChildPresenter {
     void saveChild();
     void setView(IChildView childView);
     void loadChildDetails();
-    List<Child> getChildren();
+    ChildList getChildren();
     Child setWord(String currWord, String newWord, String email);
     void setGlidingWordsMap(Map<String, Integer> glidingLiquidsMap, String email);
     Child getChildWithEmail(String email);

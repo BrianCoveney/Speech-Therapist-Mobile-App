@@ -95,20 +95,20 @@ public class ChildPresenterImpl implements IChildPresenter {
             @Override
             public void onResponse(Call<ChildResponse> call, Response<ChildResponse> response) {
                 ChildResponse rChild = response.body();
-                Log.i(LOG_TAG, "CREATED: " + rChild.getFirstName() + " "
+                Log.i(LOG_TAG, "CREATED CHILD: " + rChild.getFirstName() + " "
                         + rChild.getSecondName() + " " + rChild.getEmail());
                 iChildView.showChildSavedMessage();
             }
 
             @Override
             public void onFailure(Call<ChildResponse> call, Throwable t) {
-                Log.e("ERROR: ", t.getMessage());
+                Log.e("onFailure ERROR: ", t.getMessage());
             }
         });
     }
 
     @Override
-    public List<Child> getChildren() {
+    public ChildList getChildren() {
         return this.iChildRepository.getChildListFromDB();
     }
 
@@ -125,7 +125,7 @@ public class ChildPresenterImpl implements IChildPresenter {
 
         if (child != null) {
             iChildView.displayFirstName(child.getFirstName());
-            iChildView.displaySecondName(child.getSecondName());
+            iChildView.displaySecondName(child.getSecondName() + " blah");
             iChildView.displayEmail(child.getEmail());
         }
     }

@@ -55,10 +55,6 @@ public class Child implements Parcelable {
         return word.getGlidingLiquidsMap();
     }
 
-    public int getWordFreq() {
-        return word.getFrequency();
-    }
-
     public String getFirstName() {
         return firstName;
     }

@@ -18,9 +18,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -98,8 +96,8 @@ public class ChildRepositoryImpl implements IChildRepository {
     }
 
     @Override
-    public List<Child> getChildListFromDB() {
-        List<Child> childList = new ArrayList<>();
+    public ChildList getChildListFromDB() {
+        ChildList childList = new ChildList();
 
         FindIterable<Document> databaseRecords = database.getCollection("children").find();
         MongoCursor<Document> cursor = databaseRecords.iterator();

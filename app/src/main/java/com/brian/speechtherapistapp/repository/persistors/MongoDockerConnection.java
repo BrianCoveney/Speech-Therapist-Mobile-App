@@ -17,9 +17,7 @@ public class MongoDockerConnection {
 
         MongoClient dbConnection = null;
         try {
-
             dbConnection = new MongoClient(HOST, PORT);
-
             if (dbConnection != null)
                 Log.d(LOG_TAG,"Connected to MongoDB!");
         } catch (MongoException e) {
