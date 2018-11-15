@@ -7,18 +7,27 @@ public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
 
-    // BASE_URL for Emulator
-    // private static final String BASE_URL = "http://10.0.2.2:80";
+    /**
+     * Notes for testing in development:
+     *
+     * Android Studio Emulator URL: "http://10.0.2.2:80";
+     *
+     * _or_
+     *
+     * Get the URL of a Mobile Device - find the primary IP address of the local machine with:
+     * ip route get 1 | awk '{print $NF;exit}'
+     * e.g: 192.168.1.11:80
+     *
+     */
+    private static String DEVELOPMENT_URL = "http://192.168.1.11:80";
 
-    // To get the BASE_URL for Device first find the  primary IP address of the local machine with:
-    // ip route get 1 | awk '{print $NF;exit}'
-    private static final String BASE_URL = "http://192.168.1.11:80";
+    private static String PRODUCTION_URL = "https://speech.briancoveney.com:443";
 
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(PRODUCTION_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
